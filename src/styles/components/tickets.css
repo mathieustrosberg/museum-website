@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Formulaire de billets (page Visit) : sélecteur de jour souligné comme les
+   champs, lignes [type, prix] ............ [-] n [+], total, confirmation.
+   ========================================================================== */
+
+.tickets__form {
+  width: var(--col-text);
+  max-width: 100%;
+}
+
+.tickets__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-table);
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tickets__group legend {
+  padding: 0;
+  margin-bottom: var(--gap-table);
+}
+
+.tickets__form .field select {
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.tickets__form .field select:invalid {
+  color: var(--color-text-muted);
+}
+
+.tickets__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gutter);
+}
+
+.tickets__type {
+  display: flex;
+  gap: var(--gap-inline);
+}
+
+.stepper {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap-inline);
+}
+
+.stepper input {
+  width: 3ch;
+  padding: 0;
+  text-align: center;
+  outline: none;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.stepper input::-webkit-inner-spin-button,
+.stepper input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.tickets__total {
+  padding-top: var(--gap-inline);
+  border-top: 1px solid var(--color-line);
+}
+
+/* Erreurs : message en couleur sous le champ, trait du champ en couleur */
+.tickets__error {
+  color: var(--color-error);
+  text-transform: none;
+}
+
+.field.is-invalid .field__box {
+  border-color: var(--color-error);
+}
+
+.tickets__group.is-invalid .tickets__total {
+  border-color: var(--color-error);
+}
+
+.stepper button[disabled] {
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+/* Confirmation : la section remplit l'écran moins le footer, qui reste en bas
+   comme sur About et Visit */
+.confirmed {
+  min-height: calc(100vh - 48px);
+  min-height: calc(100dvh - 48px);
+}
+
+.confirmed .grid-2 {
+  row-gap: var(--gap-section);
+}
+
+.confirmed__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-block);
+}
+
+.confirmed__summary {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: var(--gap-list) var(--gutter);
+  width: var(--col-text);
+  max-width: 100%;
+}
+
+.confirmed__reference {
+  font-weight: 500;
+}
+
+.confirmed__line {
+  display: block;
+}
+
+.confirmed__links {
+  display: flex;
+  gap: var(--gap-block);
+}
+
+.confirmed__aside {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-block) var(--gutter);
+  align-content: start;
+}
+
+.confirmed__aside .list {
+  width: 100%;
+}
+
+@media (max-width: 767.98px) {
+  .confirmed .grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .confirmed__aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

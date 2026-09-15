@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh);
+  letter-spacing: var(--ls);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Système texte : labels et listes
+   -------------------------------------------------------------------------- */
+
+/* Label de colonne : 11px, capitales, atténué */
+.label {
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Titre de page / de bloc : même style mais noir plein, ex. [SELECTED WORKS] */
+.label--strong {
+  color: var(--color-text);
+}
+
+/* Bloc "label + contenu" : gap 16px */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gutter);
+}
+
+/* Liste de lignes de texte : 2px entre chaque ligne, largeur fixe 240px */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-list);
+  width: var(--col-text);
+  max-width: 100%;
+}
+
+/* Paragraphes : largeur 240px, 12px entre paragraphes */
+.prose {
+  width: var(--col-text);
+  max-width: 100%;
+}
+
+.prose + .prose {
+  margin-top: var(--gap-table);
+}
+
+/* Liste de liens serrée (contact) : pas d'écart, liens de 18px */
+.list--tight {
+  gap: 0;
+}
+
+.link {
+  display: inline-flex;
+  padding: 1px 0;
+}
+
+/* Lien souligné : trait 1px noir collé sous le texte */
+.link-underline {
+  position: relative;
+  display: inline-flex;
+  align-self: flex-start;
+  padding: var(--link-pad) 0;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-text);
+}
+
+/* Utilitaires */
+.text-right {
+  text-align: right;
+}
+.is-muted {
+  color: var(--color-text-muted);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

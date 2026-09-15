@@ -1,0 +1,510 @@
+{
+  "/images/archive/ink-log-01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/ink-log-02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/ink-log-03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/light-log-01.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/light-log-02.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/light-log-03.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/light-log-04.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/paper-log-01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/paper-log-02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/paper-log-03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/plate-log-01.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/plate-log-02.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/plate-log-03.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/press-log-01.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/press-log-02.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/press-log-03.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/press-log-04.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/press-log-05.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/press-log-06.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/archive/proof-log-01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/proof-log-02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/proof-log-03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/proof-log-04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/proof-log-05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/proof-log-06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/proof-log-07.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/screen-log-01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/screen-log-02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/screen-log-03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/screen-log-04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/screen-log-05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/sheet-log-01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/sheet-log-02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/sheet-log-03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/sheet-log-04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/archive/sheet-log-05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/site/building.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/site/entrance.png": {
+    "width": 960,
+    "height": 720
+  },
+  "/images/site/press-hall.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/site/reading-room.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/blanket-wash/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/blanket-wash/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/blanket-wash/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/blanket-wash/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/blanket-wash/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/blanket-wash/06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/blanket-wash/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/corniche-noon/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/corniche-noon/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/corniche-noon/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/corniche-noon/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/corniche-noon/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/corniche-noon/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/halation/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/halation/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/halation/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/halation/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/halation/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/halation/06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/halation/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/ink-limit/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/07.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/08.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/09.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/ink-limit/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/no-negative/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/no-negative/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/no-negative/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/no-negative/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/no-negative/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/no-negative/06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/no-negative/07.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/no-negative/08.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/no-negative/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/paper-white/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/paper-white/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/paper-white/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/paper-white/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/paper-white/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/paper-white/06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/paper-white/07.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/paper-white/08.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/paper-white/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/parana-six-rolls/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/parana-six-rolls/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/parana-six-rolls/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/parana-six-rolls/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/parana-six-rolls/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/parana-six-rolls/06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/parana-six-rolls/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/second-drum/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/second-drum/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/second-drum/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/second-drum/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/second-drum/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/second-drum/06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/second-drum/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/sixty-lines/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/sixty-lines/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/sixty-lines/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/sixty-lines/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/sixty-lines/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/sixty-lines/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/spoilage/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/spoilage/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/spoilage/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/spoilage/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/spoilage/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/spoilage/06.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/spoilage/07.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/spoilage/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/vine-black/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/vine-black/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/vine-black/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/vine-black/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/vine-black/preview.png": {
+    "width": 952,
+    "height": 608
+  },
+  "/images/works/warp-count/01.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/warp-count/02.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/warp-count/03.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/warp-count/04.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/warp-count/05.png": {
+    "width": 720,
+    "height": 960
+  },
+  "/images/works/warp-count/preview.png": {
+    "width": 952,
+    "height": 608
+  }
+}

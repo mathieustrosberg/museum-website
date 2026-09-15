@@ -1,0 +1,151 @@
+/* ==========================================================================
+   Work
+   Desktop : cartes 2 colonnes à gauche, colonne sticky à droite
+   (pourcentage de scroll en haut, filtres alignés à droite, footer en bas)
+   ========================================================================== */
+
+.work {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+  padding: 0 var(--gutter);
+}
+
+.work__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-block) var(--gutter);
+  padding: var(--page-top) 0 var(--gutter);
+  align-content: start;
+}
+
+.work__side {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+  height: 100vh;
+  height: 100dvh;
+  padding: var(--page-top) 0 var(--gutter);
+}
+
+.work__side-main {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  min-height: 0;
+}
+
+.work__filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-block);
+  align-items: flex-end;
+  width: 100%;
+  text-align: right;
+}
+
+.work__filters .info {
+  align-items: flex-end;
+  width: 100%;
+}
+
+.work__filters .label {
+  width: 100%;
+}
+
+/* Filtres : boutons dans les listes ; actif souligné d'un trait 1 px collé sous le texte
+   (dans l'interligne de 2 px de la liste), sans correspondance en gris ; les cartes hors
+   sélection sont masquées ; l'anneau de focus est décalé pour ne pas couvrir le trait */
+.filter {
+  text-align: inherit;
+}
+
+.filter:focus-visible {
+  outline-offset: 2px;
+}
+
+.filter[aria-pressed="true"] {
+  box-shadow: 0 1px 0 currentColor;
+}
+
+.filter[disabled] {
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.work__grid .card[hidden] {
+  display: none;
+}
+
+/* Pourcentage de scroll */
+.progress {
+  display: flex;
+}
+
+@media (max-width: 1159.98px) {
+  .work {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    padding: var(--page-top) var(--gutter) var(--gutter);
+  }
+
+  .work__grid {
+    padding: 0;
+  }
+
+  /* La colonne latérale se dissout : filtres avant les cartes, footer après */
+  .work__side,
+  .work__side-main {
+    display: contents;
+  }
+
+  .work__filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-block) var(--gutter);
+    align-items: start;
+    order: -1;
+    text-align: left;
+  }
+
+  .work__filters .info {
+    align-items: flex-start;
+  }
+
+  .work .footer {
+    order: 10;
+  }
+
+  .progress {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .work__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Recherche : même champ souligné que le formulaire Visit, largeur de la colonne
+   de texte, texte aligné comme les filtres (droite sur desktop, gauche en dessous) */
+.work__search .field {
+  width: var(--col-text);
+  max-width: 100%;
+}
+
+.work__search input {
+  text-align: inherit;
+  appearance: none;
+}
+
+.work__search input::-webkit-search-cancel-button,
+.work__search input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}

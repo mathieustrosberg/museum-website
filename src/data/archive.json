@@ -1,0 +1,326 @@
+[
+  {
+    "slug": "proof-log-01",
+    "title": "Proof log 01",
+    "date": "Dec 2025",
+    "orientation": "portrait",
+    "type": "Proof",
+    "caption": "Wet proof, black only, second pass, register marks left uncut",
+    "image": "/images/archive/proof-log-01.png"
+  },
+  {
+    "slug": "press-log-01",
+    "title": "Press log 01",
+    "date": "Dec 2025",
+    "orientation": "landscape",
+    "type": "Press",
+    "caption": "Press hall, delivery pile after the last run of the year",
+    "image": "/images/archive/press-log-01.png"
+  },
+  {
+    "slug": "screen-log-01",
+    "title": "Screen log 01",
+    "date": "Nov 2025",
+    "orientation": "portrait",
+    "type": "Screen",
+    "caption": "Halftone test strip, 60 to 133 lpi, on 80 gsm newsprint",
+    "image": "/images/archive/screen-log-01.png"
+  },
+  {
+    "slug": "ink-log-01",
+    "title": "Ink log 01",
+    "date": "Nov 2025",
+    "orientation": "portrait",
+    "type": "Ink",
+    "caption": "Ink drawdown, warm black against cool black, uncoated stock",
+    "image": "/images/archive/ink-log-01.png"
+  },
+  {
+    "slug": "light-log-01",
+    "title": "Light log 01",
+    "date": "Nov 2025",
+    "orientation": "landscape",
+    "type": "Light",
+    "caption": "Light table, twelve contact sheets under the loupe, unsorted",
+    "image": "/images/archive/light-log-01.png"
+  },
+  {
+    "slug": "sheet-log-01",
+    "title": "Sheet log 01",
+    "date": "Nov 2025",
+    "orientation": "portrait",
+    "type": "Sheet",
+    "caption": "Single sheet found between two plates, image unidentified",
+    "image": "/images/archive/sheet-log-01.png"
+  },
+  {
+    "slug": "proof-log-02",
+    "title": "Proof log 02",
+    "date": "Oct 2025",
+    "orientation": "portrait",
+    "type": "Proof",
+    "caption": "Progressive proof, cyan and magenta only, yellow withheld",
+    "image": "/images/archive/proof-log-02.png"
+  },
+  {
+    "slug": "ink-log-02",
+    "title": "Ink log 02",
+    "date": "Oct 2025",
+    "orientation": "portrait",
+    "type": "Ink",
+    "caption": "Ink density wedge, ten steps, read with the densitometer",
+    "image": "/images/archive/ink-log-02.png"
+  },
+  {
+    "slug": "press-log-02",
+    "title": "Press log 02",
+    "date": "Oct 2025",
+    "orientation": "landscape",
+    "type": "Press",
+    "caption": "Blanket cylinder, washed, before the first sheet of the day",
+    "image": "/images/archive/press-log-02.png"
+  },
+  {
+    "slug": "screen-log-02",
+    "title": "Screen log 02",
+    "date": "Sep 2025",
+    "orientation": "portrait",
+    "type": "Screen",
+    "caption": "Same negative, three screen angles, moiré on the third",
+    "image": "/images/archive/screen-log-02.png"
+  },
+  {
+    "slug": "paper-log-01",
+    "title": "Paper log 01",
+    "date": "Sep 2025",
+    "orientation": "portrait",
+    "type": "Paper",
+    "caption": "Paper test, six stocks, one image, grey balance drifting",
+    "image": "/images/archive/paper-log-01.png"
+  },
+  {
+    "slug": "light-log-02",
+    "title": "Light log 02",
+    "date": "Sep 2025",
+    "orientation": "landscape",
+    "type": "Light",
+    "caption": "Light table, film positives taped in register, awaiting exposure",
+    "image": "/images/archive/light-log-02.png"
+  },
+  {
+    "slug": "press-log-03",
+    "title": "Press log 03",
+    "date": "Aug 2025",
+    "orientation": "landscape",
+    "type": "Press",
+    "caption": "Press hall, machine idle, covers on, August light from the Panke side",
+    "image": "/images/archive/press-log-03.png"
+  },
+  {
+    "slug": "plate-log-01",
+    "title": "Plate log 01",
+    "date": "Aug 2025",
+    "orientation": "landscape",
+    "type": "Plate",
+    "caption": "Plate rack, twelve used plates, gummed, sorted by run",
+    "image": "/images/archive/plate-log-01.png"
+  },
+  {
+    "slug": "proof-log-03",
+    "title": "Proof log 03",
+    "date": "Aug 2025",
+    "orientation": "portrait",
+    "type": "Proof",
+    "caption": "Press proof on 80 gsm newsprint, dot gain measured in the margin",
+    "image": "/images/archive/proof-log-03.png"
+  },
+  {
+    "slug": "plate-log-02",
+    "title": "Plate log 02",
+    "date": "Jul 2025",
+    "orientation": "landscape",
+    "type": "Plate",
+    "caption": "Aluminium plate on the bench, scored after the run, before disposal",
+    "image": "/images/archive/plate-log-02.png"
+  },
+  {
+    "slug": "sheet-log-02",
+    "title": "Sheet log 02",
+    "date": "Jul 2025",
+    "orientation": "portrait",
+    "type": "Sheet",
+    "caption": "Workshop sheet, two colours out of register by a millimetre",
+    "image": "/images/archive/sheet-log-02.png"
+  },
+  {
+    "slug": "screen-log-03",
+    "title": "Screen log 03",
+    "date": "Jul 2025",
+    "orientation": "portrait",
+    "type": "Screen",
+    "caption": "Screen test, stochastic against 85 lpi, same file, same paper",
+    "image": "/images/archive/screen-log-03.png"
+  },
+  {
+    "slug": "press-log-04",
+    "title": "Press log 04",
+    "date": "Jun 2025",
+    "orientation": "landscape",
+    "type": "Press",
+    "caption": "Feeder, sheets fanned by hand before loading, midday",
+    "image": "/images/archive/press-log-04.png"
+  },
+  {
+    "slug": "proof-log-04",
+    "title": "Proof log 04",
+    "date": "Jun 2025",
+    "orientation": "portrait",
+    "type": "Proof",
+    "caption": "Proof for an edition, colour bar cropped, approved in pencil",
+    "image": "/images/archive/proof-log-04.png"
+  },
+  {
+    "slug": "paper-log-02",
+    "title": "Paper log 02",
+    "date": "Jun 2025",
+    "orientation": "portrait",
+    "type": "Paper",
+    "caption": "Paper test, 60 gsm newsprint, show-through measured against a lamp",
+    "image": "/images/archive/paper-log-02.png"
+  },
+  {
+    "slug": "sheet-log-03",
+    "title": "Sheet log 03",
+    "date": "May 2025",
+    "orientation": "portrait",
+    "type": "Sheet",
+    "caption": "Misprinted sheet, double impression, kept for the ghost image",
+    "image": "/images/archive/sheet-log-03.png"
+  },
+  {
+    "slug": "light-log-03",
+    "title": "Light log 03",
+    "date": "May 2025",
+    "orientation": "landscape",
+    "type": "Light",
+    "caption": "Light table, one roll of 35 mm negatives, frames numbered in grease pencil",
+    "image": "/images/archive/light-log-03.png"
+  },
+  {
+    "slug": "proof-log-05",
+    "title": "Proof log 05",
+    "date": "May 2025",
+    "orientation": "portrait",
+    "type": "Proof",
+    "caption": "Screen proof of a gelatin silver print, tone scale compressed",
+    "image": "/images/archive/proof-log-05.png"
+  },
+  {
+    "slug": "screen-log-04",
+    "title": "Screen log 04",
+    "date": "Apr 2025",
+    "orientation": "portrait",
+    "type": "Screen",
+    "caption": "Halftone test, 133 lpi, highlight dots dropping out at 3 per cent",
+    "image": "/images/archive/screen-log-04.png"
+  },
+  {
+    "slug": "plate-log-03",
+    "title": "Plate log 03",
+    "date": "Apr 2025",
+    "orientation": "landscape",
+    "type": "Plate",
+    "caption": "Plate on the bench after exposure, image just visible",
+    "image": "/images/archive/plate-log-03.png"
+  },
+  {
+    "slug": "press-log-05",
+    "title": "Press log 05",
+    "date": "Apr 2025",
+    "orientation": "landscape",
+    "type": "Press",
+    "caption": "Press hall, run in progress, sheets counted at the delivery",
+    "image": "/images/archive/press-log-05.png"
+  },
+  {
+    "slug": "paper-log-03",
+    "title": "Paper log 03",
+    "date": "Mar 2025",
+    "orientation": "portrait",
+    "type": "Paper",
+    "caption": "Paper test, coated against uncoated, same halftone, same ink",
+    "image": "/images/archive/paper-log-03.png"
+  },
+  {
+    "slug": "proof-log-06",
+    "title": "Proof log 06",
+    "date": "Mar 2025",
+    "orientation": "portrait",
+    "type": "Proof",
+    "caption": "Contact proof from a paper negative, edges unmasked",
+    "image": "/images/archive/proof-log-06.png"
+  },
+  {
+    "slug": "sheet-log-04",
+    "title": "Sheet log 04",
+    "date": "Mar 2025",
+    "orientation": "portrait",
+    "type": "Sheet",
+    "caption": "Spoiled sheet, image built up in four passes, pulled from the pile",
+    "image": "/images/archive/sheet-log-04.png"
+  },
+  {
+    "slug": "screen-log-05",
+    "title": "Screen log 05",
+    "date": "Feb 2025",
+    "orientation": "portrait",
+    "type": "Screen",
+    "caption": "Screen test, 45 lpi, coarse enough to count the dots",
+    "image": "/images/archive/screen-log-05.png"
+  },
+  {
+    "slug": "ink-log-03",
+    "title": "Ink log 03",
+    "date": "Feb 2025",
+    "orientation": "portrait",
+    "type": "Ink",
+    "caption": "Ink drawdown, rubine and a mixed black, tack noted",
+    "image": "/images/archive/ink-log-03.png"
+  },
+  {
+    "slug": "proof-log-07",
+    "title": "Proof log 07",
+    "date": "Feb 2025",
+    "orientation": "portrait",
+    "type": "Proof",
+    "caption": "Proof on 90 gsm offset, blanket marks in the lower margin",
+    "image": "/images/archive/proof-log-07.png"
+  },
+  {
+    "slug": "light-log-04",
+    "title": "Light log 04",
+    "date": "Jan 2025",
+    "orientation": "landscape",
+    "type": "Light",
+    "caption": "Light table, contact sheets sorted by roll, loupe left in place",
+    "image": "/images/archive/light-log-04.png"
+  },
+  {
+    "slug": "sheet-log-05",
+    "title": "Sheet log 05",
+    "date": "Jan 2025",
+    "orientation": "portrait",
+    "type": "Sheet",
+    "caption": "Unsorted print, newsprint yellowed at the edges, no date",
+    "image": "/images/archive/sheet-log-05.png"
+  },
+  {
+    "slug": "press-log-06",
+    "title": "Press log 06",
+    "date": "Jan 2025",
+    "orientation": "landscape",
+    "type": "Press",
+    "caption": "Press hall in January, machine cold, first plate of the year mounted",
+    "image": "/images/archive/press-log-06.png"
+  }
+]

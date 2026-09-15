@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Layout : sections, grilles
+   Breakpoints de la référence : mobile < 768, tablette 768–1159, desktop ≥ 1160
+   ========================================================================== */
+
+.page {
+  padding: var(--page-top) var(--gutter) var(--gutter);
+}
+
+/* Grille de base : 2 colonnes égales, gap 16px */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+/* Grille 4 colonnes (2 × 2 imbriquées) */
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+/* Grille 6 colonnes (archive) */
+.grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+/* Colonne sticky pleine hauteur (Work, projet) */
+.sticky-col {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  padding: var(--page-top) 0 var(--gutter);
+}
+
+@media (max-width: 1159.98px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--gap-block);
+  }
+
+  .grid-6 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  .grid-6 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

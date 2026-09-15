@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Contact
+   Desktop : deux rangées sur 100vh - footer, la première à la hauteur de son contenu.
+   Rangée 1 : [titre + billetterie centrés] | image.
+   Rangée 2 : Contact | Follow | Opening hours, centrés verticalement.
+   Tablette / mobile : titre, formulaire, horloge, liens, image carrée.
+   ========================================================================== */
+
+.contact {
+  display: grid;
+  /* Rangée 1 prend l'écran, rangée 2 (liens) à sa hauteur de contenu, au-dessus du footer */
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--gutter);
+  min-height: calc(100vh - 48px);
+  min-height: calc(100dvh - 48px);
+  padding: var(--page-top) var(--gutter) 0;
+}
+
+.contact__top {
+  min-height: 0;
+}
+
+.contact__intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gap-group);
+}
+
+.contact__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-group);
+  /* Titre + billetterie centrés verticalement face à l'image, comme le texte d'About ;
+     (marges automatiques) */
+  margin-block: auto;
+}
+
+.contact__media {
+  height: 100%;
+}
+
+.contact__links-row {
+  display: flex;
+  align-items: center;
+  min-height: 0;
+}
+
+.contact__links {
+  width: 100%;
+}
+
+.contact__links .info:first-child {
+  grid-column: span 2;
+}
+
+@media (max-width: 1159.98px) {
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    min-height: 0;
+  }
+
+  .contact__top {
+    display: contents;
+  }
+
+  .contact__media {
+    order: 5;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .contact__links {
+    row-gap: var(--gap-block);
+  }
+
+  .contact__links .info:first-child {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .contact__form-grid,
+  .contact__links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

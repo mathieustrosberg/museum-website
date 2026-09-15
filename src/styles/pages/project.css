@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Page œuvre
+   Desktop : couverture sticky à gauche, à droite (2/3 de colonne) :
+   « All works », cartel sur 2 colonnes (7 blocs, notice en dernier),
+   pile des feuilles, « [Similar works] » (4 cartes), footer.
+   Tablette / mobile : une colonne, la couverture devient la 1re image,
+   la notice passe en pleine largeur sous 768 px.
+   ========================================================================== */
+
+.project {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+  padding: 0 var(--gutter);
+  overflow: clip;
+}
+
+.project__cover {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  padding: var(--page-top) 0 var(--gutter);
+}
+
+.project__cover .media {
+  height: 100%;
+}
+
+.project__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+  padding: var(--page-top) 0 var(--gutter);
+}
+
+/* Le contenu occupe les colonnes 2 et 3 d'une grille de 3 */
+.project__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+.project__body {
+  grid-column: 2 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+}
+
+.project__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-block) var(--gutter);
+}
+
+.project__meta .info {
+  gap: 6px;
+}
+
+.project__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gutter);
+}
+
+.project__stack .media {
+  aspect-ratio: 3 / 4;
+}
+
+/* La couverture dupliquée en tête de pile n'existe qu'en dessous de 1160px */
+.project__stack-cover {
+  display: none;
+}
+
+@media (max-width: 1159.98px) {
+  .project {
+    display: block;
+    padding: var(--page-top) var(--gutter) var(--gutter);
+  }
+
+  .project__cover {
+    display: none;
+  }
+
+  .project__content {
+    padding: 0;
+  }
+
+  .project__grid {
+    display: block;
+  }
+
+  .project__stack-cover {
+    display: block;
+  }
+}
+
+/* Notice de l'œuvre : pleine largeur du cartel sur mobile */
+@media (max-width: 767.98px) {
+  .project__notes {
+    grid-column: 1 / -1;
+  }
+}

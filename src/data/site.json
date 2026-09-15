@@ -1,0 +1,266 @@
+{
+  "name": "Halbton",
+  "lang": "en",
+  "meta": {
+    "home": "Halbton, centre for the printed image, Berlin-Wedding. Exhibitions, editions printed on site, reading room, workshop.",
+    "collection": "Works shown at Halbton, from offset and riso to gelatin silver, listed by year, title, artist and medium.",
+    "archive": "The Halbton log: proofs, screen tests, stray sheets and press views in date order, outside the exhibition programme.",
+    "about": "A former offset printing plant on the Panke, Berlin-Wedding. One press, two exhibition floors, reading room, workshop.",
+    "visit": "Visit Halbton, Gerichtstraße, Berlin-Wedding. Thu–Sun, 12:00–19:00. Request tickets: full €8, reduced €5, under 18 free, paid at the entrance.",
+    "confirmed": "Ticket request received. Tickets are held at the entrance desk; pay on arrival."
+  },
+  "nav": {
+    "brand": "Halbton",
+    "links": [
+      {
+        "label": "Collection,",
+        "href": "/work",
+        "page": "work"
+      },
+      {
+        "label": "Archive,",
+        "href": "/archive",
+        "page": "archive"
+      },
+      {
+        "label": "About,",
+        "href": "/about",
+        "page": "about"
+      },
+      {
+        "label": "Visit",
+        "href": "/visit",
+        "page": "visit"
+      }
+    ]
+  },
+  "footer": {
+    "copyright": "© 2026 Halbton",
+    "status": "Open Thu–Sun"
+  },
+  "home": {
+    "intro": [
+      {
+        "label": "Institution",
+        "text": "Halbton is a centre for the printed image in a former offset printing plant in Berlin-Wedding. Every image shown, silver, digital or generated, passes through the same screen."
+      }
+    ],
+    "media": {
+      "src": "/images/site/building.png",
+      "alt": "Press hall on the ground floor, the offset press between paper stacks and the windows on the Panke side."
+    },
+    "selectedLabel": "[Selected works]",
+    "table": {
+      "year": "Year",
+      "title": "Title",
+      "artist": "Artist",
+      "count": "Sheets"
+    },
+    "selected": [
+      "blanket-wash",
+      "ink-limit",
+      "no-negative",
+      "corniche-noon",
+      "halation",
+      "second-drum",
+      "warp-count",
+      "paper-white"
+    ],
+    "viewAll": "View all"
+  },
+  "collection": {
+    "title": "Collection",
+    "scopes": [
+      {
+        "label": "All works",
+        "value": "all"
+      },
+      {
+        "label": "On view",
+        "value": "on-view"
+      }
+    ],
+    "mediumLabel": "Medium",
+    "a11y": {
+      "status": "{shown} of {total} works shown",
+      "count": {
+        "one": "{label}, one work",
+        "other": "{label}, {n} works"
+      }
+    },
+    "search": {
+      "label": "Search",
+      "placeholder": "Title, artist, medium",
+      "a11y": {
+        "clear": "Clear search"
+      }
+    }
+  },
+  "work": {
+    "allWorks": "All works",
+    "cartel": {
+      "title": "Title",
+      "artist": "Artist",
+      "medium": "Medium",
+      "year": "Year",
+      "dimensions": "Dimensions",
+      "sheets": "Sheets",
+      "notes": "Notes"
+    },
+    "similarLabel": "[Similar works]"
+  },
+  "archive": {
+    "label": "Archive",
+    "intro": "Proofs, screen tests, stray sheets and press views, kept in date order, outside the exhibition programme.",
+    "logLabel": "Log",
+    "logItems": ["Proofs and tests", "Stray sheets", "Press views"],
+    "allArchive": "Full archive",
+    "detail": {
+      "title": "Title",
+      "date": "Date"
+    }
+  },
+  "about": {
+    "title": "[About]",
+    "paragraphs": [
+      "Former offset printing plant on the Panke, Wedding. One working press downstairs, two exhibition floors, reading room under the sawtooth roof. Same screen for every image shown; same paper for every edition.",
+      "Each exhibition, eight to twelve a year, ends in an edition printed on the press. The edition enters the collection; working proofs and tests are logged in the archive."
+    ],
+    "lists": [
+      {
+        "label": "Programme",
+        "items": ["Exhibitions", "Editions", "Reading room", "Workshop"]
+      },
+      {
+        "label": "Method",
+        "items": [
+          "One screen, one house paper",
+          "Reproduction kept visible",
+          "Proofs logged"
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/images/site/press-hall.png",
+        "alt": "Press hall on the ground floor, the offset press between paper stacks and the windows on the Panke side."
+      },
+      {
+        "src": "/images/site/reading-room.png",
+        "alt": "Reading room under the sawtooth roof, editions laid flat on the tables."
+      }
+    ]
+  },
+  "visit": {
+    "title": "[Visit]",
+    "clock": {
+      "label": "Local time",
+      "aria": "Local time in Berlin",
+      "timeZone": "Europe/Berlin"
+    },
+    "media": {
+      "src": "/images/site/entrance.png",
+      "alt": "Entrance on Gerichtstraße, the former loading bay of the printing plant."
+    },
+    "blocks": [
+      {
+        "label": "Contact",
+        "links": [
+          {
+            "text": "Gerichtstraße 48, 13347 Berlin",
+            "href": "https://maps.google.com/?q=Gerichtstra%C3%9Fe+48%2C+13347+Berlin",
+            "external": true
+          },
+          {
+            "text": "mail@halbton.berlin",
+            "href": "mailto:mail@halbton.berlin"
+          },
+          {
+            "text": "+49 30 46 07 81 20",
+            "href": "tel:+493046078120"
+          }
+        ]
+      },
+      {
+        "label": "Follow",
+        "links": [
+          {
+            "text": "Instagram",
+            "href": "https://instagram.com",
+            "external": true
+          },
+          {
+            "text": "Are.na",
+            "href": "https://are.na",
+            "external": true
+          },
+          {
+            "text": "Vimeo",
+            "href": "https://vimeo.com",
+            "external": true
+          }
+        ]
+      },
+      {
+        "label": "Opening hours",
+        "items": ["Thu–Sun, 12:00–19:00", "Closed on public holidays"]
+      }
+    ]
+  },
+  "tagline": "Centre for the printed image, Berlin",
+  "notFound": {
+    "label": "[Not found]",
+    "text": "No sheet at this address. The press is on the ground floor, the collection is one floor up.",
+    "back": "Home"
+  },
+  "tickets": {
+    "form": {
+      "date": "Date",
+      "datePlaceholder": "Choose a day",
+      "tickets": "Tickets",
+      "total": "Total",
+      "name": "Name",
+      "email": "Email",
+      "submit": "Request tickets",
+      "sending": "Sending",
+      "free": "Free",
+      "decrease": "Remove one",
+      "increase": "Add one"
+    },
+    "errors": {
+      "date": "Choose an opening day.",
+      "tickets": "Choose at least one ticket.",
+      "max": "Ten tickets at most per type.",
+      "name": "Enter your name.",
+      "email": "Enter a valid email address.",
+      "generic": "The request could not be sent. Try again.",
+      "summary": {
+        "one": "One field needs your attention.",
+        "other": "{n} fields need your attention."
+      }
+    },
+    "confirmed": {
+      "title": "[Request sent]",
+      "text": "Your tickets are held at the entrance desk until 13:00 on the day of your visit. Show this reference on arrival and pay at the desk, by card or in cash.",
+      "summary": {
+        "reference": "Reference",
+        "date": "Date",
+        "tickets": "Tickets",
+        "total": "Total"
+      },
+      "next": {
+        "label": "What's next",
+        "items": [
+          "Gerichtstraße 48, Berlin-Wedding, from 12:00",
+          "Reading room and workshop floor included",
+          "Changes: mail@halbton.berlin with your reference"
+        ]
+      },
+      "onView": "On view that day",
+      "links": {
+        "again": "New request",
+        "home": "Home"
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Home
+   Desktop : 100vh, 2 rangées égales (infos / image + liste)
+   ========================================================================== */
+
+.home {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--gutter);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.home__intro {
+  align-content: start;
+}
+
+.home__bottom {
+  min-height: 0;
+}
+
+.home__media {
+  height: 100%;
+}
+
+.home__works {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gap-block);
+  min-height: 0;
+}
+
+.home__works-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-block);
+}
+
+.home__works-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gutter);
+  align-items: flex-start;
+}
+
+@media (max-width: 1159.98px) {
+  .home {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    min-height: 0;
+  }
+
+  .home__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-block);
+  }
+
+  .home__media {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .home__works {
+    gap: var(--gap-section);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .home__intro > :nth-child(-n + 2) {
+    grid-column: 1 / -1;
+  }
+
+  .home__media {
+    aspect-ratio: 1 / 1;
+  }
+}

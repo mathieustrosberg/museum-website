@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Table des projets (home) : en-tête + lignes
+   Grille 2 colonnes, chaque moitié = [40px | 1fr]
+   ========================================================================== */
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-table);
+  width: 100%;
+}
+
+.table__head,
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+.table__half,
+.row__half {
+  display: flex;
+  gap: var(--gutter);
+  min-width: 0;
+}
+
+.table__cell,
+.row__cell {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.table__cell--date,
+.row__cell--date,
+.table__cell--count,
+.row__cell--count {
+  flex: 0 0 var(--col-date);
+}
+
+.table__cell--count,
+.row__cell--count {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.table__head .table__cell {
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.table__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  padding: 3px 0;
+}
+
+.row__text {
+  position: relative;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* --------------------------------------------------------------------------
+   Hover : fond noir débordant (-6px / -2px) derrière chaque cellule,
+   texte blanc. Bascule instantanée comme la référence.
+   -------------------------------------------------------------------------- */
+
+.row__cell {
+  position: relative;
+}
+
+.row__cell::before {
+  content: "";
+  position: absolute;
+  inset: -2px -6px;
+  background: var(--color-text);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.row__text {
+  z-index: 1;
+}
+
+.row:hover .row__cell::before,
+.row:focus-visible .row__cell::before {
+  opacity: 1;
+}
+
+.row:hover,
+.row:focus-visible {
+  color: var(--color-inverse);
+  outline: none;
+}

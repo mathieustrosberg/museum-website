@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "elias-varn",
+    "name": "Elias Varn",
+    "born": "1984, Oslo",
+    "based": "Berlin",
+    "practice": "Works on offset presses. Treats makeready, blanket washes and misregistered sheets as the image."
+  },
+  {
+    "slug": "sunhee-bak",
+    "name": "Sunhee Bak",
+    "born": "1991, Daegu",
+    "based": "Seoul",
+    "practice": "Generates images from press manuals and technical drawings, then outputs them through a fixed halftone screen."
+  },
+  {
+    "slug": "adaeze-mbanefo",
+    "name": "Adaeze Mbanefo",
+    "born": "1990, Enugu",
+    "based": "Lagos",
+    "practice": "Riso and screenprint from 35 mm photographs of Lagos and Enugu. Registration tolerance is part of the work."
+  },
+  {
+    "slug": "hollis-grant",
+    "name": "Hollis Grant",
+    "born": "1986, Halifax",
+    "based": "Montreal",
+    "practice": "Night photographs on 35 mm, contact printed from halftone film. Lamps, harbours, light sources."
+  },
+  {
+    "slug": "kenji-morisaki",
+    "name": "Kenji Morisaki",
+    "born": "1979, Kanazawa",
+    "based": "Osaka",
+    "practice": "Gelatin silver prints from screened negatives. White surfaces, snow, plaster; the paper left unexposed."
+  },
+  {
+    "slug": "tomas-ferreyra",
+    "name": "Tomás Ferreyra",
+    "born": "1987, Rosario",
+    "based": "Buenos Aires",
+    "practice": "Contact sheets shown uncut. River freight on the Paraná, one roll per sheet."
+  },
+  {
+    "slug": "marta-wilczek",
+    "name": "Marta Wilczek",
+    "born": "1983, Łódź",
+    "based": "Warsaw",
+    "practice": "Photogravure of textile structures from Łódź mill archives. Warp density against screen ruling."
+  },
+  {
+    "slug": "yasmin-tazi",
+    "name": "Yasmin Tazi",
+    "born": "1992, Casablanca",
+    "based": "Marseille",
+    "practice": "Two-colour riso from photographs of Casablanca and Marseille. Fluorescent ink for direct sun."
+  },
+  {
+    "slug": "ruth-amsler",
+    "name": "Ruth Amsler",
+    "born": "1978, Basel",
+    "based": "Zurich",
+    "practice": "Inkjet and offset test forms. Control strips, ink limits and densitometer readings as the printed subject."
+  }
+]

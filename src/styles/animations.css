@@ -1,0 +1,26 @@
+/* ==========================================================================
+   États initiaux des apparitions (uniquement si JS est actif).
+   La classe is-revealed est posée sur la racine de chaque page (<main>) par
+   PageReveal, et non sur <html> : en navigation client, la page suivante
+   arrive masquée et rejoue son apparition, comme à un chargement.
+   ========================================================================== */
+
+.js [data-reveal],
+.js [data-reveal-each] > * {
+  opacity: 0;
+}
+
+.js .is-revealed [data-reveal],
+.js .is-revealed [data-reveal-each] > * {
+  opacity: 1;
+}
+
+/* Masque de lignes : la ligne glisse depuis 110 % à l'intérieur du masque */
+.line-mask {
+  display: block;
+  overflow: clip;
+}
+
+.line {
+  display: block;
+}

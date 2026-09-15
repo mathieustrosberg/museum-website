@@ -1,0 +1,103 @@
+/* ==========================================================================
+   About
+   Desktop : texte centré verticalement à gauche ; à droite un bloc gris
+   (100vh - footer) avec l'image décalée de 120px, et une petite image
+   3:4 de 320px centrée sur le bord gauche de la colonne.
+   Tablette / mobile : texte, puis image 3:4 pleine largeur, puis image carrée.
+   ========================================================================== */
+
+.about {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+  min-height: calc(100vh - 48px);
+  min-height: calc(100dvh - 48px);
+  padding: var(--page-top) var(--gutter) 0;
+}
+
+.about__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-group);
+  align-self: center;
+  width: 320px;
+  max-width: 100%;
+}
+
+.about__lists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+.about__lists .list {
+  width: 100%;
+}
+
+.about__media {
+  position: relative;
+}
+
+.about__big {
+  height: 100%;
+  padding-left: 120px;
+}
+
+.about__big img {
+  left: 120px;
+  width: calc(100% - 120px);
+}
+
+/* Petite image : centrée sur le point (−1 % de la colonne, milieu de hauteur) */
+.about__small {
+  position: absolute;
+  top: 50%;
+  left: -1%;
+  width: 320px;
+  transform: translate(-50%, -50%);
+}
+
+.about__small .media {
+  aspect-ratio: 3 / 4;
+}
+
+@media (max-width: 1159.98px) {
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    min-height: 0;
+  }
+
+  .about__text {
+    align-self: auto;
+    width: 100%;
+  }
+
+  .about__media {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gutter);
+  }
+
+  .about__big {
+    height: auto;
+    aspect-ratio: 3 / 4;
+    padding-left: 0;
+  }
+
+  .about__big img {
+    left: 0;
+    width: 100%;
+  }
+
+  .about__small {
+    position: static;
+    width: 100%;
+    transform: none;
+  }
+
+  .about__small .media {
+    aspect-ratio: 1 / 1;
+  }
+}

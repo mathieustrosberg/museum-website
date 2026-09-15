@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Formulaire : champs transparents soulignés d'un trait 1px,
+   gris clair par défaut, noir au focus.
+   ========================================================================== */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gutter);
+}
+
+.form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gutter);
+}
+
+.field {
+  display: block;
+}
+
+.field__box {
+  display: flex;
+  align-items: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-line);
+  transition: border-color var(--dur-fast) ease;
+}
+
+.field:focus-within .field__box {
+  border-color: var(--color-text);
+}
+
+.field input,
+.field textarea {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  line-height: inherit;
+  outline: none;
+  resize: none;
+}
+
+.field textarea {
+  height: calc(3 * var(--lh) * 1em);
+  overflow: hidden;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}

@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Design tokens
+   Valeurs mesurées sur la référence. Une seule graisse (400), deux tailles.
+   ========================================================================== */
+
+:root {
+  /* Couleurs */
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f7;
+  --color-text: #000000;
+  --color-text-muted: rgba(0, 0, 0, 0.55);
+  --color-inverse: #ffffff;
+  --color-line: rgba(0, 0, 0, 0.15);
+  --color-error: #b42318; /* seule couleur du site : erreurs de formulaire */
+  --color-transition: #f7f7f7; /* voile de la transition entre pages : gris de la barre de navigation (--color-surface) */
+
+  /* Typographie */
+  --font-mono:
+    var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace; /* next/font (layout.js) */
+  --fs-label: 11px;
+  --fs-body: 12px;
+  --lh: 1.36;
+  --ls: -0.02em;
+
+  /* Espacements */
+  --gutter: 16px;
+  --gap-list: 2px;
+  --gap-inline: 8px;
+  --gap-table: 12px;
+  --gap-block: 32px;
+  --gap-group: 64px;
+  --gap-section: 120px;
+
+  /* Layout */
+  --nav-h: 36px;
+  --page-top: 52px; /* nav + gutter */
+  --col-text: 240px; /* largeur des colonnes de texte */
+  --col-date: 40px; /* colonne date / compteur d'images */
+  --link-pad: 4px; /* padding vertical des liens */
+
+  /* Animation */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.2s;
+}

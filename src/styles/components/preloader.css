@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Preloader : pile de cartes qui tombent (d'après « Dropping Cards Loading
+   Animation », Osmo), dans la DA du site : fond gris de la barre de
+   navigation, feuilles de la collection sans arrondi, marque en bas.
+   Visible au chargement complet d'une page, au-dessus de tout (z 100).
+   ========================================================================== */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.preloader__screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: clip;
+  pointer-events: auto;
+  color: var(--color-text);
+}
+
+.preloader__background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface);
+}
+
+.preloader__logo {
+  position: absolute;
+  bottom: 2em;
+}
+
+.preloader__list {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  opacity: 0;
+}
+
+.preloader__card {
+  position: absolute;
+  width: 10em;
+  aspect-ratio: 3 / 4;
+  font-size: max(1.5vw, 2em);
+  background: var(--color-bg);
+}
+
+.preloader__card img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Le contenu de la page est mis à l'échelle à l'arrivée : pas de barre de défilement */
+body.is-loading main {
+  overflow: clip;
+}

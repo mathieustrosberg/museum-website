@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Archive : en-tête (2 colonnes) + grille de vignettes 6 / 4 / 2 colonnes
+   ========================================================================== */
+
+.archive-head {
+  padding: var(--page-top) var(--gutter) var(--gap-section);
+}
+
+.archive-grid {
+  padding: 0 var(--gutter) var(--gap-section);
+  overflow: hidden;
+}
+
+@media (max-width: 767.98px) {
+  .archive-head .grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--gap-block);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Archive detail : image centrée sur fond gris à gauche, méta à droite
+   -------------------------------------------------------------------------- */
+
+.archive-detail {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0 var(--gutter);
+  overflow: hidden;
+}
+
+.archive-detail__media-col {
+  padding: var(--page-top) 0 var(--gutter);
+}
+
+.archive-detail__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--gap-block);
+  background: var(--color-surface);
+}
+
+.archive-detail__box img {
+  width: 400px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.archive-detail__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gutter);
+  padding: var(--page-top) 0 var(--gutter);
+}
+
+.archive-detail__center {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: var(--gap-block);
+}
+
+.archive-detail__meta .info {
+  gap: 6px;
+}
+
+@media (max-width: 1159.98px) {
+  .archive-detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    min-height: 0;
+    padding: var(--page-top) var(--gutter) var(--gutter);
+  }
+
+  .archive-detail__side {
+    order: -1;
+  }
+
+  .archive-detail__center {
+    flex: none;
+    justify-content: flex-start;
+    padding: 104px 0 0;
+  }
+
+  .archive-detail__media-col {
+    padding: 0;
+  }
+
+  .archive-detail__box {
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .archive-detail__box img {
+    width: 480px;
+  }
+}

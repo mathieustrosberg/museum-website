@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Vignette d'archive : cellule 3:4 avec 32px de padding, image centrée
+   (portrait 3:4 ou paysage 4:3) ajustée à la largeur disponible.
+   ========================================================================== */
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 4;
+  padding: var(--gap-block);
+}
+
+.tile img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.tile--landscape img {
+  aspect-ratio: 4 / 3;
+}

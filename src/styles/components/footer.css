@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Footer : "© 2026" ............ "■ Available for work"
+   ========================================================================== */
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer__status {
+  display: flex;
+  gap: var(--gap-inline);
+}
+
+.footer__dot {
+  flex: none;
+  width: 4px;
+  height: 4px;
+  margin-top: 7px;
+  background: var(--color-text);
+}
+
+/* Variante pleine largeur (about, contact, archive) */
+.footer--page {
+  padding: var(--gutter);
+}

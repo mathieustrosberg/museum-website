@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Navigation fixe
+   Desktop : logo | [Collection, Archive, About, Visit ............ [22:38] Local time]
+   Mobile  : logo | [+]  puis 2e rangée dépliée
+   ========================================================================== */
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  background: var(--color-surface);
+  padding: 6px var(--gutter);
+}
+
+.nav__inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+.nav__brand {
+  justify-self: start;
+}
+
+.nav__menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--gap-inline);
+}
+
+.nav__link {
+  display: inline-flex;
+  padding: var(--link-pad) 0;
+  white-space: nowrap;
+}
+
+/* Horloge : [22:38] Local time, alignée sur les liens */
+.nav__clock {
+  display: flex;
+  gap: var(--gap-inline);
+  padding: var(--link-pad) 0;
+  overflow: clip;
+  white-space: nowrap;
+}
+
+.clock {
+  display: flex;
+}
+
+.clock__digits {
+  display: inline-block;
+}
+
+/* Lien actif : atténué */
+.nav__link[aria-current="page"] {
+  opacity: 0.55;
+}
+
+/* Bouton mobile [+] / [-] */
+.nav__toggle {
+  display: none;
+  padding: var(--link-pad) 0;
+}
+
+.nav__toggle .is-open-label {
+  display: none;
+}
+.nav.is-open .nav__toggle .is-open-label {
+  display: inline;
+}
+.nav.is-open .nav__toggle .is-closed-label {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .nav__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gutter);
+  }
+
+  .nav__bar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav__toggle {
+    display: inline-flex;
+  }
+
+  .nav__menu {
+    display: none;
+  }
+
+  .nav.is-open .nav__menu {
+    display: flex;
+  }
+}

@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Entrée CSS du site.
+   1. Tailwind v4 sans Preflight : le reset du site (base.css) reste la référence
+      visuelle ; les utilitaires sont disponibles pour les ajouts, dans une couche
+      de priorité inférieure au CSS non couché du site.
+   2. Le CSS existant (tokens, base, layout, composants, pages), inchangé.
+   ========================================================================== */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "./main.css";
+
+/* Tokens de la DA exposés à Tailwind (ex. text-ink, bg-surface, gap-gutter, md:, xl:) */
+@theme {
+  --font-mono:
+    var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --color-*: initial;
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f7;
+  --color-ink: #000000;
+  --color-muted: rgba(0, 0, 0, 0.55);
+  --color-inverse: #ffffff;
+  --color-line: rgba(0, 0, 0, 0.15);
+  --breakpoint-*: initial;
+  --breakpoint-md: 768px;
+  --breakpoint-xl: 1160px;
+  --spacing-gutter: 16px;
+  --spacing-list: 2px;
+  --spacing-inline: 8px;
+  --spacing-table: 12px;
+  --spacing-block: 32px;
+  --spacing-group: 64px;
+  --spacing-section: 120px;
+  --text-label: 11px;
+  --text-body: 12px;
+}

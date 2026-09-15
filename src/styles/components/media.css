@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Blocs image
+   ========================================================================== */
+
+/* Cadre gris avec image en cover (portrait tramé, images about/contact) */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image d'aperçu superposée (swap au survol des lignes de projets) */
+.media__preview {
+  opacity: 0;
+  transform: scale(1.06);
+  transition:
+    opacity 0.35s ease,
+    transform 0.9s var(--ease-out);
+  will-change: transform, opacity;
+}
+
+.media.is-preview .media__preview {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Le portrait s'efface pendant l'aperçu */
+.media__img {
+  transition: opacity 0.35s ease;
+}
+
+.media.is-preview .media__img {
+  opacity: 0;
+}
