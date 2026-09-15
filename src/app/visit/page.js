@@ -5,8 +5,8 @@ import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
 import TicketForm from "@/features/tickets/TicketForm";
-import { imageSize, site } from "@/lib/content";
-import { getOpenDays, ticketsConfig } from "@/lib/tickets";
+import { site } from "@/lib/content";
+import { getOpenDays, getTicketsConfig } from "@/lib/tickets";
 
 export const metadata = {
   title: "Visit",
@@ -48,7 +48,8 @@ export default function VisitPage() {
             <SiteImage
               src={visit.media.src}
               alt={visit.media.alt}
-              {...imageSize(visit.media.src)}
+              width={visit.media.width}
+              height={visit.media.height}
             />
           </div>
         </div>
@@ -97,13 +98,13 @@ export default function VisitPage() {
 async function Booking() {
   "use cache";
   cacheLife("hours");
-  const days = await getOpenDays();
+  const [days, config] = await Promise.all([getOpenDays(), getTicketsConfig()]);
   return (
     <TicketForm
       days={days}
-      types={ticketsConfig.types}
-      currency={ticketsConfig.currency}
-      maxPerType={ticketsConfig.maxPerType}
+      types={config.types}
+      currency={config.currency}
+      maxPerType={config.maxPerType}
       labels={site.tickets.form}
       messages={site.tickets.errors}
     />

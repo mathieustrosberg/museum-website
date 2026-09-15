@@ -4,7 +4,7 @@ import SiteImage from "@/components/SiteImage";
 /**
  * Carte d'œuvre : image 3:4 + légende (année | titre). Composant sans directive :
  * rendu côté serveur dans les œuvres similaires, côté client dans la grille
- * filtrable de la Collection. Reçoit l'image avec ses dimensions (imageSize côté
+ * filtrable de la Collection. Reçoit l'image avec ses dimensions (coverImage côté
  * serveur), donc aucune dépendance au module de données.
  */
 export default function WorkCard({ work, image, lazy = false, ...attrs }) {
@@ -17,6 +17,7 @@ export default function WorkCard({ work, image, lazy = false, ...attrs }) {
           lazy={lazy}
           width={image.width}
           height={image.height}
+          sizes="(max-width: 767px) 50vw, 25vw"
         />
       </div>
       <div className="card__caption">

@@ -6,39 +6,40 @@ import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
 import WorkCard from "@/components/WorkCard";
 import {
-  artistName,
   coverImage,
   getSimilarWorks,
   getWork,
   getWorks,
-  imageSize,
+  sheetSize,
   site,
+  workImages,
 } from "@/lib/content";
 
 /** Les 12 pages œuvre sont générées au build (SSG) à partir des slugs connus. */
-export function generateStaticParams() {
-  return getWorks().map((work) => ({ slug: work.slug }));
+export async function generateStaticParams() {
+  return (await getWorks()).map((work) => ({ slug: work.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const work = getWork(slug);
+  const work = await getWork(slug);
   if (!work) return {};
   return {
     title: work.title,
-    description: `${work.title}, ${artistName(work)}, ${work.technique}, ${work.year}.`,
+    description: `${work.title}, ${work.artist}, ${work.medium}, ${work.year}.`,
   };
 }
 
 /** Page œuvre (Server Component) : couverture sticky, cartel, feuilles, œuvres similaires. */
 export default async function WorkPage({ params }) {
   const { slug } = await params;
-  const work = getWork(slug);
+  const work = await getWork(slug);
   if (!work) notFound();
 
   const { cartel } = site.work;
-  const artist = artistName(work);
-  const cover = work.images[0];
+  const artist = work.artist;
+  const images = workImages(work);
+  const [cover] = images;
   const alt = `${work.title}, ${artist}, ${work.year}`;
 
   return (
@@ -52,7 +53,7 @@ export default async function WorkPage({ params }) {
           data-duration="0.6"
         >
           <div className="media">
-            <SiteImage src={cover} alt={alt} {...imageSize(cover)} />
+            <SiteImage src={cover} alt={alt} {...sheetSize()} />
           </div>
         </div>
 
@@ -80,7 +81,7 @@ export default async function WorkPage({ params }) {
                 </div>
                 <div className="info">
                   <Lines className="label">{cartel.medium}</Lines>
-                  <Lines>{work.technique}</Lines>
+                  <Lines>{work.medium}</Lines>
                 </div>
                 <div className="info">
                   <Lines className="label">{cartel.year}</Lines>
@@ -110,7 +111,7 @@ export default async function WorkPage({ params }) {
                     data-delay="0.7"
                     data-duration="0.4"
                   >
-                    {work.text}
+                    {work.description}
                   </p>
                 </div>
               </div>
@@ -122,7 +123,7 @@ export default async function WorkPage({ params }) {
                 data-delay="0.6"
                 data-stagger="0.1"
               >
-                {work.images.map((src, i) => (
+                {images.map((src, i) => (
                   <div
                     key={src}
                     className={i === 0 ? "media project__stack-cover" : "media"}
@@ -131,7 +132,7 @@ export default async function WorkPage({ params }) {
                       src={src}
                       alt={`${alt}, sheet ${i + 1}`}
                       lazy={i > 0}
-                      {...imageSize(src)}
+                      {...sheetSize()}
                     />
                   </div>
                 ))}
@@ -148,7 +149,7 @@ export default async function WorkPage({ params }) {
                   data-delay="0.6"
                   data-stagger="0.1"
                 >
-                  {getSimilarWorks(work).map((similar) => (
+                  {(await getSimilarWorks(work)).map((similar) => (
                     <WorkCard
                       key={similar.slug}
                       work={similar}

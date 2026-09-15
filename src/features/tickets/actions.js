@@ -1,58 +1,61 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { postTickets } from "@/lib/api";
 import { site } from "@/lib/content";
-import { getOpenDays, ticketsConfig } from "@/lib/tickets";
+import { getTicketsConfig } from "@/lib/tickets";
 
 /**
  * Demande de billets (Server Action). Le formulaire l'appelle via useActionState :
- * validation côté serveur (l'autorité, le client ne fait que pré-valider),
- * référence de retrait, puis redirection vers la page de confirmation. Aucune
- * persistance pour le moment : quand l'API existera, la demande validée lui
- * sera transmise ici (POST) et la référence viendra de sa réponse.
+ * la demande est transmise à l'API (POST /tickets), qui est l'autorité de
+ * validation (le client ne fait que pré-valider). Sur 201, redirection vers la
+ * page de confirmation avec la référence émise par l'API ; sur 400, les codes
+ * d'erreur par champ sont traduits avec les messages du site.
  * L'URL de confirmation ne porte que la référence, la date et les quantités,
  * jamais le nom ni l'email.
  */
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function reference(date) {
-  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let code = "";
-  for (let i = 0; i < 4; i++)
-    code += alphabet[Math.floor(Math.random() * alphabet.length)];
-  return `HB-${date.replaceAll("-", "").slice(2)}-${code}`;
-}
+const FIELD_MESSAGES = {
+  date: () => site.tickets.errors.date,
+  tickets: (code) =>
+    code === "max" ? site.tickets.errors.max : site.tickets.errors.tickets,
+  name: () => site.tickets.errors.name,
+  email: () => site.tickets.errors.email,
+};
 
 export async function requestTickets(_previous, formData) {
-  const { errors: messages } = site.tickets;
-  const errors = {};
-
-  const date = String(formData.get("date") ?? "");
-  const days = await getOpenDays();
-  if (!days.some((d) => d.value === date)) errors.date = messages.date;
-
-  const quantities = {};
-  let count = 0;
-  for (const type of ticketsConfig.types) {
+  const { types } = await getTicketsConfig();
+  const tickets = {};
+  for (const type of types) {
     const quantity =
       Number.parseInt(String(formData.get(`qty-${type.id}`) ?? "0"), 10) || 0;
-    if (quantity < 0 || quantity > ticketsConfig.maxPerType)
-      errors.tickets = messages.max;
-    if (quantity > 0) quantities[type.id] = quantity;
-    count += quantity;
+    if (quantity !== 0) tickets[type.id] = quantity;
   }
-  if (!errors.tickets && count === 0) errors.tickets = messages.tickets;
 
-  if (!String(formData.get("name") ?? "").trim()) errors.name = messages.name;
-  if (!EMAIL.test(String(formData.get("email") ?? "").trim()))
-    errors.email = messages.email;
+  let result;
+  try {
+    result = await postTickets({
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      date: String(formData.get("date") ?? ""),
+      tickets,
+    });
+  } catch {
+    return { ok: false, errors: { generic: site.tickets.errors.generic } };
+  }
 
-  if (Object.keys(errors).length) return { ok: false, errors };
+  if (result.status === 400 && result.body.fields) {
+    const errors = {};
+    for (const [field, code] of Object.entries(result.body.fields)) {
+      const message = FIELD_MESSAGES[field];
+      if (message) errors[field] = message(code);
+    }
+    return { ok: false, errors };
+  }
+  if (result.status !== 201)
+    return { ok: false, errors: { generic: site.tickets.errors.generic } };
 
-  const params = new URLSearchParams({
-    ref: reference(date),
-    date,
-    ...quantities,
-  });
+  const { reference, date, tickets: lines } = result.body;
+  const params = new URLSearchParams({ ref: reference, date });
+  for (const line of lines) params.set(line.id, String(line.quantity));
   redirect(`/visit/confirmed?${params}`);
 }

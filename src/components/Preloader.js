@@ -36,7 +36,12 @@ export default function Preloader({ brand, cards }) {
     const container = document.querySelector("[data-preloader]");
     if (!container) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Pas d'animation de chargement en mouvement réduit ni sur les pages 404 et
+    // erreur (marquées par PageReveal ; le CSS masque déjà le voile côté serveur).
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      document.querySelector("main[data-skip-preloader]")
+    ) {
       transition.enter();
       setDone(true);
       return;
@@ -192,6 +197,7 @@ export default function Preloader({ brand, cards }) {
                 alt=""
                 width={card.width}
                 height={card.height}
+                sizes="25vw"
               />
             </div>
           ))}

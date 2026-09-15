@@ -33,9 +33,9 @@ export const metadata = {
  * persistante, preloader, son de clic et transition entre pages. Le footer n'est pas ici : sa position dans la
  * mise en page varie selon les pages (colonne latérale ou pleine largeur).
  */
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   // Cinq feuilles de la sélection de la home, cartes du preloader.
-  const cards = getSelectedWorks().slice(0, 5).map(coverImage);
+  const cards = (await getSelectedWorks()).slice(0, 5).map(coverImage);
   return (
     <html lang={site.lang} className={`js ${mono.variable}`}>
       <body>

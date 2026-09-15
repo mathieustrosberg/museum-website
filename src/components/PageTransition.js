@@ -114,14 +114,13 @@ export default function PageTransition() {
     const onClick = (event) => {
       const link = event
         .composedPath()
-        .find(
-          (node) => node instanceof Element && node.matches("a[href], button"),
-        );
-      if (!link || link.disabled) return;
+        .find((node) => node instanceof Element && node.matches("a[href]"));
+      if (!link) return;
 
+      // Le son n'accompagne que les liens ; les boutons (filtres, compteurs de
+      // billets, menu) restent silencieux.
       play();
 
-      if (link.tagName !== "A") return;
       const url = internalUrl(link, event);
       if (!url) return;
       event.preventDefault();

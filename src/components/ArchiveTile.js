@@ -1,6 +1,6 @@
 import Link from "next/link";
 import SiteImage from "@/components/SiteImage";
-import { imageSize } from "@/lib/content";
+import { archiveImage } from "@/lib/content";
 
 /** Vignette d'archive : cellule 3:4, image portrait ou paysage. */
 export default function ArchiveTile({ entry, lazy = false }) {
@@ -11,10 +11,10 @@ export default function ArchiveTile({ entry, lazy = false }) {
       href={`/archive/${entry.slug}`}
     >
       <SiteImage
-        src={entry.image}
-        alt={entry.caption}
+        alt={entry.description}
         lazy={lazy}
-        {...imageSize(entry.image)}
+        sizes="(max-width: 767px) 50vw, (max-width: 1159px) 25vw, 17vw"
+        {...archiveImage(entry)}
       />
     </Link>
   );

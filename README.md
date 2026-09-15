@@ -1,37 +1,47 @@
 # Halbton — museum-website
 
-Site du musée fictif Halbton, centre for the printed image à Berlin : Next.js 16 (App Router), Server Components, Cache Components, GSAP.
+Site du musée fictif Halbton, centre for the printed image à Berlin : Next.js 16 (App Router), Server Components, Cache Components, GSAP. Les données viennent de l'API Halbton (projet `museum-api`), les photographies d'Unsplash.
 
 ## Commandes
 
 ```bash
 npm run dev      # développement (Turbopack)
-npm run build    # build de production, prérendu des 53 routes
+npm run build    # build de production, prérendu des 53 routes (l'API doit répondre)
 npm run start    # serveur de production
 npm run lint     # Biome (lint + format)
 npm run format   # Biome, écriture
-node tools/make-placeholders.mjs && node tools/image-sizes.mjs   # régénère les images tramées et leurs dimensions
-node tools/similar-works.mjs                                     # recalcule les œuvres similaires
+node tools/make-click.mjs   # régénère le son de clic
 ```
 
-Stack : Next.js 16.3.5, React 19, JavaScript, Biome, React Compiler, Tailwind CSS v4, GSAP 3.12, dossier `src/`, alias `@/*`, npm.
+Stack : Next.js 16.3.5, React 19, JavaScript, Biome, React Compiler, Tailwind CSS v4, GSAP 3.15, dossier `src/`, alias `@/*`, npm.
+
+## API
+
+Le site lit les œuvres, l'archive, les expositions et les informations de visite sur l'API Halbton, et lui transmet les demandes de billets. L'URL de base vient de la variable d'environnement `HALBTON_API_URL` (fichier `.env.local` en local, réglages du projet sur Vercel) ; sans elle, le site vise `http://localhost:4000`, où tourne l'API en développement (`npm run dev` dans `museum-api`).
+
+| Variable | Rôle |
+|---|---|
+| `HALBTON_API_URL` | URL de base de l'API (sans barre oblique finale) |
+| `REVALIDATE_SECRET` | jeton attendu par `POST /api/revalidate?tag=…` pour invalider le cache après une mise à jour des données |
 
 ## Architecture
 
 ```
 src/
-  app/                  routes (App Router) : layout, page, work, work/[slug], archive, archive/[slug], about, visit, not-found
+  app/                  routes (App Router) : layout, page, work, work/[slug], archive, archive/[slug], about, visit, visit/confirmed, not-found, error
+  app/api/revalidate    Route Handler d'invalidation du cache (revalidateTag)
   components/           partagés : Nav, Footer, Lines, Info, WorkCard, ArchiveTile, SiteImage, PageReveal, ScrollProgress, PageTransition, Preloader
   features/             par fonctionnalité : home/SelectedWorks, collection/CollectionBrowser, visit/Clock, tickets/TicketForm + actions (Server Action)
-  lib/content.js        accès aux données (serveur uniquement)
-  lib/tickets.js        jours d'ouverture à venir ("use cache", cacheLife("hours"))
+  lib/api.js            client de l'API : un scope "use cache" par lecture (cacheLife, cacheTag), POST des billets
+  lib/content.js        vues sur les données pour les pages (sélection, médiums, œuvres proches, images dimensionnées) + textes du site
+  lib/tickets.js        configuration de la billetterie et jours d'ouverture (depuis l'API)
   lib/reveal.js         moteur d'apparitions GSAP (navigateur)
   lib/noise-overlay.js  voile WebGL de la transition (quad plein écran + shader de bruit)
   lib/transition.js     état partagé de la transition (la page qui arrive attend le signal enter)
-  data/*.json           données statiques : site, artists, projects, exhibitions, archive, images (dimensions)
-  styles/               globals.css (Tailwind sans Preflight + tokens) et le CSS du site, inchangé
-public/images, public/audio
-tools/                  génération des placeholders, dimensions d'images, œuvres similaires, son de clic
+  data/site.json        textes, libellés, navigation, images des pages About et Visit
+  styles/               globals.css (Tailwind sans Preflight + tokens) et le CSS du site
+public/audio
+tools/                  son de clic
 ```
 
 ## Server / Client Components
@@ -49,23 +59,23 @@ Tout est Server Component par défaut : layout, pages, cartes, cartel, blocs de 
 | `ScrollProgress` | scroll, resize, ResizeObserver |
 | `Clock` | `setInterval`, fuseau de Berlin, rendu « 00:00 » côté serveur, affichée dans la navigation |
 | `TicketForm` | quantités et total en direct, pré-validation, erreurs marquées et focalisées, envoi par Server Action (`useActionState`) |
+| `error.js` | page d'erreur de route (contrat Next.js) : texte du site, bouton « Try again » |
 
-Les données sont lues côté serveur (`lib/content.js`, gardé par `server-only`) et transmises aux composants client sous forme sérialisable.
+Les données sont lues côté serveur (`lib/api.js` et `lib/content.js`, gardés par `server-only`) et transmises aux composants client sous forme sérialisable.
 
 ## Rendu
 
-- **SSG** : les 53 routes sont prérendues au build. Les données sont des JSON importés au chargement du module : des « valeurs prévisibles » pour Next.js, donc un shell statique complet sans directive de cache. Les routes dynamiques (`work/[slug]`, `archive/[slug]`) listent leurs paramètres avec `generateStaticParams`.
-- **Cache Components / PPR** : activé (`cacheComponents: true`). Le Partial Prerendering est le comportement par défaut : chaque route a un shell statique ; un slug inconnu reçoit l'App Shell puis le rendu à la requête (ISR avec Cache Components), qui aboutit à la 404.
-- **ISR / cache** : la billetterie. La liste des jours d'ouverture dépend de la date du jour : `getOpenDays()` et le bloc `Booking` de `/visit` sont des scopes `"use cache"` avec `cacheLife("hours")`. Le build affiche la route avec une revalidation d'une heure et une expiration d'un jour : le contenu est prérendu puis rafraîchi seul.
-- **Requête** : la demande de billets est une Server Action (`requestTickets`) : validation côté serveur, référence de retrait, redirection vers `/visit/confirmed`. Aucune persistance : c'est le point d'entrée de la future API.
+- **Cache Components / PPR** : activé (`cacheComponents: true`). Chaque lecture de l'API est une fonction `"use cache"` avec `cacheLife("hours")` et un `cacheTag` (`works`, `archive`, `exhibitions`, `visit`, `work:<slug>`…). Au build, les 53 routes sont prérendues avec ces données (les routes dynamiques listent leurs slugs avec `generateStaticParams`, lus sur l'API) ; le build affiche chaque route avec une revalidation d'une heure et une expiration d'un jour.
+- **ISR** : après une heure, la première requête reçoit la version en cache et déclenche une revalidation en arrière-plan (stale-while-revalidate). Si l'API ne répond pas à ce moment, la version en cache reste servie. Un slug inconnu au build reçoit l'App Shell puis le rendu à la requête, mis en cache à son tour.
+- **Invalidation** : `POST /api/revalidate?tag=works` (jeton `REVALIDATE_SECRET`) appelle `revalidateTag(tag, "max")` ; à brancher sur la mise à jour des données de l'API.
+- **Requête** : la demande de billets est une Server Action (`requestTickets`) qui transmet la demande à l'API (`POST /tickets`), autorité de validation, puis redirige vers `/visit/confirmed` avec la référence émise par l'API. Les codes d'erreur par champ renvoyés par l'API sont traduits avec les messages du site.
 - **PPR** : `/visit/confirmed` lit `searchParams` (référence, date, quantités), une donnée de requête. Le récapitulatif est un composant async derrière `<Suspense>` ; le reste de la page est le shell statique. C'est le seul trou dynamique du site, et il est justifié.
-
-Points d'insertion prévus pour l'API : voir AGENTS.md.
 
 ## Décisions de design et de rendu
 
 - Le CSS du site (`src/styles`) est écrit à la main, avec ses tokens ; Tailwind est installé sans Preflight et exposé avec les tokens de la DA pour les ajouts.
-- `next/image` est utilisé avec `unoptimized` : les placeholders sont des PNG tramés 1 bit qu'un ré-encodage flouterait. Retirer le drapeau quand de vraies photographies arrivent.
+- Les photographies sont servies par le CDN d'Unsplash, déjà recadrées par l'API (3:4 pour les feuilles, 3:4 ou 4:3 pour l'archive) ; `next/image` les redimensionne et les convertit (WebP, AVIF) à la demande selon `sizes` (`images.remotePatterns`). Les dimensions intrinsèques sont connues, donc aucun layout shift.
+- Toutes les photographies passent par le même filtre, `--image-filter: grayscale(1)` (token de `tokens.css`) : le site reste noir, blanc et gris, comme tout ce qui passe par la trame. Mettre le token à `none` pour la couleur.
 - Les textes apparaissent par masque de lignes (`Lines`, d'après « Masked Text Reveal » d'Osmo) : une ligne rendue côté serveur pour les textes courts, SplitText pour les paragraphes multilignes. Le texte reste du texte, lisible par les lecteurs d'écran.
 - La classe `is-revealed` est posée sur `<main>` et non sur `<html>` : en navigation client, chaque page arrive masquée et rejoue son apparition.
 - La page Visit vit à `/visit` ; `/contact` et `/tickets` y redirigent.
@@ -80,9 +90,10 @@ Au chargement complet d'une page, `Preloader` (client, rendu côté serveur pour
 
 ## Fonctionnalités
 
+- Collection, œuvres, archive et expositions lues sur l'API Halbton, mises en cache et revalidées (Cache Components).
 - Apparition des textes par masque de lignes, discrète (0,8 s, expo.out, 0,08 s entre lignes et entre éléments d'une liste).
 - Transition entre pages (voile de bruit WebGL).
 - Preloader (pile de cartes qui tombent).
-- Billetterie sur la page Visit (`/visit`) : jour d'ouverture, billets plein / réduit / moins de 18 ans, total en direct, validation immédiate avec erreurs en couleur (seule couleur du site, `--color-error`), demande par Server Action, page de confirmation `/visit/confirmed` avec référence et récapitulatif, paiement sur place. `/contact` et `/tickets` redirigent vers `/visit`.
+- Billetterie sur la page Visit (`/visit`) : jour d'ouverture (liste fournie par l'API), billets plein / réduit / moins de 18 ans, total en direct, validation immédiate avec erreurs en couleur (seule couleur du site, `--color-error`), demande transmise à l'API par Server Action, page de confirmation `/visit/confirmed` avec référence et récapitulatif, paiement sur place. `/contact` et `/tickets` redirigent vers `/visit`.
 - Recherche dans la Collection (titre, artiste, médium, année), instantanée, insensible à la casse et aux accents, combinée aux filtres.
-- Favicon monochrome, page 404, métadonnées (title template, description, Open Graph), labels de formulaire associés, texte des apparitions lisible par les lecteurs d'écran.
+- Favicon monochrome, page 404, page d'erreur, métadonnées (title template, description, Open Graph), labels de formulaire associés, texte des apparitions lisible par les lecteurs d'écran.

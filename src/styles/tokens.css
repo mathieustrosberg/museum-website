@@ -13,6 +13,9 @@
   --color-line: rgba(0, 0, 0, 0.15);
   --color-error: #b42318; /* seule couleur du site : erreurs de formulaire */
   --color-transition: #f7f7f7; /* voile de la transition entre pages : gris de la barre de navigation (--color-surface) */
+  --image-filter: grayscale(
+    1
+  ); /* photographies en noir et blanc, comme tout ce qui passe par la trame ; none pour la couleur */
 
   /* Typographie */
   --font-mono:

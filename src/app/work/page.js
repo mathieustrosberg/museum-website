@@ -1,14 +1,7 @@
 import Footer from "@/components/Footer";
 import PageReveal from "@/components/PageReveal";
 import CollectionBrowser from "@/features/collection/CollectionBrowser";
-import {
-  artistName,
-  coverImage,
-  getMediums,
-  getWorks,
-  onView,
-  site,
-} from "@/lib/content";
+import { coverImage, getMediums, getWorks, site } from "@/lib/content";
 
 export const metadata = {
   title: "Collection",
@@ -22,17 +15,17 @@ export const metadata = {
  * La grille est filtrable, elle vit donc dans le composant client ; le footer
  * reste un Server Component passé en prop.
  */
-export default function CollectionPage() {
-  const works = getWorks().map((work) => {
-    const artist = artistName(work);
+export default async function CollectionPage() {
+  const works = (await getWorks()).map((work) => {
+    const artist = work.artist;
     return {
       slug: work.slug,
       title: work.title,
       year: work.year,
       image: coverImage(work),
-      medium: work.category,
-      onView: onView.has(work.slug),
-      haystack: `${work.title} ${artist} ${work.category} ${work.year}`
+      medium: work.type,
+      onView: work.onView,
+      haystack: `${work.title} ${artist} ${work.type} ${work.year}`
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase(),
@@ -44,7 +37,7 @@ export default function CollectionPage() {
       <section className="work">
         <CollectionBrowser
           works={works}
-          mediums={getMediums()}
+          mediums={await getMediums()}
           labels={site.collection}
           footer={<Footer delay="1.5" />}
         />

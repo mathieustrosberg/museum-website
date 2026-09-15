@@ -3,7 +3,7 @@ import { Info, TextList } from "@/components/Info";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SelectedWorks from "@/features/home/SelectedWorks";
-import { artistName, getSelectedWorks, imageSize, site } from "@/lib/content";
+import { getSelectedWorks, site } from "@/lib/content";
 
 export const metadata = {
   title: { absolute: `${site.name} — ${site.tagline}` },
@@ -15,15 +15,15 @@ export const metadata = {
  * la rangée basse est confiée à SelectedWorks (client) pour l'aperçu au survol,
  * avec un index sérialisable des 8 œuvres sélectionnées.
  */
-export default function HomePage() {
+export default async function HomePage() {
   const { home } = site;
-  const works = getSelectedWorks().map((work) => ({
+  const works = (await getSelectedWorks()).map((work) => ({
     slug: work.slug,
     year: work.year,
     title: work.title,
-    artist: artistName(work),
+    artist: work.artist,
     sheets: work.sheets,
-    preview: work.preview,
+    preview: work.image,
   }));
 
   return (
@@ -44,7 +44,7 @@ export default function HomePage() {
         </div>
 
         <SelectedWorks
-          media={{ ...home.media, ...imageSize(home.media.src) }}
+          media={home.media}
           works={works}
           label={home.selectedLabel}
           table={home.table}

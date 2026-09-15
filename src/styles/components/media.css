@@ -40,3 +40,9 @@
 .media.is-preview .media__img {
   opacity: 0;
 }
+
+/* Toutes les photographies passent par le même filtre (token --image-filter) */
+main img,
+.preloader img {
+  filter: var(--image-filter);
+}

@@ -72,7 +72,7 @@ export default function SelectedWorks({
           width={media.width}
           height={media.height}
         />
-        {/* biome-ignore lint/performance/noImgElement: source échangée au survol, placeholders non optimisés */}
+        {/* biome-ignore lint/performance/noImgElement: source échangée au survol, URL déjà dimensionnée par le CDN */}
         <img
           ref={previewRef}
           decoding="async"

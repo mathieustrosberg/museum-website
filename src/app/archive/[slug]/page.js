@@ -4,16 +4,16 @@ import Footer from "@/components/Footer";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
-import { getArchive, getArchiveEntry, imageSize, site } from "@/lib/content";
+import { archiveImage, getArchive, getArchiveEntry, site } from "@/lib/content";
 
 /** Les 36 pages d'archive sont générées au build (SSG). */
-export function generateStaticParams() {
-  return getArchive().map((entry) => ({ slug: entry.slug }));
+export async function generateStaticParams() {
+  return (await getArchive()).map((entry) => ({ slug: entry.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const entry = getArchiveEntry(slug);
+  const entry = await getArchiveEntry(slug);
   if (!entry) return {};
   return { title: entry.title, description: `${entry.title}, ${entry.date}.` };
 }
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
 /** Entrée d'archive (Server Component) : image centrée sur fond gris, titre et date. */
 export default async function ArchiveEntryPage({ params }) {
   const { slug } = await params;
-  const entry = getArchiveEntry(slug);
+  const entry = await getArchiveEntry(slug);
   if (!entry) notFound();
 
   const { detail } = site.archive;
@@ -37,11 +37,7 @@ export default async function ArchiveEntryPage({ params }) {
             data-delay="0.5"
             data-duration="0.6"
           >
-            <SiteImage
-              src={entry.image}
-              alt={entry.caption}
-              {...imageSize(entry.image)}
-            />
+            <SiteImage alt={entry.description} {...archiveImage(entry)} />
           </div>
         </div>
 

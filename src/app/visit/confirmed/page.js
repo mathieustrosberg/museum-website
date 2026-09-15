@@ -6,7 +6,7 @@ import { Info, TextList } from "@/components/Info";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import { getExhibitionsOnView, site } from "@/lib/content";
-import { formatDay, REFERENCE, ticketsConfig } from "@/lib/tickets";
+import { formatDay, getTicketsConfig, REFERENCE } from "@/lib/tickets";
 
 export const metadata = {
   title: "Request sent",
@@ -20,7 +20,7 @@ export const metadata = {
  * rendue dans un composant async derrière <Suspense>. Le reste de la page est
  * le shell statique (Partial Prerendering). Une URL incomplète renvoie à Visit.
  */
-export default function ConfirmedPage({ searchParams }) {
+export default async function ConfirmedPage({ searchParams }) {
   const { confirmed } = site.tickets;
   return (
     <PageReveal>
@@ -66,7 +66,7 @@ export default function ConfirmedPage({ searchParams }) {
             </Info>
             <Info label={confirmed.onView}>
               <TextList
-                items={getExhibitionsOnView().map(
+                items={(await getExhibitionsOnView()).map(
                   (e) => `${e.title}, ${e.dates}`,
                 )}
               />
@@ -82,17 +82,18 @@ export default function ConfirmedPage({ searchParams }) {
 
 /** Récapitulatif lu dans l'URL et recalculé (les prix viennent des données, pas de l'URL). */
 async function Summary({ searchParams }) {
-  const params = await searchParams;
+  const [params, config] = await Promise.all([
+    searchParams,
+    getTicketsConfig(),
+  ]);
   const ref = String(params.ref ?? "");
   const date = String(params.date ?? "");
-  const lines = ticketsConfig.types
+  const lines = config.types
     .map((type) => ({
       ...type,
       quantity: Number.parseInt(String(params[type.id] ?? "0"), 10) || 0,
     }))
-    .filter(
-      (line) => line.quantity > 0 && line.quantity <= ticketsConfig.maxPerType,
-    );
+    .filter((line) => line.quantity > 0 && line.quantity <= config.maxPerType);
   if (
     !REFERENCE.test(ref) ||
     !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
@@ -105,7 +106,7 @@ async function Summary({ searchParams }) {
     (sum, line) => sum + line.quantity * line.price,
     0,
   );
-  const money = (amount) => `${ticketsConfig.currency}${amount}`;
+  const money = (amount) => `${config.currency}${amount}`;
 
   return (
     <dl

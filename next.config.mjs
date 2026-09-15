@@ -6,6 +6,10 @@ const nextConfig = {
   // statique prérendu (Partial Prerendering par défaut) ; "use cache", cacheLife et
   // cacheTag sont disponibles pour le contenu à mettre en cache lorsque l'API arrivera.
   cacheComponents: true,
+  // Photographies servies par le CDN d'Unsplash (voir l'API) : next/image les optimise à la demande.
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
+  },
   // Racine du projet pour Turbopack (un lockfile parent hors dépôt serait sinon pris en compte).
   turbopack: { root: import.meta.dirname },
   // Anciennes adresses de la page Visit (contact) et de la billetterie, fusionnées.

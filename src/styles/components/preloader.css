@@ -69,3 +69,8 @@
 body.is-loading main {
   overflow: clip;
 }
+
+/* Pages 404 et erreur : pas de preloader (PageReveal pose data-skip-preloader sur main) */
+body:has(main[data-skip-preloader]) .preloader {
+  display: none;
+}

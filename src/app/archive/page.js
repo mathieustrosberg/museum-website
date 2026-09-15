@@ -11,7 +11,7 @@ export const metadata = {
 };
 
 /** Archive (Server Component, prérendue) : en-tête sur 2 colonnes, grille de 36 vignettes. */
-export default function ArchivePage() {
+export default async function ArchivePage() {
   const { archive } = site;
   return (
     <PageReveal>
@@ -36,7 +36,7 @@ export default function ArchivePage() {
           data-delay="0.6"
           data-stagger="0.05"
         >
-          {getArchive().map((entry, i) => (
+          {(await getArchive()).map((entry, i) => (
             <ArchiveTile key={entry.slug} entry={entry} lazy={i >= 4} />
           ))}
         </div>

@@ -2,87 +2,90 @@
  * Accès aux données du site. Module serveur : les pages et les Server Components
  * l'importent, jamais un Client Component (garde "server-only").
  *
- * Aujourd'hui les données sont des fichiers JSON importés au chargement du module :
- * pour Next.js ce sont des valeurs prévisibles, chaque route est donc prérendue en
- * shell statique complet (SSG) sans directive de cache.
- *
- * Quand l'API existera : rendre ces fonctions async, y placer "use cache" +
- * cacheLife("hours") + cacheTag("works") et remplacer la lecture du JSON par le
- * fetch. Les signatures et les composants appelants ne changent pas.
+ * Les textes et libellés (site.json) restent locaux ; les œuvres, l'archive et
+ * les expositions viennent de l'API Halbton (lib/api.js, scopes "use cache").
+ * Ce module ajoute les vues dont les pages ont besoin : sélection de la home,
+ * médiums distincts, œuvres proches, images dimensionnées.
  */
 import "server-only";
-import archive from "@/data/archive.json";
-import artists from "@/data/artists.json";
-import exhibitions from "@/data/exhibitions.json";
-import images from "@/data/images.json";
-import projects from "@/data/projects.json";
 import site from "@/data/site.json";
+import {
+  fetchArchive,
+  fetchArchiveEntry,
+  fetchExhibitions,
+  fetchWork,
+  fetchWorks,
+} from "@/lib/api";
 
 export { site };
 
-const artistBySlug = new Map(artists.map((a) => [a.slug, a]));
-const workBySlug = new Map(projects.map((p) => [p.slug, p]));
-const entryBySlug = new Map(archive.map((e) => [e.slug, e]));
+/** Formats du site : feuilles de la collection en 3:4, archive en 3:4 ou 4:3. */
+const PORTRAIT = { width: 720, height: 960 };
+const LANDSCAPE = { width: 960, height: 720 };
 
-/** Slugs des œuvres présentées dans une exposition en cours. */
-export const onView = new Set(
-  exhibitions.filter((e) => e.status === "on view").flatMap((e) => e.works),
-);
-
-/** Expositions en cours, dans l'ordre du fichier. */
-export function getExhibitionsOnView() {
-  return exhibitions.filter((e) => e.status === "on view");
-}
-
-export function getWorks() {
-  return projects;
+export async function getWorks() {
+  return (await fetchWorks()) ?? [];
 }
 
 export function getWork(slug) {
-  return workBySlug.get(slug) ?? null;
+  return fetchWork(slug);
 }
 
-export function getArtist(slug) {
-  return artistBySlug.get(slug) ?? null;
-}
-
-export function artistName(work) {
-  return getArtist(work.artist)?.name ?? work.artist;
-}
-
-/** Les 4 œuvres proches (champ `similar`, calculé par tools/similar-works.mjs). */
-export function getSimilarWorks(work) {
+/** Les 4 œuvres proches (champ `similar` de l'API), résolues dans la liste. */
+export async function getSimilarWorks(work) {
+  const bySlug = new Map((await getWorks()).map((w) => [w.slug, w]));
   return [...new Set(work.similar ?? [])]
-    .map(getWork)
+    .map((slug) => bySlug.get(slug))
     .filter((w) => w && w.slug !== work.slug);
 }
 
-export function getSelectedWorks() {
-  return site.home.selected.map(getWork).filter(Boolean);
+/** Sélection de la home, dans l'ordre de site.json. */
+export async function getSelectedWorks() {
+  const bySlug = new Map((await getWorks()).map((w) => [w.slug, w]));
+  return site.home.selected.map((slug) => bySlug.get(slug)).filter(Boolean);
 }
 
 /** Médiums distincts, triés comme les filtres de la Collection. */
-export function getMediums() {
-  return [...new Set(projects.map((p) => p.category).filter(Boolean))].sort(
-    (a, b) => a.localeCompare(b, "en"),
+export async function getMediums() {
+  const works = await getWorks();
+  return [...new Set(works.map((w) => w.type).filter(Boolean))].sort((a, b) =>
+    a.localeCompare(b, "en"),
   );
 }
 
-export function getArchive() {
-  return archive;
+export async function getArchive() {
+  return (await fetchArchive()) ?? [];
 }
 
 export function getArchiveEntry(slug) {
-  return entryBySlug.get(slug) ?? null;
+  return fetchArchiveEntry(slug);
 }
 
-/** Image de couverture d'une œuvre avec ses dimensions, pour WorkCard. */
+/** Expositions en cours, dans l'ordre de l'API. */
+export async function getExhibitionsOnView() {
+  const exhibitions = (await fetchExhibitions()) ?? [];
+  return exhibitions.filter((e) => e.status === "on view");
+}
+
+/** Toutes les feuilles d'une œuvre, la couverture en tête. */
+export function workImages(work) {
+  return [work.image, ...(work.gallery ?? [])];
+}
+
+/** Image de couverture d'une œuvre avec ses dimensions, pour WorkCard et le preloader. */
 export function coverImage(work) {
-  const src = work.images[0];
-  return { src, ...imageSize(src) };
+  return { src: work.image, ...PORTRAIT };
 }
 
-/** Dimensions intrinsèques d'une image de public/ (src/data/images.json). */
-export function imageSize(src) {
-  return images[src] ?? { width: 720, height: 960 };
+/** Dimensions d'une feuille de la collection (toujours 3:4). */
+export function sheetSize() {
+  return PORTRAIT;
+}
+
+/** Image d'une entrée d'archive avec ses dimensions selon l'orientation. */
+export function archiveImage(entry) {
+  return {
+    src: entry.image,
+    ...(entry.orientation === "landscape" ? LANDSCAPE : PORTRAIT),
+  };
 }

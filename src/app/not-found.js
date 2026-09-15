@@ -10,7 +10,7 @@ export const metadata = { title: "Not found" };
 export default function NotFound() {
   const { notFound } = site;
   return (
-    <PageReveal>
+    <PageReveal className="page-fill" skipPreloader>
       <section className="page">
         <div className="info">
           <Lines as="h1" className="label label--strong">

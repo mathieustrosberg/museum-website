@@ -1,11 +1,10 @@
 import Image from "next/image";
 
 /**
- * Image du site via next/image. `unoptimized` : les placeholders sont des PNG
- * tramés 1 bit, un ré-encodage WebP redimensionné flouterait la trame. Les
- * dimensions intrinsèques viennent de src/data/images.json (aucun layout shift).
- * Le jour où de vraies photographies remplacent les placeholders, retirer
- * `unoptimized` suffit pour bénéficier de l'optimisation.
+ * Image du site via next/image. Les photographies viennent du CDN d'Unsplash
+ * (images.remotePatterns) : Next.js les redimensionne et les convertit (WebP,
+ * AVIF) à la demande, selon `sizes`. Les dimensions intrinsèques (3:4 ou 4:3)
+ * viennent des données, donc aucun layout shift.
  */
 export default function SiteImage({
   src,
@@ -13,6 +12,7 @@ export default function SiteImage({
   width,
   height,
   lazy = false,
+  sizes = "(max-width: 767px) 100vw, 50vw",
   ...props
 }) {
   return (
@@ -21,8 +21,8 @@ export default function SiteImage({
       alt={alt}
       width={width}
       height={height}
+      sizes={sizes}
       loading={lazy ? "lazy" : "eager"}
-      unoptimized
       {...props}
     />
   );

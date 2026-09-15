@@ -3,7 +3,7 @@ import { Info, TextList } from "@/components/Info";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
-import { imageSize, site } from "@/lib/content";
+import { site } from "@/lib/content";
 
 export const metadata = {
   title: "About",
@@ -48,7 +48,12 @@ export default function AboutPage() {
             data-delay="0.7"
             data-duration="0.6"
           >
-            <SiteImage src={big.src} alt={big.alt} {...imageSize(big.src)} />
+            <SiteImage
+              src={big.src}
+              alt={big.alt}
+              width={big.width}
+              height={big.height}
+            />
           </div>
           <div className="about__small">
             <div
@@ -61,7 +66,8 @@ export default function AboutPage() {
               <SiteImage
                 src={small.src}
                 alt={small.alt}
-                {...imageSize(small.src)}
+                width={small.width}
+                height={small.height}
               />
             </div>
           </div>

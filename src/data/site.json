@@ -46,7 +46,9 @@
       }
     ],
     "media": {
-      "src": "/images/site/building.png",
+      "src": "https://images.unsplash.com/photo-1768256491318-d38cad3520ed?auto=format&fit=crop&w=1904&h=1216&q=80",
+      "width": 952,
+      "height": 608,
       "alt": "Press hall on the ground floor, the offset press between paper stacks and the windows on the Panke side."
     },
     "selectedLabel": "[Selected works]",
@@ -142,11 +144,15 @@
     ],
     "images": [
       {
-        "src": "/images/site/press-hall.png",
+        "src": "https://images.unsplash.com/photo-1758183961426-88d64eb5f787?auto=format&fit=crop&w=1440&h=1920&q=80",
+        "width": 720,
+        "height": 960,
         "alt": "Press hall on the ground floor, the offset press between paper stacks and the windows on the Panke side."
       },
       {
-        "src": "/images/site/reading-room.png",
+        "src": "https://images.unsplash.com/photo-1776090188043-402fc41c4f5d?auto=format&fit=crop&w=1440&h=1920&q=80",
+        "width": 720,
+        "height": 960,
         "alt": "Reading room under the sawtooth roof, editions laid flat on the tables."
       }
     ]
@@ -159,7 +165,9 @@
       "timeZone": "Europe/Berlin"
     },
     "media": {
-      "src": "/images/site/entrance.png",
+      "src": "https://images.unsplash.com/photo-1738101014614-5a5cbd30e5cf?auto=format&fit=crop&w=1920&h=1440&q=80",
+      "width": 960,
+      "height": 720,
       "alt": "Entrance on Gerichtstraße, the former loading bay of the printing plant."
     },
     "blocks": [
@@ -262,5 +270,11 @@
         "home": "Home"
       }
     }
+  },
+  "error": {
+    "label": "[Unavailable]",
+    "text": "The collection could not be loaded. The press is still running; try again in a moment.",
+    "retry": "Try again",
+    "home": "Home"
   }
 }
