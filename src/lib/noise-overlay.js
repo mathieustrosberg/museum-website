@@ -1,8 +1,7 @@
 /**
  * Voile de transition : un quad plein écran en WebGL brut dont le fragment
- * shader dissout une couleur unie selon un bruit de valeur (référence :
- * transition « about » de la démo Codrops Barba.js + GSAP, elle-même d'après
- * faint-film.com). uProgress 1.5 = transparent, -0.75 = couvert.
+ * shader dissout une couleur unie selon un bruit de valeur.
+ * uProgress 1.5 = transparent, -0.75 = couvert.
  * Sans Three.js : un seul plan et un seul shader, l'API native suffit.
  */
 const VERTEX = `

@@ -76,17 +76,17 @@ Les données sont lues côté serveur (`lib/api.js` et `lib/content.js`, gardés
 - Le CSS du site (`src/styles`) est écrit à la main, avec ses tokens ; Tailwind est installé sans Preflight et exposé avec les tokens de la DA pour les ajouts.
 - Les photographies sont servies par le CDN d'Unsplash, déjà recadrées par l'API (3:4 pour les feuilles, 3:4 ou 4:3 pour l'archive) ; `next/image` les redimensionne et les convertit (WebP, AVIF) à la demande selon `sizes` (`images.remotePatterns`). Les dimensions intrinsèques sont connues, donc aucun layout shift.
 - Toutes les photographies passent par le même filtre, `--image-filter: grayscale(1)` (token de `tokens.css`) : le site reste noir, blanc et gris, comme tout ce qui passe par la trame. Mettre le token à `none` pour la couleur.
-- Les textes apparaissent par masque de lignes (`Lines`, d'après « Masked Text Reveal » d'Osmo) : une ligne rendue côté serveur pour les textes courts, SplitText pour les paragraphes multilignes. Le texte reste du texte, lisible par les lecteurs d'écran.
+- Les textes apparaissent par masque de lignes (`Lines`) : une ligne rendue côté serveur pour les textes courts, SplitText pour les paragraphes multilignes. Le texte reste du texte, lisible par les lecteurs d'écran.
 - La classe `is-revealed` est posée sur `<main>` et non sur `<html>` : en navigation client, chaque page arrive masquée et rejoue son apparition.
 - La page Visit vit à `/visit` ; `/contact` et `/tickets` y redirigent.
 
 ## Transition entre pages
 
-Au clic sur un lien interne : son, puis un voile plein écran, du gris de la barre de navigation, se forme par dissolution de bruit (1 s, `power1.in`), la route est poussée dans le router derrière le voile, puis le voile se dissout (1 s) pendant que la page joue ses apparitions. Le shader est celui de la transition « about » de la démo Codrops « Page Transitions with Astro, Barba.js and GSAP » (d'après faint-film.com), porté en WebGL natif sans Three.js ni Barba : Next.js assure la navigation et `PageReveal` attend le signal d'entrée. La couleur du voile est le token `--color-transition`. Sans WebGL ou avec `prefers-reduced-motion`, la navigation est simplement différée de 120 ms.
+Au clic sur un lien interne : son, puis un voile plein écran, du gris de la barre de navigation, se forme par dissolution de bruit (1 s, `power1.in`), la route est poussée dans le router derrière le voile, puis le voile se dissout (1 s) pendant que la page joue ses apparitions. Le voile est un shader de bruit en WebGL natif, sans Three.js : Next.js assure la navigation et `PageReveal` attend le signal d'entrée. La couleur du voile est le token `--color-transition`. Sans WebGL ou avec `prefers-reduced-motion`, la navigation est simplement différée de 120 ms.
 
 ## Preloader
 
-Au chargement complet d'une page, `Preloader` (client, rendu côté serveur pour couvrir la page dès le premier octet) joue la « Dropping Cards Loading Animation » d'Osmo avec ses timings d'origine : cinq feuilles de la collection s'empilent (ressort), tombent une à une, puis le fond gris glisse vers le bas pendant que `<main>` arrive à l'échelle 1 et que la page joue ses apparitions (signal `enter()` de `lib/transition.js`, le même que pour la transition entre pages). Le composant se retire du DOM à la fin ; les navigations client ne le rejouent pas. `prefers-reduced-motion` le saute.
+Au chargement complet d'une page, `Preloader` (client, rendu côté serveur pour couvrir la page dès le premier octet) joue une pile de cartes : cinq feuilles de la collection s'empilent (ressort), tombent une à une, puis le fond gris glisse vers le bas pendant que `<main>` arrive à l'échelle 1 et que la page joue ses apparitions (signal `enter()` de `lib/transition.js`, le même que pour la transition entre pages). Le composant se retire du DOM à la fin ; les navigations client ne le rejouent pas. `prefers-reduced-motion` le saute.
 
 ## Fonctionnalités
 

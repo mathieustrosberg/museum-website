@@ -1,5 +1,5 @@
 /**
- * Texte révélé par masque de lignes (d'après « Masked Text Reveal », Osmo) :
+ * Texte révélé par masque de lignes :
  * chaque ligne glisse vers le haut depuis 110 % à l'intérieur d'un masque
  * à overflow clip. Le texte reste du texte, lisible par les lecteurs d'écran.
  *

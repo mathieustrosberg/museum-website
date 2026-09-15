@@ -10,8 +10,7 @@ import { transition } from "@/lib/transition";
  * Preloader au chargement complet d'une page : une pile de cartes se forme
  * (ressort), les cartes tombent une à une, puis le fond glisse vers le bas
  * pendant que la page arrive à l'échelle 1 et joue ses apparitions.
- * Timings et motifs de la ressource Osmo « Dropping Cards Loading Animation »,
- * conservés tels quels ; seule l'apparence est celle du site.
+ * Les timings et les motifs de chute sont des constantes en tête de fichier.
  *
  * Rendu côté serveur (la page est couverte dès le premier octet), animé au
  * montage ; disparaît du DOM à la fin. Les navigations client ne le rejouent
@@ -47,8 +46,8 @@ export default function Preloader({ brand, cards }) {
       return;
     }
 
-    if (!CustomEase.get("osmo"))
-      CustomEase.create("osmo", "M0,0 C0.625,0.05 0,1 1,1");
+    if (!CustomEase.get("cards"))
+      CustomEase.create("cards", "M0,0 C0.625,0.05 0,1 1,1");
 
     const list = container.querySelector("[data-preloader-list]");
     const items = gsap.utils.toArray(
@@ -139,7 +138,7 @@ export default function Preloader({ brand, cards }) {
           rotate: 0.001,
           yPercent: 100,
           duration: 1.5,
-          ease: "osmo",
+          ease: "cards",
           // Le fond glisse : la page peut commencer ses apparitions.
           onStart: () => transition.enter(),
         },
@@ -154,7 +153,7 @@ export default function Preloader({ brand, cards }) {
             yPercent: -25,
             scale: 1.1,
             duration: 1.5,
-            ease: "osmo",
+            ease: "cards",
             clearProps: "transform",
           },
           "<",

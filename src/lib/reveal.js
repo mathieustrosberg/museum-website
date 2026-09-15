@@ -2,8 +2,7 @@
  * Apparitions déclaratives d'une page, pilotées par attributs :
  *
  *   data-reveal="lines"    : masque de lignes, chaque ligne glisse depuis 110 %
- *                            (d'après « Masked Text Reveal », Osmo : 0.8 s,
- *                            expo.out, 0.08 s entre les lignes) ; les éléments
+ *                            (0.8 s, expo.out, 0.08 s entre les lignes) ; les éléments
  *                            frères d'un même parent se suivent du même pas
  *   data-split="lines"     : texte multiligne découpé par SplitText (fontes chargées)
  *   data-reveal="fade-up"  : opacité + translation (data-y, défaut 20px)
