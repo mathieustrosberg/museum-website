@@ -1,17 +1,24 @@
 import Footer from "@/components/Footer";
 import PageReveal from "@/components/PageReveal";
 import CollectionBrowser from "@/features/collection/CollectionBrowser";
-import { coverImage, getMediums, getWorks, site } from "@/lib/content";
+import {
+  coverImage,
+  getLocations,
+  getMediums,
+  getWorks,
+  site,
+} from "@/lib/content";
 
 export const metadata = {
-  title: "Collection",
+  title: site.titles.collection,
   description: site.meta.collection,
 };
 
 /**
  * Collection (Server Component, prérendue). La page lit les 12 œuvres et passe
  * au CollectionBrowser (client) un index sérialisable : slug, titre, année,
- * image dimensionnée, médium, présence en exposition, texte de recherche.
+ * image dimensionnée, type, catégorie (tableau ou espace), lieu, présence
+ * en exposition, texte de recherche.
  * La grille est filtrable, elle vit donc dans le composant client ; le footer
  * reste un Server Component passé en prop.
  */
@@ -24,6 +31,8 @@ export default async function CollectionPage() {
       year: work.year,
       image: coverImage(work),
       medium: work.type,
+      category: work.category,
+      location: work.location,
       onView: work.onView,
       haystack: `${work.title} ${artist} ${work.type} ${work.year}`
         .normalize("NFD")
@@ -38,6 +47,7 @@ export default async function CollectionPage() {
         <CollectionBrowser
           works={works}
           mediums={await getMediums()}
+          locations={await getLocations()}
           labels={site.collection}
           footer={<Footer delay="1.5" />}
         />

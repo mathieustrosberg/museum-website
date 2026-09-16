@@ -12,6 +12,7 @@ export default function ArchiveTile({ entry, lazy = false }) {
     >
       <SiteImage
         alt={entry.description}
+        color={entry.color}
         lazy={lazy}
         sizes="(max-width: 767px) 50vw, (max-width: 1159px) 25vw, 17vw"
         {...archiveImage(entry)}

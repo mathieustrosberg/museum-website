@@ -198,6 +198,7 @@ export default function Preloader({ brand, cards }) {
               <SiteImage
                 src={card.src}
                 alt=""
+                color={card.color}
                 width={card.width}
                 height={card.height}
                 sizes="25vw"

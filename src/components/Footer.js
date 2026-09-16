@@ -1,6 +1,6 @@
 import { site } from "@/lib/content";
 
-/** Pied de page : « © 2026 Halbton » ............ « ■ Open Thu–Sun » */
+/** Pied de page : « © 2026 Fondation César Manrique » ............ « ■ Ouvert tous les jours » */
 export default function Footer({ page = false, delay = "1.5" }) {
   return (
     <footer

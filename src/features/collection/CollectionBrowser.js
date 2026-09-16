@@ -12,8 +12,9 @@ import WorkCard from "@/components/WorkCard";
  * reçoit `hidden`, les 12 restent dans le DOM : l'apparition en cascade de la
  * grille est intacte et le pourcentage de scroll suit la hauteur de la page.
  *
- * Une portée (All works / On view), un médium (activable et désactivable) et la
- * recherche (titre, artiste, médium, année) se combinent en ET. Les comptes entre
+ * Une portée (toute la collection, tableaux, espaces, en exposition), un type
+ * et un lieu (activables et désactivables) et la recherche (titre, artiste,
+ * type, année) se combinent en ET. Les comptes entre
  * crochets suivent la sélection, un bouton sans correspondance est désactivé, une
  * zone de statut annonce le résultat aux lecteurs d'écran.
  */
@@ -25,27 +26,41 @@ const fill = (template, values) =>
     key in values ? String(values[key]) : match,
   );
 
-export default function CollectionBrowser({ works, mediums, labels, footer }) {
+export default function CollectionBrowser({
+  works,
+  mediums,
+  locations,
+  labels,
+  footer,
+}) {
   const [scope, setScope] = useState(labels.scopes[0].value);
   const [medium, setMedium] = useState(null);
+  const [location, setLocation] = useState(null);
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const searchId = useId();
 
   const tokens = normalize(query).split(/\s+/).filter(Boolean);
   const inScope = (work, value) =>
-    value === "all" || (value === "on-view" && work.onView);
+    value === "all" ||
+    (value === "on-view" ? work.onView : work.category === value);
   const inMedium = (work, value) => !value || work.medium === value;
+  const inLocation = (work, value) => !value || work.location === value;
   const inQuery = (work) =>
     tokens.every((token) => work.haystack.includes(token));
-  const matches = (work, s, m) =>
-    inScope(work, s) && inMedium(work, m) && inQuery(work);
+  const matches = (work, s, m, l) =>
+    inScope(work, s) &&
+    inMedium(work, m) &&
+    inLocation(work, l) &&
+    inQuery(work);
 
-  const shown = works.filter((work) => matches(work, scope, medium));
+  const shown = works.filter((work) => matches(work, scope, medium, location));
   const countScope = (value) =>
-    works.filter((work) => matches(work, value, medium)).length;
+    works.filter((work) => matches(work, value, medium, location)).length;
   const countMedium = (value) =>
-    works.filter((work) => matches(work, scope, value)).length;
+    works.filter((work) => matches(work, scope, value, location)).length;
+  const countLocation = (value) =>
+    works.filter((work) => matches(work, scope, medium, value)).length;
   const name = (label, n) =>
     fill(n === 1 ? labels.a11y.count.one : labels.a11y.count.other, {
       label,
@@ -54,19 +69,24 @@ export default function CollectionBrowser({ works, mediums, labels, footer }) {
 
   const announce = (next) => {
     const n = works.filter((work) =>
-      matches(work, next.scope, next.medium),
+      matches(work, next.scope, next.medium, next.location),
     ).length;
     setStatus(fill(labels.a11y.status, { shown: n, total: works.length }));
   };
   const selectScope = (value) => {
     if (value === scope) return;
     setScope(value);
-    announce({ scope: value, medium });
+    announce({ scope: value, medium, location });
   };
   const toggleMedium = (value) => {
     const next = medium === value ? null : value;
     setMedium(next);
-    announce({ scope, medium: next });
+    announce({ scope, medium: next, location });
+  };
+  const toggleLocation = (value) => {
+    const next = location === value ? null : value;
+    setLocation(next);
+    announce({ scope, medium, location: next });
   };
   const search = (value) => {
     setQuery(value);
@@ -76,6 +96,7 @@ export default function CollectionBrowser({ works, mediums, labels, footer }) {
       (work) =>
         inScope(work, scope) &&
         inMedium(work, medium) &&
+        inLocation(work, location) &&
         t.every((x) => work.haystack.includes(x)),
     ).length;
     setStatus(fill(labels.a11y.status, { shown: n, total: works.length }));
@@ -115,6 +136,7 @@ export default function CollectionBrowser({ works, mediums, labels, footer }) {
             image={work.image}
             lazy={i >= 4}
             data-medium={work.medium}
+            data-location={work.location}
             data-scope={work.onView ? "on-view" : undefined}
             hidden={!shown.includes(work)}
           />
@@ -151,6 +173,23 @@ export default function CollectionBrowser({ works, mediums, labels, footer }) {
                 {mediums.map((m) =>
                   button("medium", m, m, countMedium(m), medium === m, () =>
                     toggleMedium(m),
+                  ),
+                )}
+              </ul>
+            </div>
+            <div className="info">
+              <Lines as="p" className="label" id="filter-location">
+                {labels.locationLabel}
+              </Lines>
+              <ul className="list" aria-labelledby="filter-location">
+                {locations.map((l) =>
+                  button(
+                    "location",
+                    l,
+                    l,
+                    countLocation(l),
+                    location === l,
+                    () => toggleLocation(l),
                   ),
                 )}
               </ul>

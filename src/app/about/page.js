@@ -6,7 +6,7 @@ import SiteImage from "@/components/SiteImage";
 import { site } from "@/lib/content";
 
 export const metadata = {
-  title: "About",
+  title: site.titles.about,
   description: site.meta.about,
 };
 

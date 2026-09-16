@@ -4,7 +4,7 @@ import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import { site } from "@/lib/content";
 
-export const metadata = { title: "Not found" };
+export const metadata = { title: site.titles.notFound };
 
 /** Page 404 dans la grammaire du site : label, une phrase, un lien souligné. */
 export default function NotFound() {

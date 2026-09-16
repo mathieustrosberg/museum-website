@@ -6,7 +6,7 @@ import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
 import { archiveImage, getArchive, getArchiveEntry, site } from "@/lib/content";
 
-/** Les 36 pages d'archive sont générées au build (SSG). */
+/** Les pages d'archive sont générées au build (SSG) à partir des slugs de l'API. */
 export async function generateStaticParams() {
   return (await getArchive()).map((entry) => ({ slug: entry.slug }));
 }
@@ -37,7 +37,11 @@ export default async function ArchiveEntryPage({ params }) {
             data-delay="0.5"
             data-duration="0.6"
           >
-            <SiteImage alt={entry.description} {...archiveImage(entry)} />
+            <SiteImage
+              alt={entry.description}
+              color={entry.color}
+              {...archiveImage(entry)}
+            />
           </div>
         </div>
 

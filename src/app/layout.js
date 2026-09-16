@@ -24,7 +24,7 @@ export const metadata = {
     title: siteTitle,
     description: site.meta.home,
     type: "website",
-    locale: "en",
+    locale: site.lang,
   },
 };
 
@@ -41,6 +41,7 @@ export default async function RootLayout({ children }) {
       <body>
         <Nav
           brand={site.nav.brand}
+          aria={site.nav.aria}
           links={site.nav.links}
           clock={
             <Clock

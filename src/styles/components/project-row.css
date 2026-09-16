@@ -1,6 +1,7 @@
 /* ==========================================================================
-   Table des projets (home) : en-tête + lignes
-   Grille 2 colonnes, chaque moitié = [40px | 1fr]
+   Table de la sélection (home) : en-tête + lignes
+   Grille 2 colonnes : moitié gauche [40px | 1fr] (année, titre),
+   moitié droite [1fr | 1fr] (type, lieu aligné à droite)
    ========================================================================== */
 
 .table {
@@ -39,7 +40,9 @@
 }
 
 .table__cell--count,
-.row__cell--count {
+.row__cell--count,
+.table__cell--end,
+.row__cell--end {
   justify-content: flex-end;
   text-align: right;
 }

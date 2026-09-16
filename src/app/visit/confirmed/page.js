@@ -9,7 +9,7 @@ import { getExhibitionsOnView, site } from "@/lib/content";
 import { formatDay, getTicketsConfig, REFERENCE } from "@/lib/tickets";
 
 export const metadata = {
-  title: "Request sent",
+  title: site.titles.confirmed,
   description: site.meta.confirmed,
   robots: { index: false },
 };

@@ -14,6 +14,7 @@ export default function WorkCard({ work, image, lazy = false, ...attrs }) {
         <SiteImage
           src={image.src}
           alt={work.title}
+          color={image.color}
           lazy={lazy}
           width={image.width}
           height={image.height}

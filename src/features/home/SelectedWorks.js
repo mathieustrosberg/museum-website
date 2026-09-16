@@ -20,6 +20,7 @@ export default function SelectedWorks({
   footer,
 }) {
   const [preview, setPreview] = useState(null);
+  const [previewColor, setPreviewColor] = useState(false);
   const [active, setActive] = useState(false);
   const previewRef = useRef(null);
 
@@ -39,10 +40,11 @@ export default function SelectedWorks({
     setActive(true);
   }, [preview]);
 
-  const show = (src) => {
-    if (src !== preview) {
+  const show = (work) => {
+    setPreviewColor(work.color);
+    if (work.preview !== preview) {
       setActive(false);
-      setPreview(src);
+      setPreview(work.preview);
     } else {
       setActive(true);
     }
@@ -69,6 +71,7 @@ export default function SelectedWorks({
           className="media__img"
           src={media.src}
           alt={media.alt}
+          color={media.color}
           width={media.width}
           height={media.height}
         />
@@ -76,7 +79,9 @@ export default function SelectedWorks({
         <img
           ref={previewRef}
           decoding="async"
-          className="media__preview"
+          className={
+            previewColor ? "media__preview is-color" : "media__preview"
+          }
           src={preview ?? undefined}
           alt=""
           width={media.width}
@@ -104,10 +109,10 @@ export default function SelectedWorks({
                 </div>
                 <div className="table__half">
                   <Lines as="div" className="table__cell">
-                    {table.artist}
+                    {table.type}
                   </Lines>
-                  <Lines as="div" className="table__cell table__cell--count">
-                    {table.count}
+                  <Lines as="div" className="table__cell table__cell--end">
+                    {table.location}
                   </Lines>
                 </div>
               </div>
@@ -128,8 +133,8 @@ export default function SelectedWorks({
                     className="row"
                     href={`/work/${work.slug}`}
                     data-preview={work.preview}
-                    onMouseEnter={() => show(work.preview)}
-                    onFocus={() => show(work.preview)}
+                    onMouseEnter={() => show(work)}
+                    onFocus={() => show(work)}
                     onBlur={hide}
                   >
                     <div className="row__half">
@@ -142,10 +147,10 @@ export default function SelectedWorks({
                     </div>
                     <div className="row__half">
                       <div className="row__cell">
-                        <span className="row__text">{work.artist}</span>
+                        <span className="row__text">{work.type}</span>
                       </div>
-                      <div className="row__cell row__cell--count">
-                        <span className="row__text">[{work.sheets}]</span>
+                      <div className="row__cell row__cell--end">
+                        <span className="row__text">{work.location}</span>
                       </div>
                     </div>
                   </Link>

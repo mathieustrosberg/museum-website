@@ -36,7 +36,11 @@ export default async function WorkPage({ params }) {
   const work = await getWork(slug);
   if (!work) notFound();
 
-  const { cartel } = site.work;
+  // Libellés du cartel : ceux des œuvres, remplacés pour un espace de la maison.
+  const cartel = {
+    ...site.work.cartel,
+    ...(work.category === "space" ? site.work.cartelSpace : {}),
+  };
   const artist = work.artist;
   const images = workImages(work);
   const [cover] = images;
@@ -53,7 +57,12 @@ export default async function WorkPage({ params }) {
           data-duration="0.6"
         >
           <div className="media">
-            <SiteImage src={cover} alt={alt} {...sheetSize()} />
+            <SiteImage
+              src={cover}
+              alt={alt}
+              color={work.color}
+              {...sheetSize()}
+            />
           </div>
         </div>
 
@@ -94,13 +103,15 @@ export default async function WorkPage({ params }) {
                     {work.year}
                   </p>
                 </div>
+                {work.dimensions ? (
+                  <div className="info">
+                    <Lines className="label">{cartel.dimensions}</Lines>
+                    <Lines>{work.dimensions}</Lines>
+                  </div>
+                ) : null}
                 <div className="info">
-                  <Lines className="label">{cartel.dimensions}</Lines>
-                  <Lines>{work.dimensions}</Lines>
-                </div>
-                <div className="info">
-                  <Lines className="label">{cartel.sheets}</Lines>
-                  <Lines>{String(work.sheets)}</Lines>
+                  <Lines className="label">{cartel.location}</Lines>
+                  <Lines>{work.location}</Lines>
                 </div>
                 <div className="info project__notes">
                   <Lines className="label">{cartel.notes}</Lines>
@@ -130,7 +141,8 @@ export default async function WorkPage({ params }) {
                   >
                     <SiteImage
                       src={src}
-                      alt={`${alt}, sheet ${i + 1}`}
+                      alt={`${alt}, vue ${i + 1}`}
+                      color={work.color}
                       lazy={i > 0}
                       {...sheetSize()}
                     />

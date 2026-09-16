@@ -1,16 +1,25 @@
 {
-  "name": "Halbton",
-  "lang": "en",
+  "name": "Fondation César Manrique",
+  "lang": "fr",
   "meta": {
-    "home": "Halbton, centre for the printed image, Berlin-Wedding. Exhibitions, editions printed on site, reading room, workshop.",
-    "collection": "Works shown at Halbton, from offset and riso to gelatin silver, listed by year, title, artist and medium.",
-    "archive": "The Halbton log: proofs, screen tests, stray sheets and press views in date order, outside the exhibition programme.",
-    "about": "A former offset printing plant on the Panke, Berlin-Wedding. One press, two exhibition floors, reading room, workshop.",
-    "visit": "Visit Halbton, Gerichtstraße, Berlin-Wedding. Thu–Sun, 12:00–19:00. Request tickets: full €8, reduced €5, under 18 free, paid at the entrance.",
-    "confirmed": "Ticket request received. Tickets are held at the entrance desk; pay on arrival."
+    "home": "Fondation César Manrique, ancienne maison de l'artiste à Tahíche, Lanzarote. Tableaux de Manrique, espaces creusés dans la lave, expositions, jardin.",
+    "collection": "La collection de la Fondation : tableaux de César Manrique et espaces de la maison de Tahíche, listés par année, titre, artiste et type.",
+    "archive": "Les archives de la Fondation : maison et atelier de César Manrique, tableaux et détails, vues de Lanzarote, par Vladimir Kysela et des photographes de Pexels.",
+    "about": "L'ancienne maison de César Manrique sur la coulée de lave de Tahíche. Cinq bulles volcaniques, un jameo, un atelier devenu salle d'exposition.",
+    "visit": "Visiter la Fondation César Manrique, Taro de Tahíche, Lanzarote. Tous les jours, 10:00–17:30, billetterie jusqu'à 17:00. Fermé le 1er janvier.",
+    "confirmed": "Demande de billets enregistrée à titre de démonstration. Aucun billet n'est réservé auprès de la Fondation."
+  },
+  "titles": {
+    "collection": "Collection",
+    "archive": "Archives",
+    "about": "À propos",
+    "visit": "Visite",
+    "confirmed": "Demande enregistrée",
+    "notFound": "Page introuvable"
   },
   "nav": {
-    "brand": "Halbton",
+    "brand": "Fondation César Manrique",
+    "aria": "Principale",
     "links": [
       {
         "label": "Collection,",
@@ -18,263 +27,289 @@
         "page": "work"
       },
       {
-        "label": "Archive,",
+        "label": "Archives,",
         "href": "/archive",
         "page": "archive"
       },
       {
-        "label": "About,",
+        "label": "À propos,",
         "href": "/about",
         "page": "about"
       },
       {
-        "label": "Visit",
+        "label": "Visite",
         "href": "/visit",
         "page": "visit"
       }
     ]
   },
   "footer": {
-    "copyright": "© 2026 Halbton",
-    "status": "Open Thu–Sun"
+    "copyright": "© 2026 Fondation César Manrique",
+    "status": "Ouvert tous les jours"
   },
   "home": {
     "intro": [
       {
-        "label": "Institution",
-        "text": "Halbton is a centre for the printed image in a former offset printing plant in Berlin-Wedding. Every image shown, silver, digital or generated, passes through the same screen."
+        "label": "Fondation",
+        "text": "La Fondation César Manrique occupe la maison que l'artiste s'est bâtie en 1968 sur une coulée de lave, à Tahíche. Ses tableaux et les espaces creusés dans la lave y composent une même œuvre."
       }
     ],
     "media": {
-      "src": "https://images.unsplash.com/photo-1768256491318-d38cad3520ed?auto=format&fit=crop&w=1904&h=1216&q=80",
-      "width": 952,
-      "height": 608,
-      "alt": "Press hall on the ground floor, the offset press between paper stacks and the windows on the Panke side."
+      "src": "/images/home/fenetre.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": true,
+      "alt": "Fenêtre du salon sur la coulée de lave : cactus au premier plan, champ de lave, maisons blanches et volcans au loin."
     },
-    "selectedLabel": "[Selected works]",
+    "selectedLabel": "[Sélection]",
     "table": {
-      "year": "Year",
-      "title": "Title",
-      "artist": "Artist",
-      "count": "Sheets"
+      "year": "Année",
+      "title": "Titre",
+      "type": "Type",
+      "location": "Lieu"
     },
     "selected": [
-      "blanket-wash",
-      "ink-limit",
-      "no-negative",
-      "corniche-noon",
-      "halation",
-      "second-drum",
-      "warp-count",
-      "paper-white"
+      "taro-de-tahiche",
+      "jameos-del-agua",
+      "jardin-de-cactus",
+      "casa-museo-del-campesino",
+      "lago-martianez",
+      "lagomar"
     ],
-    "viewAll": "View all"
+    "viewAll": "Toute la collection"
   },
   "collection": {
     "title": "Collection",
     "scopes": [
       {
-        "label": "All works",
+        "label": "Toute la collection",
         "value": "all"
       },
       {
-        "label": "On view",
+        "label": "Tableaux",
+        "value": "work"
+      },
+      {
+        "label": "Espaces",
+        "value": "space"
+      },
+      {
+        "label": "En exposition",
         "value": "on-view"
       }
     ],
-    "mediumLabel": "Medium",
+    "mediumLabel": "Type",
+    "locationLabel": "Lieu",
     "a11y": {
-      "status": "{shown} of {total} works shown",
+      "status": "{shown} sur {total} affichés",
       "count": {
-        "one": "{label}, one work",
-        "other": "{label}, {n} works"
+        "one": "{label}, un élément",
+        "other": "{label}, {n} éléments"
       }
     },
     "search": {
-      "label": "Search",
-      "placeholder": "Title, artist, medium",
+      "label": "Recherche",
+      "placeholder": "Titre, artiste, type, année",
       "a11y": {
-        "clear": "Clear search"
+        "clear": "Effacer la recherche"
       }
     }
   },
   "work": {
-    "allWorks": "All works",
+    "allWorks": "Toute la collection",
     "cartel": {
-      "title": "Title",
-      "artist": "Artist",
-      "medium": "Medium",
-      "year": "Year",
+      "title": "Titre",
+      "artist": "Artiste",
+      "medium": "Technique",
+      "year": "Année",
       "dimensions": "Dimensions",
-      "sheets": "Sheets",
+      "location": "Lieu",
       "notes": "Notes"
     },
-    "similarLabel": "[Similar works]"
+    "similarLabel": "[À voir aussi]",
+    "cartelSpace": {
+      "title": "Espace",
+      "artist": "Conception",
+      "medium": "Matériaux"
+    }
   },
   "archive": {
-    "label": "Archive",
-    "intro": "Proofs, screen tests, stray sheets and press views, kept in date order, outside the exhibition programme.",
-    "logLabel": "Log",
-    "logItems": ["Proofs and tests", "Stray sheets", "Press views"],
-    "allArchive": "Full archive",
+    "label": "Archives",
+    "intro": "Photographies de la maison et de l'atelier de César Manrique, de ses tableaux et de leurs détails, et de l'île, par Vladimir Kysela et des photographes de Pexels. Classées par type, en marge des expositions.",
+    "logLabel": "Fonds",
+    "logItems": [
+      "Maison et atelier",
+      "Œuvres et détails",
+      "Photographies de l'île"
+    ],
+    "allArchive": "Toutes les archives",
     "detail": {
-      "title": "Title",
+      "title": "Titre",
       "date": "Date"
     }
   },
   "about": {
-    "title": "[About]",
+    "title": "[À propos]",
     "paragraphs": [
-      "Former offset printing plant on the Panke, Wedding. One working press downstairs, two exhibition floors, reading room under the sawtooth roof. Same screen for every image shown; same paper for every edition.",
-      "Each exhibition, eight to twelve a year, ends in an edition printed on the press. The edition enters the collection; working proofs and tests are logged in the archive."
+      "Ancienne maison de César Manrique, bâtie à partir de 1968 sur une coulée de lave à Tahíche. En haut, l'architecture traditionnelle de l'île ; en dessous, cinq bulles volcaniques reliées par des tunnels creusés dans la lave.",
+      "Devenue fondation en 1992, la maison conserve l'œuvre de Manrique et sa collection, de Picasso à Miró et Tàpies. L'ancien atelier accueille aujourd'hui les expositions."
     ],
     "lists": [
       {
         "label": "Programme",
-        "items": ["Exhibitions", "Editions", "Reading room", "Workshop"]
+        "items": [
+          "Espaces de la maison",
+          "Tableaux et collection",
+          "Expositions",
+          "Activités"
+        ]
       },
       {
-        "label": "Method",
+        "label": "Principes",
         "items": [
-          "One screen, one house paper",
-          "Reproduction kept visible",
-          "Proofs logged"
+          "Art, architecture et nature",
+          "La lave laissée apparente",
+          "Défense du territoire"
         ]
       }
     ],
     "images": [
       {
-        "src": "https://images.unsplash.com/photo-1758183961426-88d64eb5f787?auto=format&fit=crop&w=1440&h=1920&q=80",
-        "width": 720,
-        "height": 960,
-        "alt": "Press hall on the ground floor, the offset press between paper stacks and the windows on the Panke side."
+        "src": "/images/about/atelier.jpg",
+        "width": 1200,
+        "height": 800,
+        "alt": "L'atelier de César Manrique : chevalets, toiles en cours, pots de peinture sur les étagères et sol taché."
       },
       {
-        "src": "https://images.unsplash.com/photo-1776090188043-402fc41c4f5d?auto=format&fit=crop&w=1440&h=1920&q=80",
-        "width": 720,
-        "height": 960,
-        "alt": "Reading room under the sawtooth roof, editions laid flat on the tables."
+        "src": "/images/about/cesar-manrique.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Portrait de César Manrique, souriant, en veste claire sur une chemise à carreaux."
       }
     ]
   },
   "visit": {
-    "title": "[Visit]",
+    "title": "[Visite]",
     "clock": {
-      "label": "Local time",
-      "aria": "Local time in Berlin",
-      "timeZone": "Europe/Berlin"
+      "label": "Heure locale",
+      "aria": "Heure locale à Lanzarote",
+      "timeZone": "Atlantic/Canary"
     },
     "media": {
-      "src": "https://images.unsplash.com/photo-1738101014614-5a5cbd30e5cf?auto=format&fit=crop&w=1920&h=1440&q=80",
-      "width": 960,
-      "height": 720,
-      "alt": "Entrance on Gerichtstraße, the former loading bay of the printing plant."
+      "src": "/images/visit/atelier-silhouette.jpg",
+      "width": 1200,
+      "height": 800,
+      "alt": "L'atelier de César Manrique vu depuis la table de travail, silhouette grandeur nature de l'artiste au fond.",
+      "color": true
     },
     "blocks": [
       {
         "label": "Contact",
         "links": [
           {
-            "text": "Gerichtstraße 48, 13347 Berlin",
-            "href": "https://maps.google.com/?q=Gerichtstra%C3%9Fe+48%2C+13347+Berlin",
+            "text": "Taro de Tahíche, C/ Jorge Luis Borges 16, 35507 Tahíche, Lanzarote",
+            "href": "https://maps.google.com/?q=Fundaci%C3%B3n+C%C3%A9sar+Manrique%2C+Taro+de+Tah%C3%ADche%2C+C%2F+Jorge+Luis+Borges+16%2C+35507+Tah%C3%ADche",
             "external": true
           },
           {
-            "text": "mail@halbton.berlin",
-            "href": "mailto:mail@halbton.berlin"
+            "text": "fcm@fcmanrique.org",
+            "href": "mailto:fcm@fcmanrique.org"
           },
           {
-            "text": "+49 30 46 07 81 20",
-            "href": "tel:+493046078120"
+            "text": "+34 928 84 31 38",
+            "href": "tel:+34928843138"
           }
         ]
       },
       {
-        "label": "Follow",
+        "label": "Suivre",
         "links": [
           {
             "text": "Instagram",
-            "href": "https://instagram.com",
+            "href": "https://www.instagram.com/fundacioncesarmanrique/",
             "external": true
           },
           {
-            "text": "Are.na",
-            "href": "https://are.na",
+            "text": "Facebook",
+            "href": "https://www.facebook.com/fundacioncesarmanrique/",
             "external": true
           },
           {
-            "text": "Vimeo",
-            "href": "https://vimeo.com",
+            "text": "YouTube",
+            "href": "https://www.youtube.com/channel/UC0hruW4UlanzlP6wSvT2IXQ",
             "external": true
           }
         ]
       },
       {
-        "label": "Opening hours",
-        "items": ["Thu–Sun, 12:00–19:00", "Closed on public holidays"]
+        "label": "Horaires",
+        "items": [
+          "Tous les jours, 10:00–17:30",
+          "Billetterie jusqu'à 17:00, fermé le 1er janvier"
+        ]
       }
     ]
   },
-  "tagline": "Centre for the printed image, Berlin",
+  "tagline": "Maison de César Manrique, Tahíche, Lanzarote",
   "notFound": {
-    "label": "[Not found]",
-    "text": "No sheet at this address. The press is on the ground floor, the collection is one floor up.",
-    "back": "Home"
+    "label": "[Page introuvable]",
+    "text": "Aucune page à cette adresse. Les tableaux sont à l'étage, les bulles sous la lave.",
+    "back": "Accueil"
   },
   "tickets": {
     "form": {
       "date": "Date",
-      "datePlaceholder": "Choose a day",
-      "tickets": "Tickets",
+      "datePlaceholder": "Choisir un jour",
+      "tickets": "Billets",
       "total": "Total",
-      "name": "Name",
-      "email": "Email",
-      "submit": "Request tickets",
-      "sending": "Sending",
-      "free": "Free",
-      "decrease": "Remove one",
-      "increase": "Add one"
+      "name": "Nom",
+      "email": "E-mail",
+      "submit": "Demander des billets",
+      "sending": "Envoi",
+      "free": "Gratuit",
+      "decrease": "Retirer un billet",
+      "increase": "Ajouter un billet"
     },
     "errors": {
-      "date": "Choose an opening day.",
-      "tickets": "Choose at least one ticket.",
-      "max": "Ten tickets at most per type.",
-      "name": "Enter your name.",
-      "email": "Enter a valid email address.",
-      "generic": "The request could not be sent. Try again.",
+      "date": "Choisissez un jour d'ouverture.",
+      "tickets": "Choisissez au moins un billet.",
+      "max": "Dix billets au plus par catégorie.",
+      "name": "Indiquez votre nom.",
+      "email": "Indiquez une adresse e-mail valide.",
+      "generic": "La demande n'a pas pu être envoyée. Réessayez.",
       "summary": {
-        "one": "One field needs your attention.",
-        "other": "{n} fields need your attention."
+        "one": "Un champ demande votre attention.",
+        "other": "{n} champs demandent votre attention."
       }
     },
     "confirmed": {
-      "title": "[Request sent]",
-      "text": "Your tickets are held at the entrance desk until 13:00 on the day of your visit. Show this reference on arrival and pay at the desk, by card or in cash.",
+      "title": "[Demande enregistrée]",
+      "text": "Votre demande a été enregistrée avec la référence ci-dessous. Cette billetterie est une démonstration : rien n'est transmis à la Fondation César Manrique et aucun billet n'est réservé.",
       "summary": {
-        "reference": "Reference",
+        "reference": "Référence",
         "date": "Date",
-        "tickets": "Tickets",
+        "tickets": "Billets",
         "total": "Total"
       },
       "next": {
-        "label": "What's next",
+        "label": "Et ensuite",
         "items": [
-          "Gerichtstraße 48, Berlin-Wedding, from 12:00",
-          "Reading room and workshop floor included",
-          "Changes: mail@halbton.berlin with your reference"
+          "Taro de Tahíche, Lanzarote, à partir de 10:00",
+          "Démonstration : aucun billet n'est réservé",
+          "Renseignements : fcm@fcmanrique.org"
         ]
       },
-      "onView": "On view that day",
+      "onView": "En exposition ce jour-là",
       "links": {
-        "again": "New request",
-        "home": "Home"
+        "again": "Nouvelle demande",
+        "home": "Accueil"
       }
     }
   },
   "error": {
-    "label": "[Unavailable]",
-    "text": "The collection could not be loaded. The press is still running; try again in a moment.",
-    "retry": "Try again",
-    "home": "Home"
+    "label": "[Indisponible]",
+    "text": "La collection n'a pas pu être chargée. La maison est toujours là ; réessayez dans un instant.",
+    "retry": "Réessayer",
+    "home": "Accueil"
   }
 }

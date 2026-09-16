@@ -45,11 +45,19 @@ export async function getSelectedWorks() {
   return site.home.selected.map((slug) => bySlug.get(slug)).filter(Boolean);
 }
 
-/** Médiums distincts, triés comme les filtres de la Collection. */
+/** Types distincts, triés comme les filtres de la Collection. */
 export async function getMediums() {
   const works = await getWorks();
   return [...new Set(works.map((w) => w.type).filter(Boolean))].sort((a, b) =>
     a.localeCompare(b, "en"),
+  );
+}
+
+/** Lieux distincts (champ `location`), triés comme les filtres de la Collection. */
+export async function getLocations() {
+  const works = await getWorks();
+  return [...new Set(works.map((w) => w.location).filter(Boolean))].sort(
+    (a, b) => a.localeCompare(b, "fr"),
   );
 }
 
@@ -72,9 +80,9 @@ export function workImages(work) {
   return [work.image, ...(work.gallery ?? [])];
 }
 
-/** Image de couverture d'une œuvre avec ses dimensions, pour WorkCard et le preloader. */
+/** Image de couverture d'une fiche avec ses dimensions et son option couleur, pour WorkCard et le preloader. */
 export function coverImage(work) {
-  return { src: work.image, ...PORTRAIT };
+  return { src: work.image, color: Boolean(work.color), ...PORTRAIT };
 }
 
 /** Dimensions d'une feuille de la collection (toujours 3:4). */

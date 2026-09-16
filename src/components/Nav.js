@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 /**
- * Navigation fixe : marque | Collection, Archive, About, Visit ............ horloge.
+ * Navigation fixe : marque | Espaces, Archives, À propos, Visite ............ horloge.
  * Client Component pour l'état du menu mobile [+] / [-] et le lien actif (usePathname). L'état est réinitialisé à chaque changement de route
  * grâce à la clé : le menu se referme après une navigation, comme à un chargement.
  */
@@ -14,7 +14,7 @@ export default function Nav(props) {
   return <NavBar key={pathname} pathname={pathname} {...props} />;
 }
 
-function NavBar({ brand, links, clock, pathname }) {
+function NavBar({ brand, aria, links, clock, pathname }) {
   const [open, setOpen] = useState(false);
   const current = (href) => (pathname === href ? "page" : undefined);
 
@@ -36,7 +36,7 @@ function NavBar({ brand, links, clock, pathname }) {
             <span className="is-open-label">[-]</span>
           </button>
         </div>
-        <nav className="nav__menu" id="nav-menu" aria-label="Main">
+        <nav className="nav__menu" id="nav-menu" aria-label={aria}>
           <div className="nav__links">
             {links.map((link) => (
               <Link

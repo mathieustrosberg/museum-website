@@ -9,7 +9,7 @@ import { site } from "@/lib/content";
 import { getOpenDays, getTicketsConfig } from "@/lib/tickets";
 
 export const metadata = {
-  title: "Visit",
+  title: site.titles.visit,
   description: site.meta.visit,
 };
 
@@ -17,7 +17,7 @@ export const metadata = {
  * Visit (Server Component). Le formulaire de la page est la billetterie :
  * la liste des jours d'ouverture dépend de la date du jour, elle vient d'un
  * bloc "use cache" revalidé toutes les heures (Booking) ; la demande passe par
- * une Server Action. Un seul îlot client : le formulaire (l'horloge de Berlin est dans la navigation).
+ * une Server Action. Un seul îlot client : le formulaire (l'horloge de Lanzarote est dans la navigation).
  */
 export default function VisitPage() {
   const { visit } = site;
@@ -48,6 +48,7 @@ export default function VisitPage() {
             <SiteImage
               src={visit.media.src}
               alt={visit.media.alt}
+              color={visit.media.color}
               width={visit.media.width}
               height={visit.media.height}
             />

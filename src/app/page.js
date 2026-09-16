@@ -21,9 +21,10 @@ export default async function HomePage() {
     slug: work.slug,
     year: work.year,
     title: work.title,
-    artist: work.artist,
-    sheets: work.sheets,
+    type: work.type,
+    location: work.location,
     preview: work.image,
+    color: Boolean(work.color),
   }));
 
   return (

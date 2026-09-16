@@ -6,11 +6,11 @@ import PageReveal from "@/components/PageReveal";
 import { getArchive, site } from "@/lib/content";
 
 export const metadata = {
-  title: "Archive",
+  title: site.titles.archive,
   description: site.meta.archive,
 };
 
-/** Archive (Server Component, prérendue) : en-tête sur 2 colonnes, grille de 36 vignettes. */
+/** Archive (Server Component, prérendue) : en-tête sur 2 colonnes, grille des photographies de l'API. */
 export default async function ArchivePage() {
   const { archive } = site;
   return (

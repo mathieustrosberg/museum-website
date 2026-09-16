@@ -46,3 +46,9 @@ main img,
 .preloader img {
   filter: var(--image-filter);
 }
+
+/* Œuvres et photographies d'auteur : pas de filtre (option `color` de SiteImage) */
+main img.is-color,
+.preloader img.is-color {
+  filter: none;
+}
