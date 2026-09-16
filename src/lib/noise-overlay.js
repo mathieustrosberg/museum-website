@@ -128,10 +128,12 @@ export function createNoiseOverlay(canvas, color) {
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     },
+    // Le contexte n'est pas perdu volontairement (WEBGL_lose_context) : le
+    // canvas survit au démontage (Strict Mode, Fast Refresh) et un contexte
+    // perdu ne peut pas être réutilisé, la transition disparaîtrait.
     dispose() {
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
     },
   };
   overlay.resize();

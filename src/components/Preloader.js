@@ -145,6 +145,9 @@ export default function Preloader({ brand, cards }) {
         "-=0.6",
       );
 
+      // Le style inline n'est posé sur <main> qu'au départ du tween (pas au
+      // montage) : la page, streamée, n'est pas encore hydratée à ce moment-là
+      // et React signalerait un attribut inattendu. Invisible sous le fond.
       if (header) {
         tl.from(
           header,
@@ -154,6 +157,7 @@ export default function Preloader({ brand, cards }) {
             scale: 1.1,
             duration: 1.5,
             ease: "cards",
+            immediateRender: false,
             clearProps: "transform",
           },
           "<",

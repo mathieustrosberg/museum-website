@@ -64,9 +64,11 @@
   object-fit: cover;
 }
 
-/* Le contenu de la page est mis à l'échelle à l'arrivée : pas de barre de défilement */
-body.is-loading main {
-  overflow: clip;
+/* La page arrive mise à l'échelle (1.1) et décalée : sa boîte transformée
+   déborderait de la fenêtre et ferait apparaître les barres de défilement.
+   Le débordement se coupe sur <body> (propagé à la fenêtre), pas sur <main>. */
+body.is-loading {
+  overflow: hidden;
 }
 
 /* Pages 404 et erreur : pas de preloader (PageReveal pose data-skip-preloader sur main) */

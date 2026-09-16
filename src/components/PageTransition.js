@@ -7,7 +7,7 @@ import { COVERED, createNoiseOverlay, HIDDEN } from "@/lib/noise-overlay";
 import { transition } from "@/lib/transition";
 
 /**
- * Navigation interne : son de clic, puis transition entre pages.
+ * Navigation interne : transition entre pages.
  *
  * 1. leave : le voile de bruit couvre la page (uProgress 1.5 → -0.75, 1 s).
  * 2. la nouvelle route est poussée dans le router (le scroll repart en haut,
@@ -18,10 +18,8 @@ import { transition } from "@/lib/transition";
  * L'écouteur est posé en phase de capture : il précède le gestionnaire de
  * <Link>, qui respecte preventDefault. Un lien vers la page courante ne
  * navigue pas. Sans WebGL ou avec prefers-reduced-motion, la navigation est
- * simplement différée de 120 ms, le temps du son.
+ * immédiate, sans voile.
  */
-const SRC = "/audio/click.wav";
-const NAV_DELAY = 120;
 const DURATION = 1;
 const EASE = "power1.in";
 const SAFETY = 4000;
@@ -29,18 +27,6 @@ const SAFETY = 4000;
 // le voile ne se dégage qu'à partir de 0 et a disparu vers 1.2 ; à 0.5 il ne
 // reste que des îlots, les textes montent juste après qu'il s'est retiré.
 const ENTER_AT = 0.5;
-
-let audio;
-
-function play() {
-  if (!audio) {
-    audio = new Audio(SRC);
-    audio.preload = "auto";
-    audio.volume = 0.6;
-  }
-  audio.currentTime = 0;
-  audio.play().catch(() => {});
-}
 
 /** URL relative d'une navigation interne « simple », sinon null. */
 function internalUrl(link, event) {
@@ -83,7 +69,7 @@ export default function PageTransition() {
     };
   }, []);
 
-  // Clics : son, puis transition et navigation.
+  // Clics : transition, puis navigation.
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -117,10 +103,6 @@ export default function PageTransition() {
         .find((node) => node instanceof Element && node.matches("a[href]"));
       if (!link) return;
 
-      // Le son n'accompagne que les liens ; les boutons (filtres, compteurs de
-      // billets, menu) restent silencieux.
-      play();
-
       const url = internalUrl(link, event);
       if (!url) return;
       event.preventDefault();
@@ -132,7 +114,7 @@ export default function PageTransition() {
         "(prefers-reduced-motion: reduce)",
       ).matches;
       if (reduced || !overlayRef.current) {
-        setTimeout(() => router.push(url), NAV_DELAY);
+        router.push(url);
         return;
       }
       leave(url);

@@ -30,7 +30,7 @@ export const metadata = {
 
 /**
  * Root layout (Server Component) : document, police, CSS global, navigation
- * persistante, preloader, son de clic et transition entre pages. Le footer n'est pas ici : sa position dans la
+ * persistante, preloader et transition entre pages. Le footer n'est pas ici : sa position dans la
  * mise en page varie selon les pages (colonne latérale ou pleine largeur).
  */
 export default async function RootLayout({ children }) {

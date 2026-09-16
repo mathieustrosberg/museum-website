@@ -10,7 +10,6 @@ npm run build    # build de production, prérendu des 53 routes (l'API doit rép
 npm run start    # serveur de production
 npm run lint     # Biome (lint + format)
 npm run format   # Biome, écriture
-node tools/make-click.mjs   # régénère le son de clic
 ```
 
 Stack : Next.js 16.3.5, React 19, JavaScript, Biome, React Compiler, Tailwind CSS v4, GSAP 3.15, dossier `src/`, alias `@/*`, npm.
@@ -40,8 +39,6 @@ src/
   lib/transition.js     état partagé de la transition (la page qui arrive attend le signal enter)
   data/site.json        textes, libellés, navigation, images des pages About et Visit
   styles/               globals.css (Tailwind sans Preflight + tokens) et le CSS du site
-public/audio
-tools/                  son de clic
 ```
 
 ## Server / Client Components
@@ -52,7 +49,7 @@ Tout est Server Component par défaut : layout, pages, cartes, cartel, blocs de 
 |---|---|
 | `PageReveal` | GSAP, `document.fonts.ready`, `matchMedia` ; `gsap.context().revert()` au nettoyage |
 | `Nav` | état du menu mobile, lien actif (`usePathname`), réinitialisé par clé à chaque route ; reçoit l'horloge en prop |
-| `PageTransition` | son de clic, voile WebGL de transition (bruit de dissolution), navigation via le router |
+| `PageTransition` | voile WebGL de transition (bruit de dissolution), navigation via le router |
 | `Preloader` | animation de chargement GSAP (pile de cartes), une fois par chargement complet |
 | `SelectedWorks` | survol d'une ligne → aperçu dans le panneau image (état partagé) |
 | `CollectionBrowser` | filtres, recherche, comptes, cartes masquées (`hidden`) |
