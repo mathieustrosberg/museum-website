@@ -16,11 +16,11 @@ Stack : Next.js 16.3.5, React 19, JavaScript, Biome, React Compiler, Tailwind CS
 
 ## API
 
-Le site lit les œuvres, l'archive, les expositions et les informations de visite sur l'API Halbton, et lui transmet les demandes de billets. L'URL de base vient de la variable d'environnement `HALBTON_API_URL` (fichier `.env.local` en local, réglages du projet sur Vercel) ; sans elle, le site vise `http://localhost:4000`, où tourne l'API en développement (`npm run dev` dans `museum-api`).
+Le site lit les œuvres, l'archive, les expositions et les informations de visite sur l'API de la Fondation (museum-api), et lui transmet les demandes de billets. L'URL de base vient de la variable d'environnement `FCM_API_URL` (fichier `.env.local` en local, réglages du projet sur Vercel) ; sans elle, le site vise `http://localhost:4000`, où tourne l'API en développement (`npm run dev` dans `museum-api`).
 
 | Variable | Rôle |
 |---|---|
-| `HALBTON_API_URL` | URL de base de l'API (sans barre oblique finale) |
+| `FCM_API_URL` | URL de base de l'API (sans barre oblique finale) |
 | `REVALIDATE_SECRET` | jeton attendu par `POST /api/revalidate?tag=…` pour invalider le cache après une mise à jour des données |
 
 ## Architecture

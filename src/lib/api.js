@@ -7,14 +7,14 @@
  * (revalidateTag depuis /api/revalidate). Si l'API est injoignable au moment
  * d'une revalidation, la version en cache continue d'être servie.
  *
- * L'URL de base vient de HALBTON_API_URL (déploiement Vercel de museum-api) ;
+ * L'URL de base vient de FCM_API_URL (déploiement Vercel de museum-api) ;
  * en local, l'API tourne sur http://localhost:4000 (npm run dev dans museum-api).
  */
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
 
 export const API_URL = (
-  process.env.HALBTON_API_URL ?? "http://localhost:4000"
+  process.env.FCM_API_URL ?? "http://localhost:4000"
 ).replace(/\/$/, "");
 
 /** GET JSON ; null pour un 404 (slug inconnu), erreur pour tout autre échec. */

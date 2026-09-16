@@ -1,5 +1,5 @@
 /** Hôte de l'API (photographies de l'archive servies depuis son dossier public). */
-const api = new URL(process.env.HALBTON_API_URL ?? "http://localhost:4000");
+const api = new URL(process.env.FCM_API_URL ?? "http://localhost:4000");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
