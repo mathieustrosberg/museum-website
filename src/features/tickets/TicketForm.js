@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  startTransition,
   useActionState,
   useEffect,
   useId,
@@ -24,6 +25,18 @@ const ORDER = ["name", "email", "date", "tickets"];
 const money = (currency, amount) => `${currency}${amount}`;
 const fill = (template, n) => template.replace("{n}", String(n));
 
+/** Focus sur le premier champ en erreur, dans l'ordre du formulaire. */
+function focusFirstError(form, errors) {
+  const first = ORDER.find((key) => errors[key]);
+  if (first) form?.querySelector(`[data-error-for="${first}"]`)?.focus();
+}
+
+/** Erreurs sans la clé donnée : la clé est retirée (et non mise à undefined), le compte suit. */
+function without(errors, key) {
+  const { [key]: _removed, ...rest } = errors;
+  return rest;
+}
+
 export default function TicketForm({
   days,
   types,
@@ -33,32 +46,47 @@ export default function TicketForm({
   messages,
 }) {
   const [state, formAction, pending] = useActionState(requestTickets, INITIAL);
+  // Erreurs de la pré-validation locale, ou erreurs du serveur corrigées depuis
+  // sa réponse ; null = afficher les erreurs du serveur telles quelles.
   const [localErrors, setLocalErrors] = useState(null);
+  const [answered, setAnswered] = useState(state);
   const [quantities, setQuantities] = useState(() =>
     Object.fromEntries(types.map((t) => [t.id, 0])),
   );
   const formRef = useRef(null);
   const id = useId();
 
+  // Nouvelle réponse du serveur : elle remplace la pré-validation locale.
+  if (answered !== state) {
+    setAnswered(state);
+    setLocalErrors(null);
+  }
+
   const errors = localErrors ?? state.errors;
   const errorCount = Object.keys(errors).length;
   const total = types.reduce((sum, t) => sum + quantities[t.id] * t.price, 0);
   const count = Object.values(quantities).reduce((a, b) => a + b, 0);
+
+  // Champ corrigé : son erreur disparaît, qu'elle vienne du formulaire ou du serveur.
+  const clear = (key) =>
+    setLocalErrors((local) => {
+      const current = local ?? state.errors;
+      return current[key] ? without(current, key) : local;
+    });
 
   const setQuantity = (typeId, value) => {
     setQuantities((q) => ({
       ...q,
       [typeId]: Math.min(maxPerType, Math.max(0, value)),
     }));
-    setLocalErrors((e) => (e?.tickets ? { ...e, tickets: undefined } : e));
+    clear("tickets");
   };
 
-  // Focus sur le premier champ en erreur après une soumission refusée.
+  // Demande refusée par le serveur : focus sur le premier champ en erreur.
+  // (Après la pré-validation locale, le focus est donné dans onSubmit.)
   useEffect(() => {
-    if (!errorCount) return;
-    const first = ORDER.find((key) => errors[key]);
-    formRef.current?.querySelector(`[data-error-for="${first}"]`)?.focus();
-  }, [errors, errorCount]);
+    focusFirstError(formRef.current, state.errors);
+  }, [state.errors]);
 
   // Page quittée (route masquée par Next) : nouvelle visite = formulaire neuf.
   useLayoutEffect(() => {
@@ -78,18 +106,24 @@ export default function TicketForm({
     return found;
   };
 
+  // Soumission : pré-validation, puis envoi manuel de l'action. Soumis par son
+  // attribut action, le formulaire serait réinitialisé par React à la fin de
+  // l'action, ce qui effacerait nom, e-mail et date après une demande refusée
+  // par le serveur ; l'attribut reste pour la soumission sans JavaScript.
   const onSubmit = (event) => {
-    const found = validate(event.currentTarget);
+    event.preventDefault();
+    const form = event.currentTarget;
+    const found = validate(form);
     if (Object.keys(found).length) {
-      event.preventDefault();
       setLocalErrors(found);
+      focusFirstError(form, found);
       return;
     }
-    setLocalErrors(null);
+    // Envoi : les erreurs de la réponse précédente ne restent pas affichées.
+    setLocalErrors({});
+    startTransition(() => formAction(new FormData(form)));
   };
 
-  const clear = (key) =>
-    setLocalErrors((e) => (e?.[key] ? { ...e, [key]: undefined } : e));
   const errorId = (key) => `${id}-error-${key}`;
   const invalid = (key) => Boolean(errors[key]);
   const message = (key) =>

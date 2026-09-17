@@ -1,5 +1,5 @@
 /**
- * Client de l'API Halbton (museum-api). Module serveur uniquement.
+ * Client de l'API de la Fondation (museum-api). Module serveur uniquement.
  *
  * Chaque lecture est un scope "use cache" (Cache Components) : le résultat est
  * mis en cache au build puis revalidé en arrière-plan toutes les heures
@@ -53,13 +53,6 @@ export async function fetchArchiveEntry(slug) {
   cacheLife("hours");
   cacheTag("archive", `archive:${slug}`);
   return get(`/archive/${encodeURIComponent(slug)}`);
-}
-
-export async function fetchExhibitions() {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("exhibitions");
-  return get("/exhibitions");
 }
 
 /** Informations de visite et jours d'ouverture à venir (la liste change chaque jour). */

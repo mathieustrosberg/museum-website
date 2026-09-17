@@ -20,8 +20,8 @@ export function formatDay(iso) {
   return labelFormat.format(new Date(`${iso}T00:00:00Z`));
 }
 
-/** Format d'une référence de demande : HB-AAMMJJ-XXXX */
-export const REFERENCE = /^HB-\d{6}-[A-Z2-9]{4}$/;
+/** Référence émise par l'API, affichée telle quelle : format opaque (majuscules, chiffres, tirets). */
+export const REFERENCE = /^[A-Z0-9-]{8,32}$/;
 
 /** Configuration de la billetterie : types de billets, devise, maximum par type. */
 export async function getTicketsConfig() {

@@ -2,8 +2,8 @@
  * Accès aux données du site. Module serveur : les pages et les Server Components
  * l'importent, jamais un Client Component (garde "server-only").
  *
- * Les textes et libellés (site.json) restent locaux ; les œuvres, l'archive et
- * les expositions viennent de l'API Halbton (lib/api.js, scopes "use cache").
+ * Les textes et libellés (site.json) restent locaux ; la collection, l'archive
+ * et la visite viennent de l'API de la Fondation (lib/api.js, scopes "use cache").
  * Ce module ajoute les vues dont les pages ont besoin : sélection de la home,
  * médiums distincts, œuvres proches, images dimensionnées.
  */
@@ -12,7 +12,6 @@ import site from "@/data/site.json";
 import {
   fetchArchive,
   fetchArchiveEntry,
-  fetchExhibitions,
   fetchWork,
   fetchWorks,
 } from "@/lib/api";
@@ -69,25 +68,27 @@ export function getArchiveEntry(slug) {
   return fetchArchiveEntry(slug);
 }
 
-/** Expositions en cours, dans l'ordre de l'API. */
-export async function getExhibitionsOnView() {
-  const exhibitions = (await fetchExhibitions()) ?? [];
-  return exhibitions.filter((e) => e.status === "on view");
-}
-
 /** Toutes les feuilles d'une œuvre, la couverture en tête. */
 export function workImages(work) {
   return [work.image, ...(work.gallery ?? [])];
 }
 
-/** Image de couverture d'une fiche avec ses dimensions et son option couleur, pour WorkCard et le preloader. */
+/** Image de couverture d'une fiche (cadre, couleur, ajustement), pour WorkCard et le preloader. */
 export function coverImage(work) {
-  return { src: work.image, color: Boolean(work.color), ...PORTRAIT };
+  return { src: work.image, ...sheetSize(work) };
 }
 
-/** Dimensions d'une feuille de la collection (toujours 3:4). */
-export function sheetSize() {
-  return PORTRAIT;
+/**
+ * Cadre d'une photographie de la collection : boîte 3:4. Les espaces la
+ * remplissent (recadrage) ; les tableaux s'y inscrivent en entier (`contain`),
+ * un tableau ne se recadre pas.
+ */
+export function sheetSize(work) {
+  return {
+    ...PORTRAIT,
+    color: Boolean(work.color),
+    contain: work.category === "work",
+  };
 }
 
 /** Image d'une entrée d'archive avec ses dimensions selon l'orientation. */

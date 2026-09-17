@@ -1,4 +1,4 @@
-/** Hôte de l'API (photographies de l'archive servies depuis son dossier public). */
+/** Hôte de l'API (photographies de la collection et de l'archive, servies depuis son dossier public). */
 const api = new URL(process.env.FCM_API_URL ?? "http://localhost:4000");
 
 /** @type {import('next').NextConfig} */
@@ -6,18 +6,18 @@ const nextConfig = {
   // Mémoïsation automatique des composants (babel-plugin-react-compiler).
   reactCompiler: true,
   // Modèle de rendu Next.js 16 : Cache Components. Chaque route produit un shell
-  // statique prérendu (Partial Prerendering par défaut) ; "use cache", cacheLife et
-  // cacheTag sont disponibles pour le contenu à mettre en cache lorsque l'API arrivera.
+  // statique prérendu (Partial Prerendering par défaut) ; les lectures de l'API
+  // sont des scopes "use cache" (cacheLife, cacheTag) dans src/lib/api.js.
   cacheComponents: true,
-  // Photographies servies par le CDN d'Unsplash (œuvres) ou par l'API (archive) :
-  // next/image les optimise à la demande.
+  // Photographies servies par l'API depuis son dossier /images : next/image les
+  // optimise à la demande (seul ce chemin est accepté par l'optimiseur).
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
       {
         protocol: api.protocol.replace(":", ""),
         hostname: api.hostname,
         port: api.port,
+        pathname: "/images/**",
       },
     ],
     // En développement, l'API tourne sur localhost : next/image refuse par défaut

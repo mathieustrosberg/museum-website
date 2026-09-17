@@ -14,19 +14,27 @@ import {
   site,
   workImages,
 } from "@/lib/content";
+import { OPEN_GRAPH, shareImage } from "@/lib/metadata";
 
-/** Les 12 pages œuvre sont générées au build (SSG) à partir des slugs connus. */
+/** Les fiches de la collection sont générées au build (SSG) à partir des slugs de l'API. */
 export async function generateStaticParams() {
   return (await getWorks()).map((work) => ({ slug: work.slug }));
 }
 
+/** Métadonnées de la fiche : description depuis le cartel, image de partage = photographie de couverture. */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const work = await getWork(slug);
   if (!work) return {};
+  const alt = [work.title, work.artist, work.year].filter(Boolean).join(", ");
   return {
     title: work.title,
-    description: `${work.title}, ${work.artist}, ${work.medium}, ${work.year}.`,
+    description: `${[work.title, work.artist, work.medium, work.year].filter(Boolean).join(", ")}.`,
+    alternates: { canonical: `/work/${slug}` },
+    openGraph: {
+      ...OPEN_GRAPH,
+      images: [shareImage(work.image, alt, sheetSize(work))],
+    },
   };
 }
 
@@ -44,7 +52,7 @@ export default async function WorkPage({ params }) {
   const artist = work.artist;
   const images = workImages(work);
   const [cover] = images;
-  const alt = `${work.title}, ${artist}, ${work.year}`;
+  const alt = [work.title, artist, work.year].filter(Boolean).join(", ");
 
   return (
     <PageReveal>
@@ -57,12 +65,7 @@ export default async function WorkPage({ params }) {
           data-duration="0.6"
         >
           <div className="media">
-            <SiteImage
-              src={cover}
-              alt={alt}
-              color={work.color}
-              {...sheetSize()}
-            />
+            <SiteImage src={cover} alt={alt} {...sheetSize(work)} />
           </div>
         </div>
 
@@ -100,7 +103,7 @@ export default async function WorkPage({ params }) {
                     data-delay="0.6"
                     data-duration="0.4"
                   >
-                    {work.year}
+                    {work.year ?? site.work.undated}
                   </p>
                 </div>
                 {work.dimensions ? (
@@ -142,9 +145,8 @@ export default async function WorkPage({ params }) {
                     <SiteImage
                       src={src}
                       alt={`${alt}, vue ${i + 1}`}
-                      color={work.color}
                       lazy={i > 0}
-                      {...sheetSize()}
+                      {...sheetSize(work)}
                     />
                   </div>
                 ))}

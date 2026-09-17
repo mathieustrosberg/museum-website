@@ -24,11 +24,15 @@ export default function SelectedWorks({
   const [active, setActive] = useState(false);
   const previewRef = useRef(null);
 
-  // Précharge les aperçus pour un swap sans latence.
+  // Précharge les aperçus (candidats next/image, à la taille du panneau) pour
+  // un swap sans latence ; inutile sans survol (écrans tactiles).
   useEffect(() => {
+    if (!window.matchMedia("(hover: hover)").matches) return;
     for (const work of works) {
       const img = new Image();
-      img.src = work.preview;
+      img.sizes = work.preview.sizes;
+      img.srcset = work.preview.srcSet;
+      img.src = work.preview.src;
     }
   }, [works]);
 
@@ -42,7 +46,7 @@ export default function SelectedWorks({
 
   const show = (work) => {
     setPreviewColor(work.color);
-    if (work.preview !== preview) {
+    if (work.preview.src !== preview?.src) {
       setActive(false);
       setPreview(work.preview);
     } else {
@@ -75,14 +79,16 @@ export default function SelectedWorks({
           width={media.width}
           height={media.height}
         />
-        {/* biome-ignore lint/performance/noImgElement: source échangée au survol, URL déjà dimensionnée par le CDN */}
+        {/* biome-ignore lint/performance/noImgElement: source échangée au survol ; src, srcSet et sizes sont les candidats produits par getImageProps (next/image) */}
         <img
           ref={previewRef}
           decoding="async"
           className={
             previewColor ? "media__preview is-color" : "media__preview"
           }
-          src={preview ?? undefined}
+          src={preview?.src}
+          srcSet={preview?.srcSet}
+          sizes={preview?.sizes}
           alt=""
           width={media.width}
           height={media.height}
@@ -132,7 +138,6 @@ export default function SelectedWorks({
                     key={work.slug}
                     className="row"
                     href={`/work/${work.slug}`}
-                    data-preview={work.preview}
                     onMouseEnter={() => show(work)}
                     onFocus={() => show(work)}
                     onBlur={hide}

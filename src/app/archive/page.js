@@ -8,6 +8,7 @@ import { getArchive, site } from "@/lib/content";
 export const metadata = {
   title: site.titles.archive,
   description: site.meta.archive,
+  alternates: { canonical: "/archive" },
 };
 
 /** Archive (Server Component, prérendue) : en-tête sur 2 colonnes, grille des photographies de l'API. */

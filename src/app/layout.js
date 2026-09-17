@@ -4,6 +4,7 @@ import PageTransition from "@/components/PageTransition";
 import Preloader from "@/components/Preloader";
 import Clock from "@/features/visit/Clock";
 import { coverImage, getSelectedWorks, site } from "@/lib/content";
+import { OPEN_GRAPH, SITE_URL } from "@/lib/metadata";
 import "@/styles/globals.css";
 
 /** IBM Plex Mono auto-hébergée par next/font : aucune requête vers Google, pas de layout shift. */
@@ -16,28 +17,41 @@ const mono = IBM_Plex_Mono({
 
 const siteTitle = `${site.name} — ${site.tagline}`;
 
+/**
+ * Métadonnées communes. Le titre et la description Open Graph ne sont pas fixés
+ * ici : chaque page hérite des siens. metadataBase rend absolues les URL
+ * relatives (canonical, image de partage, src/app/opengraph-image.jpg).
+ */
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: { default: siteTitle, template: `${site.name} — %s` },
   description: site.meta.home,
-  openGraph: {
-    siteName: site.name,
-    title: siteTitle,
-    description: site.meta.home,
-    type: "website",
-    locale: site.lang,
-  },
+  openGraph: OPEN_GRAPH,
 };
 
 /**
  * Root layout (Server Component) : document, police, CSS global, navigation
  * persistante, preloader et transition entre pages. Le footer n'est pas ici : sa position dans la
  * mise en page varie selon les pages (colonne latérale ou pleine largeur).
+ *
+ * La classe `js` de <html> conditionne l'état initial masqué des apparitions
+ * (animations.css). Elle est posée par un script inline, exécuté avant le
+ * premier rendu, et non dans le JSX : sans JavaScript, le contenu reste
+ * visible. suppressHydrationWarning : le DOM porte la classe, pas le JSX.
  */
 export default async function RootLayout({ children }) {
-  // Cinq feuilles de la sélection de la home, cartes du preloader.
+  // Cinq photographies de la sélection de la home, cartes du preloader.
   const cards = (await getSelectedWorks()).slice(0, 5).map(coverImage);
   return (
-    <html lang={site.lang} className={`js ${mono.variable}`}>
+    <html lang={site.lang} className={mono.variable} suppressHydrationWarning>
+      <head>
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: script constant, sans donnée
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
+      </head>
       <body>
         <Nav
           brand={site.nav.brand}

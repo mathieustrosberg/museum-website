@@ -5,17 +5,28 @@ import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
 import { archiveImage, getArchive, getArchiveEntry, site } from "@/lib/content";
+import { OPEN_GRAPH, shareImage } from "@/lib/metadata";
 
 /** Les pages d'archive sont générées au build (SSG) à partir des slugs de l'API. */
 export async function generateStaticParams() {
   return (await getArchive()).map((entry) => ({ slug: entry.slug }));
 }
 
+/** Métadonnées de l'entrée : image de partage = la photographie, à son orientation. */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const entry = await getArchiveEntry(slug);
   if (!entry) return {};
-  return { title: entry.title, description: `${entry.title}, ${entry.date}.` };
+  const { src, width, height } = archiveImage(entry);
+  return {
+    title: entry.title,
+    description: `${entry.title}, ${entry.date}.`,
+    alternates: { canonical: `/archive/${slug}` },
+    openGraph: {
+      ...OPEN_GRAPH,
+      images: [shareImage(src, entry.description, { width, height })],
+    },
+  };
 }
 
 /** Entrée d'archive (Server Component) : image centrée sur fond gris, titre et date. */

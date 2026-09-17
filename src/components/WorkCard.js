@@ -15,6 +15,7 @@ export default function WorkCard({ work, image, lazy = false, ...attrs }) {
           src={image.src}
           alt={work.title}
           color={image.color}
+          contain={image.contain}
           lazy={lazy}
           width={image.width}
           height={image.height}
@@ -22,7 +23,7 @@ export default function WorkCard({ work, image, lazy = false, ...attrs }) {
         />
       </div>
       <div className="card__caption">
-        <span className="card__date">{work.year}</span>
+        <span className="card__date">{work.year ?? ""}</span>
         <h3 className="card__title">{work.title}</h3>
       </div>
     </Link>

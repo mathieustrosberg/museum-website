@@ -1,5 +1,7 @@
 /* ==========================================================================
    États initiaux des apparitions (uniquement si JS est actif).
+   La classe js est posée sur <html> par un script inline du layout racine,
+   avant le premier rendu : sans JavaScript, rien n'est masqué.
    La classe is-revealed est posée sur la racine de chaque page (<main>) par
    PageReveal, et non sur <html> : en navigation client, la page suivante
    arrive masquée et rejoue son apparition, comme à un chargement.
@@ -13,6 +15,20 @@
 .js .is-revealed [data-reveal],
 .js .is-revealed [data-reveal-each] > * {
   opacity: 1;
+}
+
+/* Filet de sécurité : si l'apparition n'a pas eu lieu (script en échec,
+   hydratation interrompue), le contenu réapparaît de lui-même après 6 s.
+   La règle ne s'applique qu'avant is-revealed, jamais en concurrence avec GSAP. */
+@keyframes reveal-fallback {
+  to {
+    opacity: 1;
+  }
+}
+
+.js main:not(.is-revealed) [data-reveal],
+.js main:not(.is-revealed) [data-reveal-each] > * {
+  animation: reveal-fallback 0s 6s forwards;
 }
 
 /* Masque de lignes : la ligne glisse depuis 110 % à l'intérieur du masque */

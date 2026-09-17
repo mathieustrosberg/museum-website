@@ -8,6 +8,7 @@ import { site } from "@/lib/content";
 export const metadata = {
   title: site.titles.about,
   description: site.meta.about,
+  alternates: { canonical: "/about" },
 };
 
 /** About (Server Component, prérendue) : texte à gauche, deux images à droite. */

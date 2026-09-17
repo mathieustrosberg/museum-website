@@ -1,31 +1,48 @@
+import { getImageProps } from "next/image";
 import Footer from "@/components/Footer";
 import { Info, TextList } from "@/components/Info";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SelectedWorks from "@/features/home/SelectedWorks";
-import { getSelectedWorks, site } from "@/lib/content";
+import { coverImage, getSelectedWorks, site } from "@/lib/content";
 
 export const metadata = {
   title: { absolute: `${site.name} — ${site.tagline}` },
   description: site.meta.home,
+  alternates: { canonical: "/" },
 };
+
+/** Largeur du panneau image (grid-2) : pleine largeur sur mobile, une colonne sur deux au-delà. */
+const PREVIEW_SIZES = "(max-width: 767px) 100vw, 50vw";
 
 /**
  * Home (Server Component, prérendue). La rangée haute est du contenu statique ;
  * la rangée basse est confiée à SelectedWorks (client) pour l'aperçu au survol,
- * avec un index sérialisable des 8 œuvres sélectionnées.
+ * avec un index sérialisable de la sélection (site.json). Chaque aperçu est
+ * l'ensemble de candidats produit par getImageProps (next/image) : le
+ * navigateur charge la taille du panneau, jamais l'original de l'API.
  */
 export default async function HomePage() {
   const { home } = site;
-  const works = (await getSelectedWorks()).map((work) => ({
-    slug: work.slug,
-    year: work.year,
-    title: work.title,
-    type: work.type,
-    location: work.location,
-    preview: work.image,
-    color: Boolean(work.color),
-  }));
+  const works = (await getSelectedWorks()).map((work) => {
+    const { src, width, height } = coverImage(work);
+    const { props } = getImageProps({
+      src,
+      width,
+      height,
+      alt: "",
+      sizes: PREVIEW_SIZES,
+    });
+    return {
+      slug: work.slug,
+      year: work.year,
+      title: work.title,
+      type: work.type,
+      location: work.location,
+      preview: { src: props.src, srcSet: props.srcSet, sizes: props.sizes },
+      color: Boolean(work.color),
+    };
+  });
 
   return (
     <PageReveal>

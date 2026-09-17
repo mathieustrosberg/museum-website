@@ -12,13 +12,14 @@ import {
 export const metadata = {
   title: site.titles.collection,
   description: site.meta.collection,
+  alternates: { canonical: "/work" },
 };
 
 /**
- * Collection (Server Component, prérendue). La page lit les 12 œuvres et passe
+ * Collection (Server Component, prérendue). La page lit la collection et passe
  * au CollectionBrowser (client) un index sérialisable : slug, titre, année,
- * image dimensionnée, type, catégorie (tableau ou espace), lieu, présence
- * en exposition, texte de recherche.
+ * image dimensionnée, type, catégorie (tableau ou espace), lieu, texte de
+ * recherche.
  * La grille est filtrable, elle vit donc dans le composant client ; le footer
  * reste un Server Component passé en prop.
  */
@@ -33,8 +34,7 @@ export default async function CollectionPage() {
       medium: work.type,
       category: work.category,
       location: work.location,
-      onView: work.onView,
-      haystack: `${work.title} ${artist} ${work.type} ${work.year}`
+      haystack: `${work.title} ${artist} ${work.type} ${work.year ?? ""}`
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase(),

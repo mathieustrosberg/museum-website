@@ -1,6 +1,7 @@
 {
   "name": "Fondation César Manrique",
   "lang": "fr",
+  "locale": "fr_FR",
   "meta": {
     "home": "Fondation César Manrique, ancienne maison de l'artiste à Tahíche, Lanzarote. Tableaux de Manrique, espaces creusés dans la lave, expositions, jardin.",
     "collection": "La collection de la Fondation : tableaux de César Manrique et espaces de la maison de Tahíche, listés par année, titre, artiste et type.",
@@ -91,10 +92,6 @@
       {
         "label": "Espaces",
         "value": "space"
-      },
-      {
-        "label": "En exposition",
-        "value": "on-view"
       }
     ],
     "mediumLabel": "Type",
@@ -125,6 +122,7 @@
       "location": "Lieu",
       "notes": "Notes"
     },
+    "undated": "Non datée",
     "similarLabel": "[À voir aussi]",
     "cartelSpace": {
       "title": "Espace",
@@ -195,11 +193,11 @@
       "timeZone": "Atlantic/Canary"
     },
     "media": {
-      "src": "/images/visit/atelier-silhouette.jpg",
-      "width": 1200,
-      "height": 800,
-      "alt": "L'atelier de César Manrique vu depuis la table de travail, silhouette grandeur nature de l'artiste au fond.",
-      "color": true
+      "src": "/images/visit/maison-tahiche.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": true,
+      "alt": "Mur blanc et fenêtre verte de la maison de Tahíche, cactus candélabre et rochers de lave au premier plan."
     },
     "blocks": [
       {
@@ -298,7 +296,6 @@
           "Renseignements : fcm@fcmanrique.org"
         ]
       },
-      "onView": "En exposition ce jour-là",
       "links": {
         "again": "Nouvelle demande",
         "home": "Accueil"

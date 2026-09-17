@@ -41,9 +41,7 @@ export default function CollectionBrowser({
   const searchId = useId();
 
   const tokens = normalize(query).split(/\s+/).filter(Boolean);
-  const inScope = (work, value) =>
-    value === "all" ||
-    (value === "on-view" ? work.onView : work.category === value);
+  const inScope = (work, value) => value === "all" || work.category === value;
   const inMedium = (work, value) => !value || work.medium === value;
   const inLocation = (work, value) => !value || work.location === value;
   const inQuery = (work) =>
@@ -137,7 +135,6 @@ export default function CollectionBrowser({
             lazy={i >= 4}
             data-medium={work.medium}
             data-location={work.location}
-            data-scope={work.onView ? "on-view" : undefined}
             hidden={!shown.includes(work)}
           />
         ))}

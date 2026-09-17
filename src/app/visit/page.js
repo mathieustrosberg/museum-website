@@ -11,6 +11,7 @@ import { getOpenDays, getTicketsConfig } from "@/lib/tickets";
 export const metadata = {
   title: site.titles.visit,
   description: site.meta.visit,
+  alternates: { canonical: "/visit" },
 };
 
 /**

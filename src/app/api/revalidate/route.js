@@ -4,10 +4,10 @@ import { revalidateTag } from "next/cache";
  * Invalidation ciblée du cache (Cache Components). À appeler après une mise à
  * jour des données de l'API : POST /api/revalidate?tag=works avec
  * l'en-tête Authorization: Bearer <REVALIDATE_SECRET>. Le tag est l'un de ceux
- * posés par lib/api.js (works, archive, exhibitions, visit, work:<slug>…) ; la
+ * posés par lib/api.js (works, archive, visit, work:<slug>…) ; la
  * prochaine requête reçoit la version en cache et déclenche la revalidation.
  */
-const TAGS = /^(works|archive|exhibitions|visit|work:[\w-]+|archive:[\w-]+)$/;
+const TAGS = /^(works|archive|visit|work:[\w-]+|archive:[\w-]+)$/;
 
 export async function POST(request) {
   const secret = process.env.REVALIDATE_SECRET;

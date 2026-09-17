@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { Info, TextList } from "@/components/Info";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
-import { getExhibitionsOnView, site } from "@/lib/content";
+import { site } from "@/lib/content";
 import { formatDay, getTicketsConfig, REFERENCE } from "@/lib/tickets";
 
 export const metadata = {
@@ -63,13 +63,6 @@ export default async function ConfirmedPage({ searchParams }) {
           <div className="confirmed__aside">
             <Info label={confirmed.next.label}>
               <TextList items={confirmed.next.items} />
-            </Info>
-            <Info label={confirmed.onView}>
-              <TextList
-                items={(await getExhibitionsOnView()).map(
-                  (e) => `${e.title}, ${e.dates}`,
-                )}
-              />
             </Info>
           </div>
         </div>

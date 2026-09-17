@@ -17,6 +17,13 @@
   object-fit: cover;
 }
 
+/* Tableaux : l'image entière dans son cadre, sur le fond gris, jamais recadrée */
+.media img.is-contained,
+.card__media img.is-contained {
+  object-fit: contain;
+  transform: none;
+}
+
 /* Image d'aperçu superposée (swap au survol des lignes de projets) */
 .media__preview {
   opacity: 0;
