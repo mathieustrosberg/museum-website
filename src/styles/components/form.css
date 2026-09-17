@@ -52,3 +52,14 @@
   color: var(--color-text-muted);
   opacity: 1;
 }
+
+/* Message d'erreur sous un champ : en couleur, sans capitales (le trait du champ suit, .is-invalid) */
+.form__error {
+  color: var(--color-error);
+  text-transform: none;
+}
+
+/* Indication sous un champ (ex. longueur du mot de passe), remplacée par le message d'erreur */
+.form__hint {
+  font-size: var(--fs-label);
+}

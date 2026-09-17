@@ -102,3 +102,10 @@
     grid-column: 1 / -1;
   }
 }
+
+/* Rangée d'actions au-dessus du cartel : « Toute la collection », favori */
+.project__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-block);
+}

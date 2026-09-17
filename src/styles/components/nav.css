@@ -101,3 +101,11 @@
     display: flex;
   }
 }
+
+/* Lien de compte : le prénom, coupé s'il est long, pour ne pas pousser l'horloge */
+.nav__account {
+  display: inline-block;
+  max-width: 12ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

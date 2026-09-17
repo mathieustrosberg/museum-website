@@ -1,0 +1,94 @@
+/* ==========================================================================
+   Connexion / Inscription, Compte, Favoris
+   Connexion et Inscription : comme À propos, texte et formulaire centrés à
+   gauche, photographie de la collection à droite (100vh - footer).
+   Compte : titre, puis deux colonnes (identité + déconnexion | favoris).
+   Favoris : titre, compte, grille de cartes.
+   Tablette / mobile : une colonne, image 3:4 après le formulaire.
+   ========================================================================== */
+
+.auth {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+  min-height: calc(100vh - 48px);
+  min-height: calc(100dvh - 48px);
+  padding: var(--page-top) var(--gutter) 0;
+}
+
+.auth__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-group);
+  align-self: center;
+  width: var(--col-text);
+  max-width: 100%;
+}
+
+.auth__media {
+  height: 100%;
+}
+
+.auth__switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--gap-inline);
+  align-items: baseline;
+  margin-top: var(--gap-block);
+}
+
+.account,
+.favorites {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-group);
+}
+
+.account__panel {
+  row-gap: var(--gap-section);
+}
+
+.account__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-block);
+}
+
+.account__form {
+  width: var(--col-text);
+  max-width: 100%;
+}
+
+.account__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-list);
+}
+
+.account__column .list {
+  width: 100%;
+}
+
+@media (max-width: 1159.98px) {
+  .auth {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    min-height: 0;
+  }
+
+  .auth__text {
+    align-self: auto;
+  }
+
+  .auth__media {
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .account__panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

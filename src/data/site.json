@@ -8,7 +8,11 @@
     "archive": "Les archives de la Fondation : maison et atelier de César Manrique, tableaux et détails, vues de Lanzarote, par Vladimir Kysela et des photographes de Pexels.",
     "about": "L'ancienne maison de César Manrique sur la coulée de lave de Tahíche. Cinq bulles volcaniques, un jameo, un atelier devenu salle d'exposition.",
     "visit": "Visiter la Fondation César Manrique, Taro de Tahíche, Lanzarote. Tous les jours, 10:00–17:30, billetterie jusqu'à 17:00. Fermé le 1er janvier.",
-    "confirmed": "Demande de billets enregistrée à titre de démonstration. Aucun billet n'est réservé auprès de la Fondation."
+    "confirmed": "Demande de billets enregistrée à titre de démonstration. Aucun billet n'est réservé auprès de la Fondation.",
+    "account": "Compte sur le site de la Fondation César Manrique : connexion, création de compte, favoris de la collection.",
+    "favorites": "Fiches de la collection de la Fondation César Manrique enregistrées en favoris.",
+    "login": "Connexion à votre compte sur le site de la Fondation César Manrique, pour retrouver vos favoris de la collection.",
+    "signup": "Création d'un compte sur le site de la Fondation César Manrique, pour enregistrer des fiches de la collection en favoris."
   },
   "titles": {
     "collection": "Collection",
@@ -16,7 +20,11 @@
     "about": "À propos",
     "visit": "Visite",
     "confirmed": "Demande enregistrée",
-    "notFound": "Page introuvable"
+    "notFound": "Page introuvable",
+    "account": "Compte",
+    "favorites": "Favoris",
+    "login": "Connexion",
+    "signup": "Inscription"
   },
   "nav": {
     "brand": "Fondation César Manrique",
@@ -38,7 +46,7 @@
         "page": "about"
       },
       {
-        "label": "Visite",
+        "label": "Visite,",
         "href": "/visit",
         "page": "visit"
       }
@@ -307,5 +315,80 @@
     "text": "La collection n'a pas pu être chargée. La maison est toujours là ; réessayez dans un instant.",
     "retry": "Réessayer",
     "home": "Accueil"
+  },
+  "account": {
+    "nav": {
+      "signedOut": "Connexion",
+      "signedIn": "Compte",
+      "aria": "Compte de {name}"
+    },
+    "login": {
+      "title": "[Connexion]",
+      "intro": "Retrouvez les fiches de la collection que vous avez enregistrées en favoris.",
+      "submit": "Se connecter",
+      "sending": "Connexion",
+      "switchText": "Pas encore de compte ?",
+      "switchLink": "Créer un compte",
+      "image": "jameos-del-agua"
+    },
+    "signup": {
+      "title": "[Inscription]",
+      "intro": "Un compte permet d'enregistrer des fiches de la collection en favoris et de les retrouver à chaque visite. Il ne vaut que sur ce site : aucun service de la Fondation n'y est lié.",
+      "submit": "Créer un compte",
+      "sending": "Création",
+      "switchText": "Déjà un compte ?",
+      "switchLink": "Se connecter",
+      "image": "jardin-de-cactus"
+    },
+    "form": {
+      "name": "Nom",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "hints": {
+        "password": "8 caractères au moins"
+      }
+    },
+    "errors": {
+      "name": "Indiquez votre nom.",
+      "email": "Indiquez une adresse e-mail valide.",
+      "password": "Indiquez votre mot de passe.",
+      "passwordShort": "Choisissez un mot de passe d'au moins 8 caractères.",
+      "credentials": "E-mail ou mot de passe incorrect.",
+      "exists": "Un compte existe déjà avec cette adresse.",
+      "generic": "La demande n'a pas pu être traitée. Réessayez.",
+      "summary": {
+        "one": "Un champ demande votre attention.",
+        "other": "{n} champs demandent votre attention."
+      }
+    },
+    "page": {
+      "title": "[Compte]",
+      "name": "Nom",
+      "email": "E-mail",
+      "since": "Membre depuis",
+      "favorites": "[Favoris]",
+      "count": {
+        "zero": "Aucune fiche enregistrée pour l'instant.",
+        "one": "Une fiche enregistrée.",
+        "other": "{n} fiches enregistrées."
+      },
+      "browse": "Parcourir la collection",
+      "viewFavorites": "Voir tous les favoris",
+      "signOut": "Se déconnecter",
+      "signingOut": "Déconnexion"
+    }
+  },
+  "favorites": {
+    "title": "[Favoris]",
+    "add": "Ajouter aux favoris",
+    "remove": "Retirer des favoris",
+    "count": {
+      "one": "Une fiche enregistrée.",
+      "other": "{n} fiches enregistrées."
+    },
+    "empty": "Aucune fiche enregistrée pour l'instant. Chaque fiche de la collection propose « Ajouter aux favoris ».",
+    "allWorks": "Toute la collection",
+    "removeShort": "Retirer",
+    "removeAria": "Retirer {title} des favoris"
   }
 }

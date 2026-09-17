@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
 import WorkCard from "@/components/WorkCard";
+import FavoriteToggle from "@/features/favorites/FavoriteToggle";
 import {
   coverImage,
   getSimilarWorks,
@@ -14,14 +17,20 @@ import {
   site,
   workImages,
 } from "@/lib/content";
-import { OPEN_GRAPH, shareImage } from "@/lib/metadata";
+import {
+  breadcrumbJsonLd,
+  excerpt,
+  OPEN_GRAPH,
+  shareImage,
+  workJsonLd,
+} from "@/lib/metadata";
 
 /** Les fiches de la collection sont générées au build (SSG) à partir des slugs de l'API. */
 export async function generateStaticParams() {
   return (await getWorks()).map((work) => ({ slug: work.slug }));
 }
 
-/** Métadonnées de la fiche : description depuis le cartel, image de partage = photographie de couverture. */
+/** Métadonnées de la fiche : description = début de la notice, image de partage = photographie de couverture. */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const work = await getWork(slug);
@@ -29,7 +38,7 @@ export async function generateMetadata({ params }) {
   const alt = [work.title, work.artist, work.year].filter(Boolean).join(", ");
   return {
     title: work.title,
-    description: `${[work.title, work.artist, work.medium, work.year].filter(Boolean).join(", ")}.`,
+    description: excerpt(work.description),
     alternates: { canonical: `/work/${slug}` },
     openGraph: {
       ...OPEN_GRAPH,
@@ -38,7 +47,11 @@ export async function generateMetadata({ params }) {
   };
 }
 
-/** Page œuvre (Server Component) : couverture sticky, cartel, feuilles, œuvres similaires. */
+/**
+ * Page œuvre (Server Component) : couverture sticky, cartel, feuilles, œuvres
+ * similaires. Le favori dépend de la session : c'est le seul trou dynamique de
+ * la fiche (Suspense), le reste est le shell statique.
+ */
 export default async function WorkPage({ params }) {
   const { slug } = await params;
   const work = await getWork(slug);
@@ -53,9 +66,17 @@ export default async function WorkPage({ params }) {
   const images = workImages(work);
   const [cover] = images;
   const alt = [work.title, artist, work.year].filter(Boolean).join(", ");
+  const share = shareImage(cover, alt, sheetSize(work));
 
   return (
     <PageReveal>
+      <JsonLd data={workJsonLd(work, share)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: site.titles.collection, path: "/work" },
+          { name: work.title, path: `/work/${work.slug}` },
+        ])}
+      />
       <section className="project">
         <div
           className="project__cover"
@@ -72,15 +93,25 @@ export default async function WorkPage({ params }) {
         <div className="project__content">
           <div className="project__grid">
             <div className="project__body">
-              <Link
-                className="link-underline"
-                href="/work"
-                data-reveal="fade-up"
-                data-y="20"
-                data-delay="0.2"
-              >
-                {site.work.allWorks}
-              </Link>
+              <div className="project__actions">
+                <Link
+                  className="link-underline"
+                  href="/work"
+                  data-reveal="fade-up"
+                  data-y="20"
+                  data-delay="0.2"
+                >
+                  {site.work.allWorks}
+                </Link>
+                <Suspense fallback={null}>
+                  <FavoriteToggle
+                    slug={work.slug}
+                    data-reveal="fade-up"
+                    data-y="20"
+                    data-delay="0.3"
+                  />
+                </Suspense>
+              </div>
 
               <div className="project__meta">
                 <div className="info">

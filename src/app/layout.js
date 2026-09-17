@@ -1,7 +1,9 @@
 import { IBM_Plex_Mono } from "next/font/google";
+import { Suspense } from "react";
 import Nav from "@/components/Nav";
 import PageTransition from "@/components/PageTransition";
 import Preloader from "@/components/Preloader";
+import AccountLink from "@/features/account/AccountLink";
 import Clock from "@/features/visit/Clock";
 import { coverImage, getSelectedWorks, site } from "@/lib/content";
 import { OPEN_GRAPH, SITE_URL } from "@/lib/metadata";
@@ -38,6 +40,10 @@ export const metadata = {
  * (animations.css). Elle est posée par un script inline, exécuté avant le
  * premier rendu, et non dans le JSX : sans JavaScript, le contenu reste
  * visible. suppressHydrationWarning : le DOM porte la classe, pas le JSX.
+ *
+ * Le lien de compte de la navigation dépend de la session (cookie) : c'est le
+ * trou dynamique commun à toutes les pages (Suspense, Partial Prerendering),
+ * le reste du layout et des pages reste prérendu.
  */
 export default async function RootLayout({ children }) {
   // Cinq photographies de la sélection de la home, cartes du preloader.
@@ -57,6 +63,11 @@ export default async function RootLayout({ children }) {
           brand={site.nav.brand}
           aria={site.nav.aria}
           links={site.nav.links}
+          account={
+            <Suspense fallback={null}>
+              <AccountLink />
+            </Suspense>
+          }
           clock={
             <Clock
               className="nav__clock"

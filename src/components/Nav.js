@@ -5,18 +5,34 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 /**
- * Navigation fixe : marque | Espaces, Archives, À propos, Visite ............ horloge.
+ * Navigation fixe : marque | Collection, Archives, À propos, Visite, compte ............ horloge.
  * Client Component pour l'état du menu mobile [+] / [-] et le lien actif (usePathname). L'état est réinitialisé à chaque changement de route
  * grâce à la clé : le menu se referme après une navigation, comme à un chargement.
+ * `account` est le lien de compte, rendu côté serveur selon la session
+ * (AccountLink) et reçu en prop comme l'horloge.
  */
 export default function Nav(props) {
   const pathname = usePathname();
-  return <NavBar key={pathname} pathname={pathname} {...props} />;
+  return <NavBar key={pathname} {...props} />;
 }
 
-function NavBar({ brand, aria, links, clock, pathname }) {
+/** Lien de la navigation, marqué courant quand il mène à la page affichée. */
+export function NavLink({ href, className, children, ...props }) {
+  const pathname = usePathname();
+  return (
+    <Link
+      className={className ? `nav__link ${className}` : "nav__link"}
+      href={href}
+      aria-current={pathname === href ? "page" : undefined}
+      {...props}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function NavBar({ brand, aria, links, account, clock }) {
   const [open, setOpen] = useState(false);
-  const current = (href) => (pathname === href ? "page" : undefined);
 
   return (
     <header className={open ? "nav is-open" : "nav"} id="nav">
@@ -39,15 +55,11 @@ function NavBar({ brand, aria, links, clock, pathname }) {
         <nav className="nav__menu" id="nav-menu" aria-label={aria}>
           <div className="nav__links">
             {links.map((link) => (
-              <Link
-                key={link.href}
-                className="nav__link"
-                href={link.href}
-                aria-current={current(link.href)}
-              >
+              <NavLink key={link.href} href={link.href}>
                 {link.label}
-              </Link>
+              </NavLink>
             ))}
+            {account}
           </div>
           {clock}
         </nav>
