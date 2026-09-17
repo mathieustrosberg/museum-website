@@ -101,6 +101,20 @@ Au clic sur un lien interne, un voile plein écran, du gris de la barre de navig
 
 Au chargement complet d'une page, `Preloader` (client, rendu côté serveur pour couvrir la page dès le premier octet) joue une pile de cartes : cinq photographies de la sélection de la home s'empilent (ressort), tombent une à une, puis le fond gris glisse vers le bas pendant que `<main>` arrive à l'échelle 1 et que la page joue ses apparitions (signal `enter()` de `lib/transition.js`, le même que pour la transition entre pages). Le composant se retire du DOM à la fin ; les navigations client ne le rejouent pas. `prefers-reduced-motion` le saute.
 
+## Conventions
+
+- La DA, les espacements, les animations et le responsive ne se modifient pas sans décision explicite. Le CSS de `src/styles` est la référence ; Tailwind sert aux ajouts, pas aux réécritures.
+- Server Components par défaut ; `"use client"` uniquement pour un besoin navigateur (état, événements, GSAP, APIs du DOM), au plus bas de l'arbre. Les données passent par `src/lib/content.js` (serveur) puis par props sérialisables.
+- Toute animation GSAP vit dans un `useEffect` avec nettoyage (`gsap.context().revert()`) : avec Cache Components, une route masquée puis réaffichée rejoue ses effets.
+- Les textes et libellés viennent de `src/data/site.json` ; la collection, l'archive et la visite viennent de l'API (`src/lib/api.js`) : pas de texte ni de donnée en dur dans les composants.
+- Toute lecture de l'API est une fonction `"use cache"` de `src/lib/api.js` avec `cacheLife("hours")` et un `cacheTag` ; les pages appellent `src/lib/content.js`, jamais `fetch`. Une nouvelle ressource = une fonction dans `api.js`, une vue dans `content.js`, un tag accepté par `src/app/api/revalidate/route.js`.
+- Les images sont des URL complètes fournies par l'API (chemin `/images/**` dans `images.remotePatterns`) ou des chemins `/images/…` du dossier `public` du site pour `site.json` ; `SiteImage` (next/image) reçoit toujours `width`, `height` et un `sizes` adapté à la grille. Une image hors `next/image` (aperçu au survol) prend ses candidats de `getImageProps`, jamais l'URL de l'API. Les tableaux s'affichent entiers (`contain`), jamais recadrés.
+- Métadonnées : `metadataBase`, Open Graph commun (`OPEN_GRAPH`) et image de partage d'une fiche (`shareImage`) viennent de `src/lib/metadata.js`. Chaque page déclare `title`, `description` et `alternates.canonical` ; une page qui définit `openGraph` repart de `OPEN_GRAPH` (Next.js remplace l'objet, il ne le fusionne pas). Une nouvelle route publique s'ajoute à `src/app/sitemap.js`.
+- Billetterie : `requestTickets` (`src/features/tickets/actions.js`) transmet la demande à l'API (`POST /tickets`) et traduit ses codes d'erreur par champ avec `site.tickets.errors` ; la validation locale de `TicketForm` n'est qu'une pré-validation. La référence émise par l'API est affichée telle quelle (format opaque, `REFERENCE` dans `src/lib/tickets.js`).
+- Transition entre pages : `PageTransition` (voile WebGL, `src/lib/noise-overlay.js`) et `src/lib/transition.js` ; toute nouvelle page passe par `PageReveal`, qui attend le signal d'entrée pendant une transition. Sans `PageReveal`, une page resterait masquée.
+- Texte révélé : composant `Lines` (`split` pour le multiligne) et `data-reveal="lines"` ; pas de découpe par caractères. La classe `js` de `<html>` est posée par le script inline du layout racine, jamais dans le JSX : sans JavaScript, le contenu reste visible.
+- Le build a besoin de l'API (`FCM_API_URL`, `http://localhost:4000` par défaut) : lancer `museum-api` avant `npm run build`.
+
 ## Fonctionnalités
 
 - Collection (espaces conçus par César Manrique et tableaux), archive photographique et informations de visite lues sur l'API de la Fondation, mises en cache et revalidées (Cache Components).
