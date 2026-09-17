@@ -1,18 +1,25 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
 import { archiveImage, getArchive, getArchiveEntry, site } from "@/lib/content";
-import { OPEN_GRAPH, shareImage } from "@/lib/metadata";
+import {
+  breadcrumbJsonLd,
+  excerpt,
+  OPEN_GRAPH,
+  photoJsonLd,
+  shareImage,
+} from "@/lib/metadata";
 
 /** Les pages d'archive sont générées au build (SSG) à partir des slugs de l'API. */
 export async function generateStaticParams() {
   return (await getArchive()).map((entry) => ({ slug: entry.slug }));
 }
 
-/** Métadonnées de l'entrée : image de partage = la photographie, à son orientation. */
+/** Métadonnées de l'entrée : description = légende, image de partage = la photographie, à son orientation. */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const entry = await getArchiveEntry(slug);
@@ -20,7 +27,7 @@ export async function generateMetadata({ params }) {
   const { src, width, height } = archiveImage(entry);
   return {
     title: entry.title,
-    description: `${entry.title}, ${entry.date}.`,
+    description: excerpt(entry.description),
     alternates: { canonical: `/archive/${slug}` },
     openGraph: {
       ...OPEN_GRAPH,
@@ -36,9 +43,18 @@ export default async function ArchiveEntryPage({ params }) {
   if (!entry) notFound();
 
   const { detail } = site.archive;
+  const image = archiveImage(entry);
+  const share = shareImage(image.src, entry.description, image);
 
   return (
     <PageReveal>
+      <JsonLd data={photoJsonLd(entry, share)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: site.titles.archive, path: "/archive" },
+          { name: entry.title, path: `/archive/${entry.slug}` },
+        ])}
+      />
       <section className="archive-detail">
         <div className="archive-detail__media-col">
           <div

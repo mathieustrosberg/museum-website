@@ -1,10 +1,13 @@
 import { getImageProps } from "next/image";
 import Footer from "@/components/Footer";
 import { Info, TextList } from "@/components/Info";
+import JsonLd from "@/components/JsonLd";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SelectedWorks from "@/features/home/SelectedWorks";
 import { coverImage, getSelectedWorks, site } from "@/lib/content";
+import { museumJsonLd } from "@/lib/metadata";
+import { getVisitInfo } from "@/lib/tickets";
 
 export const metadata = {
   title: { absolute: `${site.name} — ${site.tagline}` },
@@ -24,7 +27,11 @@ const PREVIEW_SIZES = "(max-width: 767px) 100vw, 50vw";
  */
 export default async function HomePage() {
   const { home } = site;
-  const works = (await getSelectedWorks()).map((work) => {
+  const [selected, visit] = await Promise.all([
+    getSelectedWorks(),
+    getVisitInfo(),
+  ]);
+  const works = selected.map((work) => {
     const { src, width, height } = coverImage(work);
     const { props } = getImageProps({
       src,
@@ -46,6 +53,7 @@ export default async function HomePage() {
 
   return (
     <PageReveal>
+      <JsonLd data={museumJsonLd(visit)} />
       <section className="page home">
         <div className="grid-4 home__intro">
           {home.intro.map((block) => (

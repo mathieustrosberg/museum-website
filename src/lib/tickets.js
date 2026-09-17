@@ -23,6 +23,12 @@ export function formatDay(iso) {
 /** Référence émise par l'API, affichée telle quelle : format opaque (majuscules, chiffres, tirets). */
 export const REFERENCE = /^[A-Z0-9-]{8,32}$/;
 
+/** Informations pratiques de la Fondation (nom, adresse, contact, horaires), pour les données structurées. */
+export async function getVisitInfo() {
+  const { days, admission, maxPerType, currency, ...info } = await fetchVisit();
+  return info;
+}
+
 /** Configuration de la billetterie : types de billets, devise, maximum par type. */
 export async function getTicketsConfig() {
   const visit = await fetchVisit();

@@ -2,12 +2,19 @@ import Link from "next/link";
 import SiteImage from "@/components/SiteImage";
 
 /**
- * Carte d'œuvre : image 3:4 + légende (année | titre). Composant sans directive :
+ * Carte d'œuvre : image 3:4 + légende (année | titre, niveau de titre `titleAs`
+ * selon la page : h2 dans la grille de la Collection, h3 sous « À voir aussi »). Composant sans directive :
  * rendu côté serveur dans les œuvres similaires, côté client dans la grille
  * filtrable de la Collection. Reçoit l'image avec ses dimensions (coverImage côté
  * serveur), donc aucune dépendance au module de données.
  */
-export default function WorkCard({ work, image, lazy = false, ...attrs }) {
+export default function WorkCard({
+  work,
+  image,
+  lazy = false,
+  titleAs: Title = "h3",
+  ...attrs
+}) {
   return (
     <Link className="card" href={`/work/${work.slug}`} {...attrs}>
       <div className="card__media">
@@ -24,7 +31,7 @@ export default function WorkCard({ work, image, lazy = false, ...attrs }) {
       </div>
       <div className="card__caption">
         <span className="card__date">{work.year ?? ""}</span>
-        <h3 className="card__title">{work.title}</h3>
+        <Title className="card__title">{work.title}</Title>
       </div>
     </Link>
   );

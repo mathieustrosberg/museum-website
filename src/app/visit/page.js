@@ -1,12 +1,14 @@
 import { cacheLife } from "next/cache";
 import Footer from "@/components/Footer";
 import { Info, TextList } from "@/components/Info";
+import JsonLd from "@/components/JsonLd";
 import Lines from "@/components/Lines";
 import PageReveal from "@/components/PageReveal";
 import SiteImage from "@/components/SiteImage";
 import TicketForm from "@/features/tickets/TicketForm";
 import { site } from "@/lib/content";
-import { getOpenDays, getTicketsConfig } from "@/lib/tickets";
+import { museumJsonLd } from "@/lib/metadata";
+import { getOpenDays, getTicketsConfig, getVisitInfo } from "@/lib/tickets";
 
 export const metadata = {
   title: site.titles.visit,
@@ -20,11 +22,13 @@ export const metadata = {
  * bloc "use cache" revalidé toutes les heures (Booking) ; la demande passe par
  * une Server Action. Un seul îlot client : le formulaire (l'horloge de Lanzarote est dans la navigation).
  */
-export default function VisitPage() {
+export default async function VisitPage() {
   const { visit } = site;
+  const info = await getVisitInfo();
 
   return (
     <PageReveal>
+      <JsonLd data={museumJsonLd(info)} />
       <section className="contact">
         <div className="grid-2 contact__top">
           <div className="contact__intro">

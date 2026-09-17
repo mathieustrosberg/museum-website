@@ -133,6 +133,7 @@ export default function CollectionBrowser({
             work={work}
             image={work.image}
             lazy={i >= 4}
+            titleAs="h2"
             data-medium={work.medium}
             data-location={work.location}
             hidden={!shown.includes(work)}
