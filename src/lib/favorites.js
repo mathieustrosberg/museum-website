@@ -1,78 +1,90 @@
 /**
  * Favoris d'un compte : les slugs des fiches de la collection qu'il a
  * enregistrées. Module serveur. Table `favorite` de la base du site (lib/auth.js),
- * une ligne par (compte, slug), supprimée avec le compte.
+ * une ligne par (compte, slug), supprimée avec le compte. Requêtes Kysely,
+ * valables pour le fichier SQLite local comme pour Postgres.
  * Les fiches elles-mêmes restent dans l'API : les pages résolvent les slugs
  * dans la collection en cache (lib/content.js).
  */
 import "server-only";
-import { db, ready } from "@/lib/auth";
+import { sql } from "kysely";
+import { DATABASE_TYPE, db, ready } from "@/lib/auth";
 import { coverImage, getWorks } from "@/lib/content";
 
 let created = null;
 
-/** Table prête, après celles de Better Auth (clé étrangère vers user). */
+/**
+ * Table prête, après celles de Better Auth (clé étrangère vers user). Même
+ * schéma dans les deux bases ; seuls le type de date et sa valeur par défaut diffèrent.
+ */
 function table() {
-  created ??= ready().then(() => {
-    db.exec(`
-      CREATE TABLE IF NOT EXISTS favorite (
-        userId TEXT NOT NULL REFERENCES user(id) ON DELETE CASCADE,
-        slug TEXT NOT NULL,
-        createdAt TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
-        PRIMARY KEY (userId, slug)
+  created ??= ready().then(() =>
+    sql`
+      CREATE TABLE IF NOT EXISTS "favorite" (
+        "userId" TEXT NOT NULL REFERENCES "user"("id") ON DELETE CASCADE,
+        "slug" TEXT NOT NULL,
+        "createdAt" ${
+          DATABASE_TYPE === "postgres"
+            ? sql.raw("TIMESTAMPTZ NOT NULL DEFAULT now()")
+            : sql.raw(
+                "TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))",
+              )
+        },
+        PRIMARY KEY ("userId", "slug")
       )
-    `);
-  });
+    `.execute(db),
+  );
   return created;
 }
 
 /** Slugs enregistrés par un compte, du plus récent au plus ancien. */
 export async function listFavorites(userId) {
   await table();
-  return db
-    .prepare(
-      "SELECT slug FROM favorite WHERE userId = ? ORDER BY createdAt DESC",
-    )
-    .all(userId)
-    .map((row) => row.slug);
+  const rows = await db
+    .selectFrom("favorite")
+    .select("slug")
+    .where("userId", "=", userId)
+    .orderBy("createdAt", "desc")
+    .execute();
+  return rows.map((row) => row.slug);
 }
 
 export async function countFavorites(userId) {
   await table();
-  return db
-    .prepare("SELECT COUNT(*) AS n FROM favorite WHERE userId = ?")
-    .get(userId).n;
+  const row = await db
+    .selectFrom("favorite")
+    .select(db.fn.countAll().as("n"))
+    .where("userId", "=", userId)
+    .executeTakeFirst();
+  return Number(row?.n ?? 0);
 }
 
 export async function isFavorite(userId, slug) {
   await table();
-  return Boolean(
-    db
-      .prepare("SELECT 1 FROM favorite WHERE userId = ? AND slug = ?")
-      .get(userId, slug),
-  );
+  const row = await db
+    .selectFrom("favorite")
+    .select("slug")
+    .where("userId", "=", userId)
+    .where("slug", "=", slug)
+    .executeTakeFirst();
+  return Boolean(row);
 }
 
-/** Retire la fiche des favoris du compte (sans effet si elle n'y est pas). */
+/** Retire la fiche des favoris du compte ; rend le nombre de lignes retirées (0 ou 1). */
 export async function removeFavorite(userId, slug) {
   await table();
-  db.prepare("DELETE FROM favorite WHERE userId = ? AND slug = ?").run(
-    userId,
-    slug,
-  );
+  const result = await db
+    .deleteFrom("favorite")
+    .where("userId", "=", userId)
+    .where("slug", "=", slug)
+    .executeTakeFirst();
+  return Number(result.numDeletedRows);
 }
 
 /** Ajoute ou retire la fiche ; rend son nouvel état (true = en favori). */
 export async function toggleFavorite(userId, slug) {
-  await table();
-  const removed = db
-    .prepare("DELETE FROM favorite WHERE userId = ? AND slug = ?")
-    .run(userId, slug).changes;
-  if (removed) return false;
-  db.prepare("INSERT INTO favorite (userId, slug) VALUES (?, ?)").run(
-    userId,
-    slug,
-  );
+  if (await removeFavorite(userId, slug)) return false;
+  await db.insertInto("favorite").values({ userId, slug }).execute();
   return true;
 }
 

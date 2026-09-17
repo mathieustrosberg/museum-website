@@ -12,7 +12,7 @@ npm run lint     # Biome (lint + format)
 npm run format   # Biome, écriture
 ```
 
-Stack : Next.js 16.3.5, React 19, JavaScript, Biome, React Compiler, Tailwind CSS v4, GSAP 3.15, Better Auth 1.7 + better-sqlite3, dossier `src/`, alias `@/*`, npm.
+Stack : Next.js 16.3.5, React 19, JavaScript, Biome, React Compiler, Tailwind CSS v4, GSAP 3.15, Better Auth 1.7 + Kysely (Postgres en production, SQLite local en développement), dossier `src/`, alias `@/*`, npm.
 
 ## API et environnement
 
@@ -24,8 +24,14 @@ Le site lit la collection, l'archive et les informations de visite sur l'API de 
 | `SITE_URL` | adresse publique du site (`https://…`, sans barre oblique finale), base des URL absolues des métadonnées, du sitemap et de robots.txt ; sur Vercel, l'adresse de production du déploiement est utilisée par défaut |
 | `REVALIDATE_SECRET` | jeton attendu par `POST /api/revalidate?tag=…` pour invalider le cache après une mise à jour des données |
 | `BETTER_AUTH_SECRET` | secret de signature des sessions (32 caractères aléatoires au moins, `openssl rand -base64 32`) ; obligatoire en production, une valeur de développement est utilisée sinon |
+| `DATABASE_URL` (ou `POSTGRES_URL`) | connexion Postgres des comptes et des favoris (Neon ; posée par l'intégration Neon de Vercel). Absente, le site utilise le fichier SQLite local `data/site.sqlite`, créé au premier démarrage (dossier ignoré par git) |
 
-La base des comptes et des favoris est le fichier `data/site.sqlite`, créé au premier démarrage avec ses tables (dossier ignoré par git). Un hébergement sans disque persistant (Vercel) demande une autre base : Better Auth accepte Postgres, MySQL ou Turso en changeant la seule option `database` de `src/lib/auth.js`.
+## Déploiement (Vercel)
+
+1. Déployer `museum-api` (aucune variable nécessaire), noter son adresse.
+2. Créer le projet `museum-website` depuis GitHub et, avant le premier build, renseigner `FCM_API_URL` (adresse de l'API, sans barre oblique finale) et `BETTER_AUTH_SECRET`. Le build prérend toutes les pages en lisant l'API : sans `FCM_API_URL`, il échoue.
+3. Storage → Create Database → Neon (Postgres) et relier le projet : Vercel pose `DATABASE_URL`. Les tables sont créées au premier accès à un compte (migrations de Better Auth, table `favorite`).
+4. `SITE_URL` n'est utile qu'avec un domaine personnalisé ; sinon l'adresse de production Vercel est utilisée.
 
 ## Architecture
 
@@ -42,7 +48,7 @@ src/
   lib/content.js        vues sur les données pour les pages (sélection, types, lieux, fiches proches, images dimensionnées) + textes du site
   lib/tickets.js        configuration de la billetterie et jours d'ouverture (depuis l'API)
   lib/metadata.js       adresse publique du site, Open Graph commun, image de partage d'une fiche
-  lib/auth.js           Better Auth : base SQLite du site (data/site.sqlite), migrations à la demande, session de la requête
+  lib/auth.js           Better Auth : base du site (Postgres via DATABASE_URL, sinon SQLite local), migrations à la demande, session de la requête
   lib/favorites.js      favoris d'un compte (table favorite : compte, slug de la fiche)
   lib/reveal.js         moteur d'apparitions GSAP (navigateur)
   lib/noise-overlay.js  voile WebGL de la transition (quad plein écran + shader de bruit)
@@ -83,7 +89,7 @@ Les données sont lues côté serveur (`lib/api.js` et `lib/content.js`, gardés
 
 ## Comptes et favoris
 
-- **Better Auth** (`src/lib/auth.js`) : connexion par e-mail et mot de passe, sessions en cookie. La base est un fichier SQLite du site (better-sqlite3, `data/site.sqlite`), distinct de l'API de la Fondation qui reste la seule source de la collection ; les tables de Better Auth sont créées à la demande par ses migrations au premier accès (`ready`), l'instance est créée ensuite (`getAuth`).
+- **Better Auth** (`src/lib/auth.js`) : connexion par e-mail et mot de passe, sessions en cookie. La base du site est distincte de l'API de la Fondation, qui reste la seule source de la collection : Postgres (Neon) désigné par `DATABASE_URL` en production, fichier SQLite local (`data/site.sqlite`, libsql) sans cette variable. Les deux passent par un dialecte Kysely, partagé par Better Auth et les requêtes des favoris ; les tables de Better Auth sont créées à la demande par ses migrations au premier accès (`ready`), l'instance est créée ensuite (`getAuth`). Rien n'est ouvert au build.
 - **Pages** : `/login` (e-mail, mot de passe) et `/signup` (nom, e-mail, mot de passe) partagent `AuthPage` : texte et formulaire à gauche, photographie de la collection à droite (fiche choisie dans `site.account.login.image` / `signup.image`), lien vers l'autre page. Server Actions `signIn`, `signUp` de `src/features/account/actions.js` (appel direct de `auth.api`, cookie posé par le plugin `nextCookies`), codes d'erreur de Better Auth traduits avec `site.account.errors`. Le paramètre `next` (un chemin du site seulement) ramène à la page demandée après connexion ; un compte déjà connecté est renvoyé vers `/account`. `/account` affiche l'identité, la date d'inscription, les derniers favoris en cartes et la déconnexion (`signOut`).
 - **Navigation** : le dernier lien est `AccountLink`, rendu selon la session derrière `<Suspense>` dans le layout : « Connexion » vers `/login`, ou le prénom vers `/account`.
 - **Favoris** (`src/lib/favorites.js`) : une ligne par (compte, slug de fiche), supprimée avec le compte. Chaque fiche de la collection porte « Ajouter aux favoris » / « Retirer des favoris » (`FavoriteToggle`, derrière `<Suspense>` : un lien vers `/login?next=…` sans session). `/favorites` liste les fiches enregistrées, résolues dans la collection en cache (`savedWorks`, une fiche retirée de l'API disparaît d'elle-même), et renvoie vers `/login` sans session. Sur Favoris comme sur l'aperçu de Compte, chaque carte porte « Retirer » (`FavoritesGrid`, Server Action `removeFavorite`).

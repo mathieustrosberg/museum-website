@@ -1,12 +1,18 @@
 /**
  * Comptes : Better Auth, côté serveur uniquement.
  *
- * Les comptes et les favoris vivent dans une base SQLite locale
- * (better-sqlite3, fichier data/site.sqlite), en dehors de l'API de la
- * Fondation, qui reste la seule source de la collection. Le fichier est créé
- * au premier démarrage ; ses tables (user, session, account, verification)
- * sont celles de Better Auth, créées à la demande par ses migrations (ready).
- * Pour une autre base (Postgres, Turso…), seule l'option `database` change.
+ * Les comptes et les favoris vivent dans une base du site, distincte de l'API
+ * de la Fondation qui reste la seule source de la collection :
+ * - en production, Postgres (Neon via l'intégration Vercel), désigné par
+ *   DATABASE_URL (ou POSTGRES_URL) ;
+ * - sans DATABASE_URL (développement), un fichier SQLite local
+ *   (data/site.sqlite, dossier ignoré par git) par libsql.
+ * Les deux passent par un dialecte Kysely : Better Auth et les requêtes du
+ * site (favoris) utilisent la même connexion, `DATABASE_TYPE` dit laquelle.
+ *
+ * Les tables de Better Auth (user, session, account, verification) sont
+ * créées à la demande par ses migrations (ready) ; l'instance est créée
+ * ensuite (getAuth). Rien n'est ouvert à l'import du module, donc rien au build.
  *
  * Connexion par e-mail et mot de passe. Les Server Actions (features/account)
  * appellent auth.api directement ; le plugin nextCookies pose alors le cookie
@@ -15,26 +21,50 @@
  */
 import "server-only";
 import { mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { createClient } from "@libsql/client";
+import { LibsqlDialect } from "@libsql/kysely-libsql";
 import { betterAuth } from "better-auth";
 import { getMigrations } from "better-auth/db/migration";
 import { nextCookies } from "better-auth/next-js";
-import Database from "better-sqlite3";
+import { Kysely, PostgresDialect } from "kysely";
 import { headers } from "next/headers";
+import pg from "pg";
 import { SITE_URL } from "@/lib/metadata";
 
-/** Dossier de la base, hors du dépôt (data/ est ignoré par git). */
-const DATA_DIR = join(process.cwd(), "data");
-mkdirSync(DATA_DIR, { recursive: true });
+/** Fichier SQLite local par défaut, hors du dépôt. */
+const LOCAL_FILE = join(process.cwd(), "data", "site.sqlite");
 
-export const db = new Database(join(DATA_DIR, "site.sqlite"));
-db.pragma("journal_mode = WAL");
-db.pragma("foreign_keys = ON");
+/** Connexion Postgres : DATABASE_URL, ou POSTGRES_URL (autre nom posé par l'intégration Neon de Vercel). */
+const POSTGRES_URL = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+/** "postgres" avec une URL de connexion, sinon "sqlite" (fichier local). */
+export const DATABASE_TYPE = POSTGRES_URL ? "postgres" : "sqlite";
+
+function createDialect() {
+  if (DATABASE_TYPE === "postgres") {
+    // Un petit pool par instance : chaque fonction Vercel a le sien.
+    const pool = new pg.Pool({
+      connectionString: POSTGRES_URL,
+      max: 5,
+    });
+    return new PostgresDialect({ pool });
+  }
+  mkdirSync(dirname(LOCAL_FILE), { recursive: true });
+  return new LibsqlDialect({
+    client: createClient({ url: `file:${LOCAL_FILE}` }),
+  });
+}
+
+const dialect = createDialect();
+
+/** Requêtes du site (favoris), sur la même connexion que Better Auth. */
+export const db = new Kysely({ dialect });
 
 const options = {
   baseURL: SITE_URL,
   secret: process.env.BETTER_AUTH_SECRET,
-  database: db,
+  database: { dialect, type: DATABASE_TYPE },
   emailAndPassword: { enabled: true, minPasswordLength: 8 },
   telemetry: { enabled: false },
   // Dernier de la liste : il pose les cookies après les autres plugins.
@@ -45,9 +75,9 @@ const options = {
 export const MIN_PASSWORD_LENGTH = options.emailAndPassword.minPasswordLength;
 
 /**
- * Tables de Better Auth créées si elles manquent. Un autre processus (build,
- * second serveur sur le même fichier) peut les créer entre l'inspection et la
- * création : dans ce cas, une nouvelle inspection confirme que tout est en place.
+ * Tables de Better Auth créées si elles manquent. Un autre processus (second
+ * serveur sur la même base) peut les créer entre l'inspection et la création :
+ * dans ce cas, une nouvelle inspection confirme que tout est en place.
  */
 async function migrate() {
   const { toBeCreated, toBeAdded, runMigrations } =
