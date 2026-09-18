@@ -8,7 +8,7 @@ import { flushSync } from "react-dom";
  * Horloge locale de Lanzarote, mise à jour à chaque minute. Rendue « 00:00 » par le
  * serveur puis remplie côté client : aucun écart d'hydratation, l'heure dépend
  * du navigateur. À chaque changement les chiffres glissent de 12px (GSAP).
- * Affichée dans la barre de navigation : [22:38] Heure locale.
+ * Affichée dans le pied de page : [22:38] Heure locale.
  */
 export default function Clock({ label, aria, timeZone, className }) {
   const [time, setTime] = useState("00:00");

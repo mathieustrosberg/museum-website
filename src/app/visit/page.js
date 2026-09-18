@@ -20,7 +20,7 @@ export const metadata = {
  * Visit (Server Component). Le formulaire de la page est la billetterie :
  * la liste des jours d'ouverture dépend de la date du jour, elle vient d'un
  * bloc "use cache" revalidé toutes les heures (Booking) ; la demande passe par
- * une Server Action. Un seul îlot client : le formulaire (l'horloge de Lanzarote est dans la navigation).
+ * une Server Action. Un seul îlot client : le formulaire (l'horloge de Lanzarote est dans le pied de page).
  */
 export default async function VisitPage() {
   const { visit } = site;

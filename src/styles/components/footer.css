@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Footer : "© 2026" ............ "■ Available for work"
+   Footer : "© 2026 …" ............ "[22:38] Heure locale   ■ Ouvert tous les jours"
    ========================================================================== */
 
 .footer {
@@ -8,9 +8,32 @@
   align-items: flex-start;
 }
 
+/* Bloc de droite : horloge puis statut, sur une ligne ; passe à la ligne si la place manque */
+.footer__right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--gap-inline) var(--gap-block);
+}
+
 .footer__status {
   display: flex;
   gap: var(--gap-inline);
+}
+
+/* Horloge de Lanzarote : [22:38] Heure locale */
+.footer__clock {
+  display: flex;
+  gap: var(--gap-inline);
+  white-space: nowrap;
+}
+
+.clock {
+  display: flex;
+}
+
+.clock__digits {
+  display: inline-block;
 }
 
 .footer__dot {

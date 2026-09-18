@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 /**
- * Navigation fixe : marque | Collection, Archives, À propos, Visite, compte ............ horloge.
+ * Navigation fixe : marque | Collection, Archives, À propos, Visite ............ Connexion (ou le prénom).
  * Client Component pour l'état du menu mobile [+] / [-] et le lien actif (usePathname). L'état est réinitialisé à chaque changement de route
  * grâce à la clé : le menu se referme après une navigation, comme à un chargement.
  * `account` est le lien de compte, rendu côté serveur selon la session
- * (AccountLink) et reçu en prop comme l'horloge.
+ * (AccountLink) et reçu en prop ; il occupe le bord droit de la barre.
  */
 export default function Nav(props) {
   const pathname = usePathname();
@@ -31,7 +31,7 @@ export function NavLink({ href, className, children, ...props }) {
   );
 }
 
-function NavBar({ brand, aria, links, account, clock }) {
+function NavBar({ brand, aria, links, account }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -59,9 +59,8 @@ function NavBar({ brand, aria, links, account, clock }) {
                 {link.label}
               </NavLink>
             ))}
-            {account}
           </div>
-          {clock}
+          {account}
         </nav>
       </div>
     </header>

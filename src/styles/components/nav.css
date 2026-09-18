@@ -1,6 +1,6 @@
 /* ==========================================================================
    Navigation fixe
-   Desktop : logo | [Collection, Archive, About, Visit ............ [22:38] Local time]
+   Desktop : logo | [Collection, Archives, À propos, Visite ............ Connexion]
    Mobile  : logo | [+]  puis 2e rangée dépliée
    ========================================================================== */
 
@@ -37,23 +37,6 @@
   display: inline-flex;
   padding: var(--link-pad) 0;
   white-space: nowrap;
-}
-
-/* Horloge : [22:38] Local time, alignée sur les liens */
-.nav__clock {
-  display: flex;
-  gap: var(--gap-inline);
-  padding: var(--link-pad) 0;
-  overflow: clip;
-  white-space: nowrap;
-}
-
-.clock {
-  display: flex;
-}
-
-.clock__digits {
-  display: inline-block;
 }
 
 /* Lien actif : atténué */
@@ -102,7 +85,7 @@
   }
 }
 
-/* Lien de compte : le prénom, coupé s'il est long, pour ne pas pousser l'horloge */
+/* Lien de compte, au bord droit : le prénom, coupé s'il est long */
 .nav__account {
   display: inline-block;
   max-width: 12ch;

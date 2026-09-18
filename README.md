@@ -64,13 +64,13 @@ Tout est Server Component par défaut : layout, pages, cartes, cartel, blocs de 
 | Composant | Raison |
 |---|---|
 | `PageReveal` | GSAP, `document.fonts.ready`, `matchMedia` ; `gsap.context().revert()` au nettoyage |
-| `Nav` | état du menu mobile, lien actif (`usePathname`), réinitialisé par clé à chaque route ; reçoit l'horloge et le lien de compte en props |
+| `Nav` | état du menu mobile, lien actif (`usePathname`), réinitialisé par clé à chaque route ; reçoit le lien de compte en prop, au bord droit de la barre |
 | `PageTransition` | voile WebGL de transition (bruit de dissolution), navigation via le router |
 | `Preloader` | animation de chargement GSAP (pile de cartes), une fois par chargement complet |
 | `SelectedWorks` | survol d'une ligne → aperçu dans le panneau image (état partagé) |
 | `CollectionBrowser` | filtres, recherche, comptes, cartes masquées (`hidden`) |
 | `ScrollProgress` | scroll, resize, ResizeObserver |
-| `Clock` | `setInterval`, fuseau du musée (site.json), rendu « 00:00 » côté serveur, affichée dans la navigation |
+| `Clock` | `setInterval`, fuseau du musée (site.json), rendu « 00:00 » côté serveur, affichée dans le pied de page |
 | `TicketForm` | quantités et total en direct, pré-validation, erreurs marquées et focalisées, envoi par Server Action (`useActionState`) |
 | `AuthForm`, `SignOutButton` | connexion, inscription et déconnexion : même mécanique que la billetterie (pré-validation, erreurs, `useActionState`) |
 | `FavoriteButton` | bascule du favori d'une fiche par Server Action (`useActionState`), libellé mis à jour dès l'envoi |
@@ -91,7 +91,7 @@ Les données sont lues côté serveur (`lib/api.js` et `lib/content.js`, gardés
 
 - **Better Auth** (`src/lib/auth.js`) : connexion par e-mail et mot de passe, sessions en cookie. La base du site est distincte de l'API de la Fondation, qui reste la seule source de la collection : Postgres (Neon) désigné par `DATABASE_URL` en production, fichier SQLite local (`data/site.sqlite`, libsql) sans cette variable. Les deux passent par un dialecte Kysely, partagé par Better Auth et les requêtes des favoris ; les tables de Better Auth sont créées à la demande par ses migrations au premier accès (`ready`), l'instance est créée ensuite (`getAuth`). Rien n'est ouvert au build.
 - **Pages** : `/login` (e-mail, mot de passe) et `/signup` (nom, e-mail, mot de passe) partagent `AuthPage` : texte et formulaire à gauche, photographie de la collection à droite (fiche choisie dans `site.account.login.image` / `signup.image`), lien vers l'autre page. Server Actions `signIn`, `signUp` de `src/features/account/actions.js` (appel direct de `auth.api`, cookie posé par le plugin `nextCookies`), codes d'erreur de Better Auth traduits avec `site.account.errors`. Le paramètre `next` (un chemin du site seulement) ramène à la page demandée après connexion ; un compte déjà connecté est renvoyé vers `/account`. `/account` affiche l'identité, la date d'inscription, les derniers favoris en cartes et la déconnexion (`signOut`).
-- **Navigation** : le dernier lien est `AccountLink`, rendu selon la session derrière `<Suspense>` dans le layout : « Connexion » vers `/login`, ou le prénom vers `/account`.
+- **Navigation** : le bord droit de la barre est `AccountLink`, rendu selon la session derrière `<Suspense>` dans le layout : « Connexion » vers `/login`, ou le prénom vers `/account`. L'horloge de Lanzarote est dans le pied de page.
 - **Favoris** (`src/lib/favorites.js`) : une ligne par (compte, slug de fiche), supprimée avec le compte. Chaque fiche de la collection porte « Ajouter aux favoris » / « Retirer des favoris » (`FavoriteToggle`, derrière `<Suspense>` : un lien vers `/login?next=…` sans session). `/favorites` liste les fiches enregistrées, résolues dans la collection en cache (`savedWorks`, une fiche retirée de l'API disparaît d'elle-même), et renvoie vers `/login` sans session. Sur Favoris comme sur l'aperçu de Compte, chaque carte porte « Retirer » (`FavoritesGrid`, Server Action `removeFavorite`).
 - Les pages Connexion, Inscription, Compte et Favoris sont en `noindex`, exclues du sitemap et de robots.txt, comme la confirmation de billets.
 

@@ -3,7 +3,7 @@
    Desktop : deux rangées sur 100vh - footer, la première à la hauteur de son contenu.
    Rangée 1 : [titre + billetterie centrés] | image.
    Rangée 2 : Contact | Follow | Opening hours, centrés verticalement.
-   Tablette / mobile : titre, formulaire, horloge, liens, image carrée.
+   Tablette / mobile : titre, formulaire, liens, image carrée.
    ========================================================================== */
 
 .contact {

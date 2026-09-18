@@ -4,7 +4,6 @@ import Nav from "@/components/Nav";
 import PageTransition from "@/components/PageTransition";
 import Preloader from "@/components/Preloader";
 import AccountLink from "@/features/account/AccountLink";
-import Clock from "@/features/visit/Clock";
 import { coverImage, getSelectedWorks, site } from "@/lib/content";
 import { OPEN_GRAPH, SITE_URL } from "@/lib/metadata";
 import "@/styles/globals.css";
@@ -33,8 +32,9 @@ export const metadata = {
 
 /**
  * Root layout (Server Component) : document, police, CSS global, navigation
- * persistante, preloader et transition entre pages. Le footer n'est pas ici : sa position dans la
- * mise en page varie selon les pages (colonne latérale ou pleine largeur).
+ * persistante, preloader et transition entre pages. Le footer (avec l'horloge de
+ * Lanzarote) n'est pas ici : sa position dans la mise en page varie selon les
+ * pages (colonne latérale ou pleine largeur).
  *
  * La classe `js` de <html> conditionne l'état initial masqué des apparitions
  * (animations.css). Elle est posée par un script inline, exécuté avant le
@@ -67,14 +67,6 @@ export default async function RootLayout({ children }) {
             <Suspense fallback={null}>
               <AccountLink />
             </Suspense>
-          }
-          clock={
-            <Clock
-              className="nav__clock"
-              label={site.visit.clock.label}
-              aria={site.visit.clock.aria}
-              timeZone={site.visit.clock.timeZone}
-            />
           }
         />
         {children}
