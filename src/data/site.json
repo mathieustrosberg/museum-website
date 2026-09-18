@@ -82,7 +82,30 @@
       "jameos-del-agua",
       "jardin-de-cactus",
       "casa-museo-del-campesino",
-      "lago-martianez"
+      "lago-martianez",
+      "lagomar"
+    ],
+    "preloader": [
+      {
+        "work": "lagomar",
+        "sheet": 1
+      },
+      {
+        "work": "lagomar",
+        "sheet": 2
+      },
+      {
+        "work": "lagomar",
+        "sheet": 3
+      },
+      {
+        "work": "taro-de-tahiche",
+        "sheet": 1
+      },
+      {
+        "work": "jameos-del-agua",
+        "sheet": 1
+      }
     ],
     "viewAll": "Toute la collection"
   },

@@ -44,6 +44,22 @@ export async function getSelectedWorks() {
   return site.home.selected.map((slug) => bySlug.get(slug)).filter(Boolean);
 }
 
+/**
+ * Cartes du preloader : cinq photographies choisies dans site.json
+ * (home.preloader : fiche et numéro de feuille), résolues dans la collection.
+ * Une fiche ou une feuille absente est ignorée.
+ */
+export async function getPreloaderCards() {
+  const bySlug = new Map((await getWorks()).map((w) => [w.slug, w]));
+  return site.home.preloader
+    .map(({ work: slug, sheet }) => {
+      const work = bySlug.get(slug);
+      const src = work && workImages(work)[sheet - 1];
+      return src ? { src, ...sheetSize(work) } : null;
+    })
+    .filter(Boolean);
+}
+
 /** Types distincts, triés comme les filtres de la Collection. */
 export async function getMediums() {
   const works = await getWorks();

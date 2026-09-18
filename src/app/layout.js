@@ -4,7 +4,7 @@ import Nav from "@/components/Nav";
 import PageTransition from "@/components/PageTransition";
 import Preloader from "@/components/Preloader";
 import AccountLink from "@/features/account/AccountLink";
-import { coverImage, getSelectedWorks, site } from "@/lib/content";
+import { getPreloaderCards, site } from "@/lib/content";
 import { OPEN_GRAPH, SITE_URL } from "@/lib/metadata";
 import "@/styles/globals.css";
 
@@ -46,8 +46,8 @@ export const metadata = {
  * le reste du layout et des pages reste prérendu.
  */
 export default async function RootLayout({ children }) {
-  // Cinq photographies de la sélection de la home, cartes du preloader.
-  const cards = (await getSelectedWorks()).slice(0, 5).map(coverImage);
+  // Cinq photographies de la collection, choisies dans site.json (home.preloader).
+  const cards = await getPreloaderCards();
   return (
     <html lang={site.lang} className={mono.variable} suppressHydrationWarning>
       <head>
