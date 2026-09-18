@@ -352,7 +352,10 @@
       "sending": "Connexion",
       "switchText": "Pas encore de compte ?",
       "switchLink": "Créer un compte",
-      "image": "jameos-del-agua"
+      "image": {
+        "work": "jameos-del-agua",
+        "sheet": 1
+      }
     },
     "signup": {
       "title": "[Inscription]",
@@ -361,7 +364,10 @@
       "sending": "Création",
       "switchText": "Déjà un compte ?",
       "switchLink": "Se connecter",
-      "image": "jardin-de-cactus"
+      "image": {
+        "work": "jameos-del-agua",
+        "sheet": 4
+      }
     },
     "form": {
       "name": "Nom",

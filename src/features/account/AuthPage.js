@@ -8,13 +8,13 @@ import SiteImage from "@/components/SiteImage";
 import AuthForm from "@/features/account/AuthForm";
 import { signIn, signUp } from "@/features/account/actions";
 import { getSession, MIN_PASSWORD_LENGTH } from "@/lib/auth";
-import { coverImage, getWork, site } from "@/lib/content";
+import { getWork, sheetSize, site, workImages } from "@/lib/content";
 
 /**
  * Page de connexion ou d'inscription (Server Component), sur le modèle des
  * pages À propos et Visite : à gauche le titre, une phrase et le formulaire,
- * centrés ; à droite une photographie de la collection (fiche choisie dans
- * site.json). Le titre, le texte et l'image sont le shell statique ; le
+ * centrés ; à droite une photographie de la collection (fiche et numéro de
+ * photo choisis dans site.json, `image`). Le titre, le texte et l'image sont le shell statique ; le
  * formulaire dépend de la requête (session : un compte connecté est renvoyé
  * vers Compte ; `next` : page à rejoindre après connexion), donc rendu derrière <Suspense>.
  */
@@ -29,8 +29,9 @@ const KINDS = {
 
 export default async function AuthPage({ kind, searchParams }) {
   const texts = site.account[kind];
-  const work = await getWork(texts.image);
-  const image = work ? coverImage(work) : null;
+  const work = await getWork(texts.image.work);
+  const src = work && workImages(work)[texts.image.sheet - 1];
+  const image = src ? { src, ...sheetSize(work) } : null;
 
   return (
     <PageReveal>
