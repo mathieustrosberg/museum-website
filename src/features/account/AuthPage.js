@@ -105,7 +105,7 @@ async function Panel({ kind, searchParams }) {
         data-y="12"
         data-delay="0.6"
       >
-        <span className="is-muted">{texts.switchText}</span>{" "}
+        <span className="is-muted">{texts.switchText}</span>
         <Link className="link-underline" href={otherHref}>
           {texts.switchLink}
         </Link>

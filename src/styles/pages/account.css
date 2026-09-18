@@ -29,11 +29,12 @@
   height: 100%;
 }
 
+/* Renvoi vers l'autre page : question atténuée, lien souligné dessous */
 .auth__switch {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--gap-inline);
-  align-items: baseline;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-list);
   margin-top: var(--gap-block);
 }
 
